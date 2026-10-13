@@ -419,7 +419,7 @@ var G = (function(){
      Mode "sheets": sync.js substitueix start() i save() per llegir i escriure al full de càlcul del Drive. */
   var current = null;
   function start(s, onData){
-    current = s;
+    current = s; G.storeDef = s;
     var d = load(s.key);
     if(!s.valid(d)) d = s.seed();
     onData(d);
