@@ -190,6 +190,8 @@ html.locked .apps{display:none}
 .gate-form{display:flex;flex-direction:column;gap:12px;width:100%;max-width:380px}
 .gate-form input{font-size:16px !important}
 .gate .gate-msg{color:var(--late);font-weight:600}
+.gate .gate-link{display:inline-block;margin-top:10px;font-weight:600;color:var(--ink);text-decoration:underline;text-decoration-color:var(--brand);text-underline-offset:3px}
+.gate .gdetail{display:block;margin-top:10px;font-family:var(--f-mono);font-size:12px;color:var(--muted);overflow-wrap:anywhere}
 .gate .hint{max-width:60ch}
 .sync{display:flex;align-items:center;gap:6px 8px;font-size:12.5px;color:var(--muted);flex-wrap:wrap;flex-basis:100%}
 @media (min-width:760px){.sync{flex-basis:auto}}
@@ -579,13 +581,45 @@ var G = (function(){
     if(!token || Date.now()>tokenExp) return Promise.reject({auth:true});
     return fetch(url, {method:method, headers:{"Authorization":"Bearer "+token, "Content-Type":"application/json"}, body: body ? JSON.stringify(body) : undefined})
       .then(function(r){
-        if(r.status===401) throw {auth:true};
-        if(r.status===403 || r.status===404) throw {denied:true};
-        if(!r.ok) return r.text().then(function(t){ throw {msg:"L’API de Google ha respost amb l’error "+r.status+".", detail:t}; });
-        return r.json();
+        if(r.ok) return r.json();
+        return r.text().then(function(t){
+          var j = {}; try { j = JSON.parse(t).error || {}; } catch(x){}
+          var gmsg = j.message || "", reasons = [], activation = "";
+          (j.details||[]).forEach(function(d){
+            if(d.reason) reasons.push(d.reason);
+            if(d.metadata && d.metadata.activationUrl) activation = d.metadata.activationUrl;
+          });
+          (j.errors||[]).forEach(function(d){ if(d.reason) reasons.push(d.reason); });
+          var rs = reasons.join(" ")+" "+gmsg;
+          if(r.status===401) throw {auth:true, gmsg:gmsg};
+          if(/SERVICE_DISABLED|accessNotConfigured|has not been used|is disabled/i.test(rs)){
+            var m = gmsg.match(/https:\/\/console\.developers\.google\.com\/\S+?(?=[\s.]*(?:\s|$))/);
+            throw {apiOff:true, url: activation || (m && m[0]) || "https://console.cloud.google.com/apis/library/sheets.googleapis.com", gmsg:gmsg};
+          }
+          if(/ACCESS_TOKEN_SCOPE_INSUFFICIENT|insufficientPermissions|insufficient authentication scopes/i.test(rs)) throw {scope:true, gmsg:gmsg};
+          if(r.status===403 || r.status===404) throw {denied:true, gmsg:gmsg, status:r.status};
+          throw {msg:"L’API de Google ha respost amb l’error "+r.status+".", gmsg:gmsg};
+        });
       }, function(){ throw {offline:true}; });
   }
   function errText(e){ return e && e.offline ? "No hi ha connexió amb Google. Comprova la connexió a internet." : ((e && e.msg) || "Error desconegut."); }
+  function gdetail(e){ return e && e.gmsg ? '<span class="gdetail">Resposta de Google: '+esc(e.gmsg)+'</span>' : ''; }
+  // Errors de configuració que no depenen del compte: es mostren igual a la portada i a les eines.
+  function configGate(e, retryAct){
+    if(e.apiOff){
+      gate("Falta activar l’API de Google Sheets",
+        "El projecte de Google Cloud de la clau d’accés no té activada l’API de fulls de càlcul. Obre l’enllaç amb el compte zenkai3dstudio, toca <b>Activa</b>, espera un parell de minuts i torna-ho a provar.<br>"+
+        '<a class="gate-link" href="'+esc(e.url)+'" target="_blank" rel="noopener">Activa la Google Sheets API</a>'+gdetail(e),
+        [[retryAct,"Torna-ho a provar"]]);
+      statusEl.hidden = true; return true;
+    }
+    if(e.scope){
+      gate("Falta un permís", "Google no ha donat permís per veure i editar els fulls de càlcul. Torna a entrar i, a la pantalla de permisos, marca la casella dels fulls de càlcul."+gdetail(e),
+        [["portal-other","Torna a entrar"]]);
+      statusEl.hidden = true; return true;
+    }
+    return false;
+  }
 
   /* ---------- Portada ---------- */
   function portal(){
@@ -619,12 +653,13 @@ var G = (function(){
         status("ok", "Has entrat com a <b>"+esc(email || "un compte autoritzat")+"</b>", [["switch","Canvia de compte"],["logout","Surt"]]);
       }).catch(function(e){
         if(e.auth){ clearSession(); portalGate("La sessió ha caducat."); return; }
+        if(configGate(e, "portal-retry")) return;
         if(e.denied){
           var who = email; clearSession();
-          gate("Aquest compte no té accés", (who ? "Has entrat com a <b>"+esc(who)+"</b>. " : "")+"Les eines només es poden obrir amb els comptes autoritzats.", [["portal-other","Entra amb un altre compte"]]);
+          gate("Aquest compte no té accés", (who ? "Has entrat com a <b>"+esc(who)+"</b>. " : "")+"Les eines només es poden obrir amb els comptes autoritzats."+gdetail(e), [["portal-other","Entra amb un altre compte"]]);
           statusEl.hidden = true; return;
         }
-        gate("No s’ha pogut connectar", esc(errText(e)), [["portal-retry","Torna-ho a provar"]]);
+        gate("No s’ha pogut connectar", esc(errText(e))+gdetail(e), [["portal-retry","Torna-ho a provar"]]);
       });
     };
     if(readSession()) portalVerify(); else gate("", "Connectant amb Google…");
@@ -679,12 +714,16 @@ var G = (function(){
   }
   function handleErr(e, inBackground){
     if(e && e.auth){ needLogin(inBackground ? push : loadData); return; }
+    if(e && (e.apiOff || e.scope)){
+      if(inBackground && data){ status("err", e.apiOff ? "No s’ha pogut desar: falta activar l’API de Google Sheets." : "No s’ha pogut desar: falta el permís dels fulls de càlcul.", [["retry","Torna-ho a provar"]]); return; }
+      configGate(e, "retry"); return;
+    }
     if(e && e.denied){
-      gate("Aquest compte no té accés", (email ? "Has entrat com a <b>"+esc(email)+"</b>. " : "")+"Les dades només es poden obrir amb els comptes autoritzats.", [["switch","Canvia de compte"]]);
+      gate("Aquest compte no té accés", (email ? "Has entrat com a <b>"+esc(email)+"</b>. " : "")+"Les dades només es poden obrir amb els comptes autoritzats."+gdetail(e), [["switch","Canvia de compte"]]);
       data = null; statusEl.hidden = true; return;
     }
     if(inBackground && data){ status("err", esc(errText(e)), [["retry","Torna-ho a provar"]]); return; }
-    gate("No s’han pogut carregar les dades", esc(errText(e)), [["retry","Torna-ho a provar"]]);
+    gate("No s’han pogut carregar les dades", esc(errText(e))+gdetail(e), [["retry","Torna-ho a provar"]]);
   }
   function loadData(){
     gate("", "Carregant les dades del Drive…");
@@ -732,7 +771,7 @@ var G = (function(){
     if(!b) return;
     var a = b.getAttribute("data-sync");
     if(a==="portal-choose") portalLogin("", true);
-    else if(a==="portal-other") portalGate("", "");
+    else if(a==="portal-other"){ clearSession(); if(portalGate) portalGate("", ""); else toPortal(); }
     else if(a==="portal-retry"){ if(portalVerify) portalVerify(); }
     else if(a==="logout"){ clearSession(); location.replace("./"); }
     else if(a==="switch"){
