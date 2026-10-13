@@ -1,0 +1,953 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/webp;base64,UklGRk4EAABXRUJQVlA4IEIEAABQFwCdASpuAHgAPj0ejUQiIaGTunUcIAPEtIBqW4pnD3tH+cx87fiJlat3h/unmZpPscHoVZ4/qLgJeiAWymoGxwoBzK9sp422w1LUo2+ZOYW8AyZJ7bpqtSzpO136l7n3vHd4d75Hkq2/Vc3eNdJMwghqA//rxT85OdFrv0JIMTFXrBPvh9b2O9wEcsBCkTrA86Q99bAmSVFqZDRJuq11kCqNI4qzGTf0FZeUKkZOkSiDjrolsxxJDlW6yiVmWgbHCSAA/u7p37DCYMqwm7NBJOBurnADhgBrfgRbJ0+HsCwwUhi8v94EltwxlCwWGejuq/FNvX/Dd/uXrfcsBAo8TZVDb/S8rCHtXgKBfd7XRSCU99hrBa+LmKr9sm7HR2shWSRjxZE8LYo+j4v73oE/lVMBoDMh0P9euKeppVcIM8zy2fn8DTcS0g83e//oCM0i8GNBbI2p81vyZfMn17s2oR9rdqUaneL/P+LuPhRR5L+ldXWnhuX3ZvvrIf+zT8/lYviVSTT6LOF04JNTUg3XMizwVPwzQcT3Lhe7MInzq21QtoIY+EVR971B8CMmsDiUlIibM530uB6HJef6uix7nxBPBADcbTy6iCGLIRFAR5+ystpFn8gkHW2+p45mq6ZNWAcyoT19MNXDto0Ho4QNV0DO9V/XPj6OtwK5PdoQqP+oTlEdfSGJ86ujGAwq0PAALK22Sb4I3Oe8bZ7R3clnZ/43hDb69040LGgPIPKYT4KmmO1hyQPPXoOpqGKFC5iX0E2gkOahBxmlbguqbCGcRIsN4N49E5cqTGJSNFX8I6d7c5TrfgJ/C6dY0MGonKPxHy4F9OUaSiwf5ZyAAnP4Fc7iEnVN4VZWgNQey9A/hOf15FrRwtNfL4v+QyB81s3bz2DnjzNqu+GCB5x1NwXpRO0cTUe6xSTGU+xFwE7gE92t6EGnSrpo9r0WU8vax6NrhYm7bLgtWfKMdA+2OD6Nc/0oOlHYJIdIfiPkGBogkZNRz58rrJHZ4Furfvn9mfGnZ8Azvv5yt8Bt/7nv8v5uuU39ziWjN8HQJ09in7hj6hbLWHg8KLE4+qXVQ9hGm+gybBo+YUDYSDptvY4TND5+yRRP2O4Uk5NBoQxxVxrTUl+EjrvzV+aXM78Ic5+807LIkw8Ud39+M1WcdO68cEHJp9WkGfcoa8HcCepUgJiNpJ7jL8I9haN6LpyrtUuaFNoMqEwPoG2tNsRgFNGowdyq7kBLQ5Od/I6zt3AXxVEU9aiJNbAKiTDCeJGBsL38HtrtvlpFRO8IZjPzdbP1dlzl2xAyPx+rcVWgVOHQqZuwTQYMxfGsiSllpaOUI1F7eFWcG+CBZrxI5Fk5qs/KrVD/9UjlnfYlXj4uKCPzLRcRSIFsMAk+QQUNPBM9s+LzlR8uhQICQFwjzRCbUbtt1r3Nv042S5HDxHFLMFq8AAAAAAAA">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
+<script src="config.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<title>Control de caducitats</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Franklin:wght@400;500;600;700;800&display=swap">
+<style>
+/* Galindo grup — base comuna de les eines internes.
+   Columna de treball única; capçalera amb el monograma i menú entre eines; gris càlid de marca sobre blanc. */
+:root{
+  --bg:#f6f5f3; --surface:#ffffff; --sunk:#eeebe7; --hover:#f8f7f5;
+  --ink:#2a2723; --muted:#6c675f; --line:#e1ddd7; --bar:#cfc9c0;
+  --brand:#a39c92; --accent:#5d564c; --accent-soft:#ece8e2; --on-accent:#ffffff;
+  --info:#2f5f8a; --info-soft:#e3ebf3;
+  --late:#b3391f; --late-soft:#f7e3dc;
+  --soon:#8f5d00; --soon-soft:#f5ebd6;
+  --ok:#36744b; --ok-soft:#e1eee4;
+  --scrim:rgba(20,18,15,.45);
+  --f-display:"Libre Franklin","Franklin Gothic Medium","Arial Narrow",Arial,system-ui,sans-serif;
+  --f-body:"Libre Franklin",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#191816; --surface:#22201d; --sunk:#2c2a26; --hover:#282622;
+    --ink:#ece9e4; --muted:#a8a298; --line:#38352f; --bar:#55504a;
+    --brand:#a39c92; --accent:#d9d3ca; --accent-soft:#38342e; --on-accent:#191816;
+    --info:#93bde6; --info-soft:#1e2c3a;
+    --late:#ff8f72; --late-soft:#40221a;
+    --soon:#e2b45c; --soon-soft:#3a2f17;
+    --ok:#7cc896; --ok-soft:#1d3426;
+    --scrim:rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#191816; --surface:#22201d; --sunk:#2c2a26; --hover:#282622;
+  --ink:#ece9e4; --muted:#a8a298; --line:#38352f; --bar:#55504a;
+  --brand:#a39c92; --accent:#d9d3ca; --accent-soft:#38342e; --on-accent:#191816;
+  --info:#93bde6; --info-soft:#1e2c3a;
+  --late:#ff8f72; --late-soft:#40221a;
+  --soon:#e2b45c; --soon-soft:#3a2f17;
+  --ok:#7cc896; --ok-soft:#1d3426;
+  --scrim:rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.wrap{max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:14px 72px;display:flex;flex-direction:column;gap:18px}
+@media (min-width:760px){.wrap{padding-inline:28px;padding-block:22px 88px;gap:22px}}
+
+/* Capçalera corporativa */
+.brandbar{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px}
+.mark{display:block;width:37px;height:40px;flex:none}
+.wm{display:flex;flex-direction:column;align-items:center;line-height:1;color:var(--brand)}
+.wm1{font-family:var(--f-display);font-weight:700;font-size:21px;letter-spacing:.005em}
+.wm2{font-family:var(--f-display);font-weight:600;font-size:13px;margin-top:1px}
+.apps{display:flex;gap:4px;flex-wrap:wrap}
+.app{font-size:13.5px;font-weight:500;padding:6px 11px;border-radius:7px;color:var(--muted);text-decoration:none;border:1px solid transparent}
+a.app:hover{background:var(--hover);color:var(--ink);border-color:var(--line)}
+.app.cur{color:var(--ink);font-weight:700;background:var(--surface);border-color:var(--line)}
+
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 20px}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,6.5vw,2.75rem);line-height:1;letter-spacing:-.015em;margin:0;text-wrap:balance}
+.sub{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);margin:8px 0 0}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font-weight:600;font-size:14px;border-radius:8px;padding:9px 14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--hover)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.primary:hover{filter:brightness(1.1)}
+.btn.danger{color:var(--late);border-color:var(--late-soft);background:transparent}
+.btn.danger[data-armed="1"]{background:var(--late);color:var(--surface);border-color:var(--late)}
+.linkbtn{background:none;border:0;padding:0;color:var(--ink);text-decoration:underline;text-decoration-color:var(--brand);text-underline-offset:3px;cursor:pointer;font-size:inherit}
+
+.demo{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin:0}
+
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:760px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.stat .k{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.stat .v{font-family:var(--f-display);font-weight:800;font-size:2rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat .v small{font-size:1rem;font-weight:600;color:var(--muted)}
+.stat .s{font-size:12.5px;color:var(--muted)}
+.stat.alert .v{color:var(--late)}
+.stat.warn .v{color:var(--soon)}
+.stat.good .v{color:var(--ok)}
+
+.filters{display:flex;flex-direction:column;gap:10px}
+.search{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.frow{display:flex;gap:8px 12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:13px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.chip:hover{background:var(--hover)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fside{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.fside select{padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:13.5px}
+.check{display:flex;gap:6px;align-items:center;font-size:13.5px;color:var(--muted);cursor:pointer}
+
+.group{display:flex;flex-direction:column;gap:8px}
+.gh{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 2px}
+.gh h2{font-family:var(--f-display);font-size:16px;font-weight:700;margin:0;display:flex;gap:8px;align-items:center;text-wrap:balance}
+.gh .dot{width:10px;height:10px;border-radius:2px;background:var(--gcol);flex:none}
+.gh .n{font-family:var(--f-mono);font-weight:400;font-size:12.5px;color:var(--muted)}
+.gh .gs{font-size:12.5px;color:var(--muted);font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+
+.tag{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border:1px solid var(--line);border-radius:4px;color:var(--muted);flex:none;line-height:1.5}
+.pill{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap}
+
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:28px 16px;text-align:center;color:var(--muted);display:flex;flex-direction:column;gap:12px;align-items:center}
+.empty p{margin:0}
+
+/* Fitxa: full inferior al mòbil, panell lateral a l'escriptori */
+.backdrop{position:fixed;inset:0;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;z-index:20;opacity:0;transition:opacity .18s ease}
+.backdrop.open{opacity:1}
+.sheet{background:var(--surface);color:var(--ink);width:100%;max-height:90%;overflow:auto;overscroll-behavior:contain;border-radius:14px 14px 0 0;padding:18px 16px calc(28px + env(safe-area-inset-bottom,0px));transform:translateY(18px);transition:transform .2s ease;display:flex;flex-direction:column;gap:18px}
+.backdrop.open .sheet{transform:none}
+@media (min-width:760px){
+  .backdrop{justify-content:flex-end;align-items:stretch}
+  .sheet{width:480px;max-height:none;height:100%;border-radius:0;padding:calc(24px + env(safe-area-inset-top,0px)) 26px calc(32px + env(safe-area-inset-bottom,0px));transform:translateX(24px)}
+}
+@media (prefers-reduced-motion: reduce){.backdrop,.sheet{transition:none}}
+.s-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.s-head .tag{display:inline-block;margin-bottom:6px}
+.s-head h2{font-family:var(--f-display);font-weight:800;font-size:1.55rem;line-height:1.08;margin:0;text-wrap:balance}
+.s-head .s-sub{margin:4px 0 0;font-size:13.5px;color:var(--muted)}
+.x{border:1px solid var(--line);background:var(--surface);border-radius:8px;width:36px;height:36px;font-size:20px;line-height:1;cursor:pointer;flex:none}
+.x:hover{background:var(--hover)}
+.due{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 14px;border-radius:10px;background:var(--sunk)}
+.due-d{font-family:var(--f-display);font-weight:700;font-size:1.2rem}
+.due-r{font-size:13.5px;color:var(--muted)}
+.due.late .due-d{color:var(--late)}
+.due.soon .due-d{color:var(--soon)}
+.due.good .due-d{color:var(--ok)}
+.note{margin:0;font-size:13.5px;color:var(--muted);border-left:3px solid var(--line);padding:2px 0 2px 12px}
+.note b{color:var(--ink);font-weight:600}
+.note.hot{border-left-color:var(--soon)}
+.note.hot b{color:var(--soon)}
+.note.bad{border-left-color:var(--late)}
+.note.bad b{color:var(--late)}
+.s-sec{display:flex;flex-direction:column;gap:8px}
+.s-sec h3{margin:0;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font-size:13px;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.seg button:hover{background:var(--hover)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:0;font-size:14px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;overflow-wrap:anywhere;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mono{font-family:var(--f-mono);font-size:13.5px}
+.mini{font-family:var(--f-body);font-size:12px;padding:2px 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fld{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);min-width:0}
+.fld .opt{font-weight:400;opacity:.85}
+.fld input,.fld select,.fld textarea,.sheet textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:14.5px}
+.sheet textarea{resize:vertical;line-height:1.45}
+.msg{background:var(--sunk) !important;font-size:14px !important}
+.hint{margin:0;font-size:12.5px;color:var(--muted)}
+.checks{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px}
+.checks label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.hist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13.5px}
+.hist li{display:grid;grid-template-columns:78px minmax(0,1fr);gap:10px}
+.hist time{font-family:var(--f-mono);font-size:12px;color:var(--muted);padding-top:1px}
+.s-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-top:6px;border-top:1px solid var(--line)}
+.err{margin:0;color:var(--late);font-size:13.5px}
+form.nf{display:flex;flex-direction:column;gap:12px}
+
+/* Versió connectada al Drive: porta d'entrada i estat del desament */
+html.locked .wrap > :not(.brandbar):not(.gate){display:none !important}
+.gate{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:26px 20px;display:flex;flex-direction:column;gap:12px;align-items:flex-start;max-width:540px}
+.gate h2{font-family:var(--f-display);font-weight:800;font-size:1.4rem;line-height:1.15;margin:0;text-wrap:balance}
+.gate p{margin:0;color:var(--muted);max-width:60ch}
+.gate p b{color:var(--ink)}
+.gate code{font-family:var(--f-mono);font-size:.92em;background:var(--sunk);padding:1px 5px;border-radius:4px}
+.gate-btns{display:flex;gap:8px;flex-wrap:wrap}
+.sync{display:flex;align-items:center;gap:6px 8px;font-size:12.5px;color:var(--muted);flex-wrap:wrap;flex-basis:100%}
+@media (min-width:760px){.sync{flex-basis:auto}}
+.sync .sd{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
+.sync.s-busy .sd{background:var(--soon)}
+.sync.s-err{color:var(--late)}
+.sync.s-err .sd{background:var(--late)}
+.brandlink{display:flex;align-items:center;gap:10px;text-decoration:none}
+
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;z-index:40;max-width:calc(100% - 32px);box-shadow:0 6px 20px rgba(0,0,0,.18)}
+
+/* Caducitats: llista per proximitat de la data */
+#list{display:flex;flex-direction:column;gap:22px}
+ul.rows{list-style:none;margin:0;padding:0}
+.row{width:100%;text-align:left;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;background:transparent;border:0;border-top:1px solid var(--line);padding:12px 14px;cursor:pointer}
+ul.rows li:first-child .row{border-top:0}
+.row:hover{background:var(--hover)}
+.row:focus-visible{outline-offset:-2px}
+.r-main{display:flex;flex-direction:column;gap:3px;min-width:0}
+.r-name{font-weight:600;font-size:15.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.r-meta{font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center;min-width:0}
+.r-meta .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.r-foot{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;font-size:13px;margin-top:3px}
+.r-foot:empty{display:none}
+.r-date{display:flex;flex-direction:column;align-items:flex-end;gap:2px;text-align:right}
+.r-day{font-family:var(--f-display);font-weight:800;font-size:17px;color:var(--gcol);white-space:nowrap;font-variant-numeric:tabular-nums}
+.r-day small{font-family:var(--f-mono);font-weight:400;font-size:11px;color:var(--muted);margin-left:3px}
+.r-rel{font-size:12px;color:var(--muted);white-space:nowrap}
+.f-bad{background:var(--late-soft);color:var(--late)}
+.f-hot{background:var(--soon-soft);color:var(--soon)}
+.f-ok{background:var(--ok-soft);color:var(--ok)}
+.f-info{background:var(--info-soft);color:var(--info)}
+.f-quiet{background:var(--sunk);color:var(--muted)}
+.renew{display:flex;flex-direction:column;gap:10px;padding:12px;border:1px solid var(--line);border-radius:10px}
+.renew .fld{max-width:240px}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="brandbar"><a class="brandlink" href="./" aria-label="Inici"><img class="mark" src="data:image/webp;base64,UklGRk4EAABXRUJQVlA4IEIEAABQFwCdASpuAHgAPj0ejUQiIaGTunUcIAPEtIBqW4pnD3tH+cx87fiJlat3h/unmZpPscHoVZ4/qLgJeiAWymoGxwoBzK9sp422w1LUo2+ZOYW8AyZJ7bpqtSzpO136l7n3vHd4d75Hkq2/Vc3eNdJMwghqA//rxT85OdFrv0JIMTFXrBPvh9b2O9wEcsBCkTrA86Q99bAmSVFqZDRJuq11kCqNI4qzGTf0FZeUKkZOkSiDjrolsxxJDlW6yiVmWgbHCSAA/u7p37DCYMqwm7NBJOBurnADhgBrfgRbJ0+HsCwwUhi8v94EltwxlCwWGejuq/FNvX/Dd/uXrfcsBAo8TZVDb/S8rCHtXgKBfd7XRSCU99hrBa+LmKr9sm7HR2shWSRjxZE8LYo+j4v73oE/lVMBoDMh0P9euKeppVcIM8zy2fn8DTcS0g83e//oCM0i8GNBbI2p81vyZfMn17s2oR9rdqUaneL/P+LuPhRR5L+ldXWnhuX3ZvvrIf+zT8/lYviVSTT6LOF04JNTUg3XMizwVPwzQcT3Lhe7MInzq21QtoIY+EVR971B8CMmsDiUlIibM530uB6HJef6uix7nxBPBADcbTy6iCGLIRFAR5+ystpFn8gkHW2+p45mq6ZNWAcyoT19MNXDto0Ho4QNV0DO9V/XPj6OtwK5PdoQqP+oTlEdfSGJ86ujGAwq0PAALK22Sb4I3Oe8bZ7R3clnZ/43hDb69040LGgPIPKYT4KmmO1hyQPPXoOpqGKFC5iX0E2gkOahBxmlbguqbCGcRIsN4N49E5cqTGJSNFX8I6d7c5TrfgJ/C6dY0MGonKPxHy4F9OUaSiwf5ZyAAnP4Fc7iEnVN4VZWgNQey9A/hOf15FrRwtNfL4v+QyB81s3bz2DnjzNqu+GCB5x1NwXpRO0cTUe6xSTGU+xFwE7gE92t6EGnSrpo9r0WU8vax6NrhYm7bLgtWfKMdA+2OD6Nc/0oOlHYJIdIfiPkGBogkZNRz58rrJHZ4Furfvn9mfGnZ8Azvv5yt8Bt/7nv8v5uuU39ziWjN8HQJ09in7hj6hbLWHg8KLE4+qXVQ9hGm+gybBo+YUDYSDptvY4TND5+yRRP2O4Uk5NBoQxxVxrTUl+EjrvzV+aXM78Ic5+807LIkw8Ud39+M1WcdO68cEHJp9WkGfcoa8HcCepUgJiNpJ7jL8I9haN6LpyrtUuaFNoMqEwPoG2tNsRgFNGowdyq7kBLQ5Od/I6zt3AXxVEU9aiJNbAKiTDCeJGBsL38HtrtvlpFRO8IZjPzdbP1dlzl2xAyPx+rcVWgVOHQqZuwTQYMxfGsiSllpaOUI1F7eFWcG+CBZrxI5Fk5qs/KrVD/9UjlnfYlXj4uKCPzLRcRSIFsMAk+QQUNPBM9s+LzlR8uhQICQFwjzRCbUbtt1r3Nv042S5HDxHFLMFq8AAAAAAAA" alt="Galindo grup" width="37" height="40"><span class="wm" aria-hidden="true"><span class="wm1">Galindo</span><span class="wm2">grup</span></span></a><nav class="apps" aria-label="Eines de la gestoria"><a class="app" href="venciments.html">Venciments</a><a class="app" href="trimestrals.html">Trimestrals</a><span class="app cur" aria-current="page">Caducitats</span></nav></div>
+  <header class="top">
+    <div>
+      <h1>Caducitats</h1>
+      <p class="sub" id="sub"></p>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="b-new" type="button">+ Nova caducitat</button>
+    </div>
+  </header>
+
+  <p class="demo">
+    <span>Clients i dates inventats per provar. El que hi canviïs es guarda només en aquest navegador.</span>
+    <button class="linkbtn" id="b-reset" type="button">Torna a les dades de prova</button>
+  </p>
+
+  <section class="stats" id="stats" aria-label="Resum"></section>
+
+  <section class="filters" aria-label="Filtres">
+    <input class="search" id="q" type="search" placeholder="Busca per client, empresa o matrícula" autocomplete="off">
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <div id="list" aria-live="polite"></div>
+</div>
+
+<div class="backdrop" id="bd" hidden><aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="s-title"></aside></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+var G = (function(){
+  "use strict";
+  var DAY = 86400000;
+  var MESOS = ["gener","febrer","març","abril","maig","juny","juliol","agost","setembre","octubre","novembre","desembre"];
+  var MESC = ["gen.","febr.","març","abr.","maig","juny","jul.","ag.","set.","oct.","nov.","des."];
+  var DIES = ["diumenge","dilluns","dimarts","dimecres","dijous","divendres","dissabte"];
+  var eurF = new Intl.NumberFormat("ca-ES",{style:"currency",currency:"EUR",maximumFractionDigits:0});
+  var pctF = new Intl.NumberFormat("ca-ES",{maximumFractionDigits:1,minimumFractionDigits:1});
+
+  function eur(n){ return (n==null || isNaN(n)) ? "—" : eurF.format(n); }
+  function fPct(v){ return (v>0?"+":"")+pctF.format(v)+" %"; }
+  function pad(n){ return (n<10?"0":"")+n; }
+  function today(){ var d=new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  function parse(s){ var a=String(s).split("-").map(Number); return new Date(a[0], a[1]-1, a[2]||1); }
+  function iso(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+  function addDays(d,n){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()+n); }
+  function addMonths(d,n){
+    var t = new Date(d.getFullYear(), d.getMonth()+n, 1);
+    var last = new Date(t.getFullYear(), t.getMonth()+1, 0).getDate();
+    t.setDate(Math.min(d.getDate(), last));
+    return t;
+  }
+  function daysTo(s){ return Math.round((parse(s) - today())/DAY); }
+  function fShort(s){ var d=parse(s); return pad(d.getDate())+"/"+pad(d.getMonth()+1)+"/"+d.getFullYear(); }
+  function fDM(s){ var d=parse(s); return pad(d.getDate())+"/"+pad(d.getMonth()+1); }
+  function fDayMon(s){ var d=parse(s); return d.getDate()+" "+MESC[d.getMonth()]; }
+  function monthPhrase(d){ var m=MESOS[d.getMonth()]; return (/^[aeiouà]/.test(m) ? "d’" : "de ")+m; }
+  function longDate(s){ var d=parse(s); return d.getDate()+" "+monthPhrase(d)+" de "+d.getFullYear(); }
+  function dayMonth(s){ var d=parse(s); return d.getDate()+" "+monthPhrase(d); }
+  function artDate(s){ var d=parse(s), n=d.getDate(); return (n===1||n===11 ? "l’" : "el ")+n+" "+monthPhrase(d); }
+  function delDate(s){ var d=parse(s), n=d.getDate(); return (n===1||n===11 ? "de l’" : "del ")+n+" "+monthPhrase(d); }
+  function weekday(s){ return DIES[parse(s).getDay()]; }
+  function rel(n){
+    if(n===0) return "avui";
+    if(n===1) return "demà";
+    if(n===-1) return "ahir";
+    if(n<-90) return "fa "+Math.round(-n/30.44)+" mesos";
+    if(n<0) return "fa "+(-n)+" dies";
+    if(n>90) return "d’aquí a "+Math.round(n/30.44)+" mesos";
+    return "d’aquí a "+n+" dies";
+  }
+  function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+  function norm(s){ return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
+  function $(id){ return document.getElementById(id); }
+
+  function load(key){ try { var r = localStorage.getItem(key); return r ? JSON.parse(r) : null; } catch(e){ return null; } }
+  function store(key, v){ try { localStorage.setItem(key, JSON.stringify(v)); } catch(e){} }
+
+  var tt = null;
+  function toast(t){
+    var el = $("toast"); if(!el) return;
+    el.textContent = t; el.hidden = false;
+    clearTimeout(tt); tt = setTimeout(function(){ el.hidden = true; }, 2800);
+  }
+
+  var lastFocus = null;
+  function sheetOpen(){ return !$("bd").hidden; }
+  function openSheet(html, focusSel){
+    var bd = $("bd"), sh = $("sheet");
+    sh.innerHTML = html;
+    if(bd.hidden){
+      lastFocus = document.activeElement;
+      bd.hidden = false;
+      document.documentElement.style.overflow = "hidden";
+      requestAnimationFrame(function(){ bd.classList.add("open"); });
+      sh.scrollTop = 0;
+    }
+    var f = sh.querySelector(focusSel || '[data-act="close"]');
+    if(f) f.focus({preventScroll:true});
+  }
+  function closeSheet(focusEl){
+    var bd = $("bd");
+    if(bd.hidden) return;
+    bd.classList.remove("open");
+    bd.hidden = true;
+    document.documentElement.style.overflow = "";
+    var f = focusEl || lastFocus;
+    if(f && document.body.contains(f)) f.focus({preventScroll:true});
+  }
+
+  function copyText(text, selectEl, okMsg){
+    function fallback(){
+      if(selectEl){ selectEl.focus(); selectEl.select(); toast("Text seleccionat. Copia’l amb Ctrl+C o mantenint-lo premut."); }
+      else copyBox("Text per copiar", text);
+    }
+    try {
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){ toast(okMsg); }, fallback);
+      } else fallback();
+    } catch(e){ fallback(); }
+  }
+  function copyBox(title, text, hint){
+    openSheet('<div class="s-head"><div><h2 id="s-title">'+esc(title)+'</h2></div><button type="button" class="x" data-act="close" aria-label="Tanca">×</button></div>'+
+      (hint ? '<p class="hint">'+esc(hint)+'</p>' : '')+
+      '<textarea id="cbox" class="msg" rows="14" readonly>'+esc(text)+'</textarea>'+
+      '<div><button type="button" class="btn" data-act="copybox">Copia-ho tot</button></div>', "#cbox");
+  }
+  document.addEventListener("click", function(e){
+    if(e.target.closest && e.target.closest('[data-act="copybox"]')){ var b=$("cbox"); if(b) copyText(b.value, b, "Copiat."); }
+  });
+
+  // Botó de confirmació en dos tocs (el visor no mostra confirm()).
+  function arm(btn, armedText){
+    if(btn.getAttribute("data-armed")==="1"){ btn.removeAttribute("data-armed"); return true; }
+    var normal = btn.textContent;
+    btn.setAttribute("data-armed","1"); btn.textContent = armedText;
+    setTimeout(function(){ if(document.body.contains(btn) && btn.getAttribute("data-armed")==="1"){ btn.removeAttribute("data-armed"); btn.textContent = normal; } }, 4000);
+    return false;
+  }
+
+  /* ---------- Desament ----------
+     Mode local: cada eina guarda les dades al navegador (versió de prova).
+     Mode "sheets": sync.js substitueix start() i save() per llegir i escriure al full de càlcul del Drive. */
+  var current = null;
+  function start(s, onData){
+    current = s;
+    var d = load(s.key);
+    if(!s.valid(d)) d = s.seed();
+    onData(d);
+  }
+  function save(d){ if(current) store(current.key, d); }
+
+  /* Conversió de files del full de càlcul */
+  function objs(table){
+    if(!table || !table.length) return [];
+    var head = table[0].map(function(h){ return String(h).trim(); });
+    return table.slice(1).map(function(r){ var o={}; head.forEach(function(h,i){ o[h] = r[i]==null ? "" : r[i]; }); return o; });
+  }
+  function num(v){
+    if(v===""||v==null) return null;
+    if(typeof v==="number") return v;
+    var s = String(v).replace(/[€\s]/g,"");
+    if(s.indexOf(",")>=0) s = s.replace(/\./g,"").replace(",",".");
+    var n = parseFloat(s); return isNaN(n) ? null : n;
+  }
+  function str(v){ return v==null ? "" : String(v); }
+  function bool(v){ return v===true || /^(true|s|si|sí|1|x)$/i.test(String(v).trim()); }
+  function dateStr(v){
+    if(typeof v==="number"){ return iso(new Date(1899, 11, 30 + Math.floor(v))); }
+    var s = String(v||"").trim(), m;
+    if((m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/))) return m[1]+"-"+pad(+m[2])+"-"+pad(+m[3]);
+    if((m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/))) return m[3]+"-"+pad(+m[2])+"-"+pad(+m[1]);
+    return "";
+  }
+  function jsonArr(v){ try { var a = JSON.parse(v); return Array.isArray(a) ? a : []; } catch(e){ return []; } }
+  function blank(v){ return v==null ? "" : v; }
+
+  return {DAY:DAY, MESOS:MESOS, MESC:MESC, DIES:DIES, eur:eur, fPct:fPct, pad:pad, today:today, parse:parse, iso:iso,
+    addDays:addDays, addMonths:addMonths, daysTo:daysTo, fShort:fShort, fDM:fDM, fDayMon:fDayMon, longDate:longDate,
+    dayMonth:dayMonth, artDate:artDate, delDate:delDate, weekday:weekday, rel:rel, esc:esc, norm:norm, $:$,
+    load:load, store:store, toast:toast, openSheet:openSheet, closeSheet:closeSheet, sheetOpen:sheetOpen,
+    copyText:copyText, copyBox:copyBox, arm:arm, mode:"local", start:start, save:save,
+    objs:objs, num:num, str:str, bool:bool, dateStr:dateStr, jsonArr:jsonArr, blank:blank};
+})();
+
+/* Desament al full de càlcul de Google (versió publicada a GitHub Pages).
+   Qui entra ho fa amb el seu compte de Google; el full només és compartit amb els comptes autoritzats,
+   així que un compte sense permís rep un error de l'API i no veu res. */
+(function(){
+  "use strict";
+  var C = window.GALINDO_CONFIG || {};
+  var API = "https://sheets.googleapis.com/v4/spreadsheets/";
+  var SHEETS_SCOPE = "https://www.googleapis.com/auth/spreadsheets";
+  var SCOPE = SHEETS_SCOPE+" openid email";
+  var TOKEN_KEY = "galindo-token", HINT_KEY = "galindo-login-hint";
+  var S = null, onData = null, data = null, counts = {};
+  var token = null, tokenExp = 0, email = "", tc = null;
+  var dirty = false, saving = false, saveT = null, lastLoad = 0, afterLogin = null;
+  var gateEl = null, statusEl = null;
+  var esc = G.esc;
+
+  function sget(k){ try { return sessionStorage.getItem(k); } catch(e){ return null; } }
+  function sset(k,v){ try { sessionStorage.setItem(k,v); } catch(e){} }
+  function lget(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+  function lset(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+  function hhmm(){ var d=new Date(); return G.pad(d.getHours())+":"+G.pad(d.getMinutes()); }
+
+  /* ---------- Interfície: porta d'entrada i estat ---------- */
+  function ui(){
+    document.documentElement.classList.add("locked");
+    var demo = document.querySelector(".demo"); if(demo) demo.hidden = true;
+    var bar = document.querySelector(".brandbar");
+    statusEl = document.createElement("div"); statusEl.className = "sync"; statusEl.hidden = true; statusEl.setAttribute("role","status");
+    bar.appendChild(statusEl);
+    gateEl = document.createElement("section"); gateEl.className = "gate"; gateEl.setAttribute("aria-live","polite");
+    bar.insertAdjacentElement("afterend", gateEl);
+  }
+  function gate(title, text, btns){
+    gateEl.innerHTML = (title ? '<h2>'+esc(title)+'</h2>' : '')+(text ? '<p>'+text+'</p>' : '')+
+      (btns && btns.length ? '<div class="gate-btns">'+btns.map(function(b,i){ return '<button type="button" class="btn'+(i===0?' primary':'')+'" data-sync="'+b[0]+'">'+esc(b[1])+'</button>'; }).join("")+'</div>' : '');
+    gateEl.hidden = false;
+    document.documentElement.classList.add("locked");
+  }
+  function unlock(){ gateEl.hidden = true; document.documentElement.classList.remove("locked"); }
+  function status(kind, text, btn){
+    statusEl.hidden = false;
+    statusEl.className = "sync s-"+kind;
+    statusEl.innerHTML = '<span class="sd" aria-hidden="true"></span><span class="st">'+esc(text)+'</span>'+
+      (btn ? '<button type="button" class="linkbtn" data-sync="'+btn[0]+'">'+esc(btn[1])+'</button>' : '');
+  }
+  function okStatus(){ status("ok", "Desat al Drive · "+hhmm()+(email ? " · "+email : "")); }
+
+  /* ---------- Accés amb Google ---------- */
+  function gisReady(){ return !!(window.google && google.accounts && google.accounts.oauth2); }
+  function initClient(){
+    if(tc) return true;
+    if(!gisReady()) return false;
+    tc = google.accounts.oauth2.initTokenClient({
+      client_id: C.clientId, scope: SCOPE, callback: onToken,
+      error_callback: function(err){
+        if(err && err.type==="popup_closed") gateOrStatus("Has tancat la finestra de Google abans d’acabar.");
+        else gateOrStatus("No s’ha pogut obrir la finestra de Google. Si el navegador bloqueja finestres emergents, permet-les per a aquesta pàgina.");
+      }
+    });
+    return true;
+  }
+  function gateOrStatus(msg){
+    if(data) status("err", msg, ["login","Torna a entrar"]);
+    else gate("Entra per veure les dades", esc(msg), [["login","Entra amb Google"]]);
+  }
+  function login(select){
+    if(!initClient()) return;
+    var hint = lget(HINT_KEY);
+    var opts = {prompt: select ? "select_account" : ""};
+    if(!select && hint) opts.login_hint = hint;
+    tc.requestAccessToken(opts);
+  }
+  function onToken(r){
+    if(!r || r.error){
+      gateOrStatus(r && r.error==="access_denied" ? "Google no ha donat accés a aquest compte. Comprova que és un dels comptes autoritzats." : "No s’ha pogut entrar amb Google.");
+      return;
+    }
+    if(!google.accounts.oauth2.hasGrantedAllScopes(r, SHEETS_SCOPE)){
+      gate("Falta un permís", "Cal marcar el permís per veure i editar els fulls de càlcul. Sense aquest permís l’eina no pot llegir les dades.", [["switch","Torna-ho a provar"]]);
+      return;
+    }
+    token = r.access_token;
+    tokenExp = Date.now() + (Number(r.expires_in)||3600)*1000 - 60000;
+    sset(TOKEN_KEY, JSON.stringify({t:token, e:tokenExp}));
+    fetch("https://www.googleapis.com/oauth2/v3/userinfo", {headers:{Authorization:"Bearer "+token}})
+      .then(function(x){ return x.ok ? x.json() : {}; })
+      .then(function(j){ if(j.email){ email = j.email; lset(HINT_KEY, email); sset(TOKEN_KEY, JSON.stringify({t:token, e:tokenExp, m:email})); } })
+      .catch(function(){})
+      .then(function(){ var f = afterLogin || loadData; afterLogin = null; f(); });
+  }
+  function needLogin(then){
+    afterLogin = then;
+    token = null;
+    if(data) status("err", "La sessió ha caducat. Els canvis encara no estan desats.", ["login","Torna a entrar"]);
+    else gate("Entra per veure les dades", "La sessió ha caducat.", [["login","Entra amb Google"]]);
+  }
+
+  /* ---------- Crides a l'API ---------- */
+  function api(method, url, body){
+    if(!token || Date.now()>tokenExp) return Promise.reject({auth:true});
+    return fetch(url, {method:method, headers:{"Authorization":"Bearer "+token, "Content-Type":"application/json"}, body: body ? JSON.stringify(body) : undefined})
+      .then(function(r){
+        if(r.status===401) throw {auth:true};
+        if(r.status===403 || r.status===404) throw {denied:true};
+        if(!r.ok) return r.text().then(function(t){ throw {msg:"L’API de Google ha respost amb l’error "+r.status+".", detail:t}; });
+        return r.json();
+      }, function(){ throw {offline:true}; });
+  }
+  function tabs(){ return Object.keys(S.tabs); }
+  function fetchTables(){
+    var id = C.spreadsheetId, ts = tabs();
+    return api("GET", API+id+"?fields=sheets.properties.title").then(function(meta){
+      var have = (meta.sheets||[]).map(function(s){ return s.properties.title; });
+      var missing = ts.filter(function(t){ return have.indexOf(t)<0; });
+      if(!missing.length) return;
+      return api("POST", API+id+":batchUpdate", {requests: missing.map(function(t){ return {addSheet:{properties:{title:t, gridProperties:{frozenRowCount:1}}}}; })})
+        .then(function(){ return api("POST", API+id+"/values:batchUpdate", {valueInputOption:"RAW", data: missing.map(function(t){ return {range:t+"!A1", values:[S.tabs[t]]}; })}); });
+    }).then(function(){
+      return api("GET", API+id+"/values:batchGet?valueRenderOption=UNFORMATTED_VALUE&"+ts.map(function(t){ return "ranges="+encodeURIComponent(t+"!A1:Z"); }).join("&"));
+    }).then(function(r){
+      var tables = {};
+      (r.valueRanges||[]).forEach(function(vr, i){ var t = ts[i], v = vr.values || []; tables[t] = v; counts[t] = Math.max(0, v.length-1); });
+      return tables;
+    });
+  }
+  function handleErr(e, inBackground){
+    if(e && e.auth){ needLogin(inBackground ? push : loadData); return; }
+    if(e && e.denied){
+      gate("Aquest compte no té accés", (email ? "Has entrat com a <b>"+esc(email)+"</b>. " : "")+"Les dades només es poden obrir amb els comptes autoritzats.", [["switch","Canvia de compte"]]);
+      data = null; statusEl.hidden = true; return;
+    }
+    var msg = e && e.offline ? "No hi ha connexió amb Google. Comprova la connexió a internet." : ((e && e.msg) || "Error desconegut.");
+    if(inBackground && data){ status("err", msg, ["retry","Torna-ho a provar"]); return; }
+    gate("No s’han pogut carregar les dades", esc(msg), [["retry","Torna-ho a provar"]]);
+  }
+  function loadData(){
+    gate("", "Carregant les dades del Drive…");
+    fetchTables().then(function(tables){
+      data = S.fromTables(tables);
+      lastLoad = Date.now();
+      unlock(); okStatus();
+      onData(data);
+    }).catch(function(e){ handleErr(e, false); });
+  }
+  function refresh(){
+    if(!data || dirty || saving || !token || Date.now()>tokenExp) return;
+    fetchTables().then(function(tables){
+      if(dirty || saving) return;
+      data = S.fromTables(tables); lastLoad = Date.now();
+      onData(data); okStatus();
+    }).catch(function(e){ handleErr(e, true); });
+  }
+
+  /* ---------- Desar ---------- */
+  function push(){
+    clearTimeout(saveT);
+    if(!data) return;
+    if(saving){ dirty = true; return; }
+    if(!token || Date.now()>tokenExp){ needLogin(push); return; }
+    saving = true; dirty = false;
+    status("busy", "Desant…");
+    var tables = S.toTables(data), payload = [], next = {};
+    Object.keys(tables).forEach(function(t){
+      var head = S.tabs[t], rows = tables[t].map(function(r){ return r.map(G.blank); });
+      var n = rows.length, prev = counts[t] || 0;
+      for(var i=n; i<prev; i++){ var b=[]; for(var j=0;j<head.length;j++) b.push(""); rows.push(b); }
+      payload.push({range:t+"!A1", values:[head].concat(rows)});
+      next[t] = n;
+    });
+    api("POST", API+C.spreadsheetId+"/values:batchUpdate", {valueInputOption:"RAW", data:payload})
+      .then(function(){
+        saving = false;
+        Object.keys(next).forEach(function(t){ counts[t] = next[t]; });
+        lastLoad = Date.now();
+        if(dirty) push(); else okStatus();
+      })
+      .catch(function(e){ saving = false; dirty = true; handleErr(e, true); });
+  }
+
+  document.addEventListener("click", function(e){
+    var b = e.target.closest && e.target.closest("[data-sync]");
+    if(!b) return;
+    var a = b.getAttribute("data-sync");
+    if(a==="login") login(false);
+    else if(a==="switch"){ afterLogin = null; login(true); }
+    else if(a==="retry"){ if(data) push(); else if(token) loadData(); else login(false); }
+  });
+  document.addEventListener("visibilitychange", function(){
+    if(document.visibilityState==="visible" && Date.now()-lastLoad > 30000) refresh();
+  });
+  window.addEventListener("beforeunload", function(e){
+    if(dirty || saving){ e.preventDefault(); e.returnValue = ""; }
+  });
+
+  /* ---------- Punt d'entrada per a les eines ---------- */
+  G.mode = "sheets";
+  G.start = function(s, cb){
+    S = s; onData = cb;
+    ui();
+    if(!C.clientId || !C.spreadsheetId){
+      gate("Falta acabar la configuració", "Cal posar l’identificador d’accés de Google al fitxer <code>config.js</code> del repositori.", []);
+      return;
+    }
+    try { var saved = JSON.parse(sget(TOKEN_KEY)||"null"); if(saved && saved.t && saved.e > Date.now()){ token = saved.t; tokenExp = saved.e; email = saved.m || ""; } } catch(e){}
+    if(token) loadData(); else gate("", "Connectant amb Google…");
+    var tries = 0;
+    (function wait(){
+      if(gisReady()){
+        initClient();
+        if(!token) gate("Entra per veure les dades", "Les dades són en un full de càlcul privat al Drive de la gestoria. Només hi poden entrar els comptes autoritzats.", [["login","Entra amb Google"]]);
+        return;
+      }
+      if(++tries > 100){ if(!token) gate("No s’ha pogut connectar amb Google", "Comprova la connexió a internet i torna a carregar la pàgina.", []); return; }
+      setTimeout(wait, 100);
+    })();
+  };
+  G.save = function(d){
+    data = d;
+    if(!S) return;
+    dirty = true;
+    status("busy", "Canvis pendents de desar…");
+    clearTimeout(saveT); saveT = setTimeout(push, 800);
+  };
+})();
+
+(function(){
+  "use strict";
+  var today=G.today, parse=G.parse, iso=G.iso, addDays=G.addDays, addMonths=G.addMonths, daysTo=G.daysTo, fShort=G.fShort,
+      fDM=G.fDM, longDate=G.longDate, artDate=G.artDate, delDate=G.delDate, weekday=G.weekday, rel=G.rel, esc=G.esc,
+      norm=G.norm, $=G.$, toast=G.toast, MESC=G.MESC;
+
+  var KEY = "galindo-caducitats-v1";
+  var TIPUS = {
+    cert:{nom:"Certificat digital", curt:"Certificat"},
+    rep:{nom:"Certificat de representant", curt:"Representant"},
+    dni:{nom:"DNI", curt:"DNI"},
+    carnet:{nom:"Carnet de conduir", curt:"Carnet"},
+    itv:{nom:"ITV", curt:"ITV"},
+    altre:{nom:"Altres", curt:"Altres"}
+  };
+  var FILTRES = [["","Tots"],["certs","Certificats"],["dni","DNI"],["carnet","Carnet"],["itv","ITV"],["altre","Altres"]];
+  var DETALL_PH = {cert:"Opcional", rep:"Nom de la persona representant",dni:"Opcional", carnet:"Opcional", itv:"Vehicle i matrícula", altre:"Quin document és"};
+  var GROUPS = [["late","Ja han caducat","var(--late)"],["g30","Pròxims 30 dies","var(--soon)"],["g90","D’aquí a 31–90 dies","var(--ink)"],["later","Més endavant","var(--muted)"]];
+
+  // Pròxim termini de trimestrals (20 d'abril, juliol i octubre; 30 de gener), passat al dilluns si cau en cap de setmana.
+  function shiftWE(d){ var w=d.getDay(); return w===6 ? addDays(d,2) : (w===0 ? addDays(d,1) : d); }
+  var NEXT_TRIM = (function(){
+    var y = today().getFullYear(), t = iso(today()), list = [];
+    [y,y+1].forEach(function(yy){ [[0,30],[3,20],[6,20],[9,20]].forEach(function(md){ list.push(iso(shiftWE(new Date(yy,md[0],md[1])))); }); });
+    list.sort(); for(var i=0;i<list.length;i++) if(list[i]>=t) return list[i];
+    return list[list.length-1];
+  })();
+  function windowOpens(it){ return iso(addDays(parse(it.caduca), -60)); }
+  function isCert(it){ return it.tipus==="cert" || it.tipus==="rep"; }
+
+  function seed(){
+    var t = today();
+    var rows = [
+      ["Marta Puigdollers","cert","",-9,"600 000 034",false],
+      ["Fusteria Codina SL","rep","Josep Codina",5,"600 000 312",false],
+      ["Carles Soler Mas","cert","",12,"600 000 117",true],
+      ["Núria Bosch","dni","",21,"600 000 102",false],
+      ["Toni Garriga","itv","Seat León · 4821 KTB",3,"600 000 027",false],
+      ["Xavier Roca","itv","Kia Sportage · 9065 KPN",-4,"600 000 136",false],
+      ["Instal·lacions Vallès SL","rep","Marc Vallès",38,"600 000 301",false],
+      ["Pere Ribas Soler","cert","",47,"600 000 089",false],
+      ["Oriol Planas","carnet","",55,"600 000 184",false],
+      ["Imma Serra","cert","",70,"600 000 153",false],
+      ["Bar Can Pep SL","rep","Pep Martí",88,"600 000 045",false],
+      ["Laia Pujol","dni","",102,"600 000 073",false],
+      ["Jordi Casals Vila","cert","",140,"600 000 052",false],
+      ["Montse Ferrer","itv","Renault Kangoo · 3321 HGT",160,"600 000 148",false],
+      ["Gemma Torrent","cert","",210,"600 000 172",false],
+      ["Ferreteria Sala SL","rep","Rosa Sala",260,"600 000 094",false],
+      ["Albert Prat","carnet","",300,"600 000 203",false],
+      ["Toni Garriga","cert","",420,"600 000 027",false]
+    ];
+    var notes = {0:"Se li va passar. Ha de demanar cita o fer la videotrucada.", 2:"L’última vegada el va renovar per internet."};
+    return {items: rows.map(function(r,i){
+      return {id:"k"+(i+1), client:r[0], tipus:r[1], detall:r[2], caduca:iso(addDays(t,r[3])), tel:r[4], online:r[5], notes:notes[i]||"", hist:[]};
+    })};
+  }
+
+  var data = {items:[]};
+  var STORE = {
+    key: KEY,
+    tabs: {caducitats: ["id","client","document","detall","caduca","telefon","renovat_internet","notes","historial"]},
+    valid: function(d){ return !!(d && Array.isArray(d.items)); },
+    seed: seed,
+    toTables: function(d){
+      return {caducitats: d.items.map(function(it){ return [it.id, it.client, it.tipus, it.detall, it.caduca, it.tel, !!it.online, it.notes, JSON.stringify(it.hist||[])]; })};
+    },
+    fromTables: function(t){
+      return {items: G.objs(t.caducitats).filter(function(o){ return String(o.id).trim() && G.dateStr(o.caduca); }).map(function(o){
+        return {id:String(o.id), client:G.str(o.client), tipus:TIPUS[o.document] ? o.document : "altre", detall:G.str(o.detall),
+          caduca:G.dateStr(o.caduca), tel:G.str(o.telefon), online:G.bool(o.renovat_internet), notes:G.str(o.notes), hist:G.jsonArr(o.historial)};
+      })};
+    }
+  };
+  function save(){ G.save(data); }
+  function byId(id){ for(var i=0;i<data.items.length;i++) if(data.items[i].id===id) return data.items[i]; return null; }
+
+  var F = {q:"", tipus:""};
+  function visible(it){
+    if(F.tipus==="certs" && !isCert(it)) return false;
+    if(F.tipus && F.tipus!=="certs" && it.tipus!==F.tipus) return false;
+    if(F.q && norm(it.client+" "+it.detall+" "+it.notes+" "+TIPUS[it.tipus].nom).indexOf(norm(F.q))<0) return false;
+    return true;
+  }
+  function group(it){ var d=daysTo(it.caduca); return d<0 ? "late" : d<=30 ? "g30" : d<=90 ? "g90" : "later"; }
+
+  // Avisos d'una línia per a cada element
+  function flags(it){
+    var d = daysTo(it.caduca), out = [];
+    if(it.tipus==="cert"){
+      if(d<0) out.push(["bad","Cal demanar-ne un de nou"]);
+      else if(d<=60) out.push(it.online ? ["hot","Cal identificar-se: l’última renovació va ser per internet"] : ["ok","Renovació per internet oberta"]);
+      else out.push(["quiet","Renovació per internet des del "+fDM(windowOpens(it))]);
+    } else if(d<0){
+      out.push(["bad","Caducat"]);
+    }
+    if(isCert(it) && d>=0 && it.caduca<=NEXT_TRIM) out.push(["hot","Caduca abans del trimestral del "+fDM(NEXT_TRIM)]);
+    return out;
+  }
+
+  function renderHeader(){
+    var t = iso(today());
+    $("sub").textContent = data.items.length+" documents · "+weekday(t)+", "+longDate(t);
+  }
+  function stat(k,v,s,cls){ return '<div class="stat '+cls+'"><span class="k">'+k+'</span><span class="v">'+v+'</span><span class="s">'+s+'</span></div>'; }
+  function renderStats(){
+    var late=0, d30=0, win=0, trim=0;
+    data.items.forEach(function(it){
+      var d = daysTo(it.caduca);
+      if(d<0) late++; else if(d<=30) d30++;
+      if(it.tipus==="cert" && d>=0 && d<=60) win++;
+      if(isCert(it) && d>=0 && it.caduca<=NEXT_TRIM) trim++;
+    });
+    $("stats").innerHTML =
+      stat("Caducats", late, late ? "Cal renovar-los ja" : "Cap document caducat", late?"alert":"") +
+      stat("Caduquen en 30 dies", d30, "Avisa el client aquesta setmana", d30?"warn":"") +
+      stat("Renovables per internet", win, "Certificats dins dels 60 dies previs", "") +
+      stat("Abans del trimestral", trim, "Certificats que caduquen abans del "+fDM(NEXT_TRIM), trim?"alert":"");
+  }
+  function dayLabel(s){
+    var d = parse(s), y = today().getFullYear();
+    return d.getDate()+" "+MESC[d.getMonth()]+(d.getFullYear()!==y ? '<small>'+d.getFullYear()+'</small>' : '');
+  }
+  function rowHTML(it){
+    var d = daysTo(it.caduca);
+    var fl = flags(it).map(function(f){ return '<span class="pill f-'+f[0]+'">'+esc(f[1])+'</span>'; }).join("");
+    return '<li><button type="button" class="row" data-id="'+it.id+'">'+
+      '<span class="r-main"><span class="r-name">'+esc(it.client)+'</span>'+
+      '<span class="r-meta"><span class="tag">'+TIPUS[it.tipus].curt+'</span><span class="t">'+esc(it.detall || TIPUS[it.tipus].nom)+'</span></span>'+
+      '<span class="r-foot">'+fl+'</span></span>'+
+      '<span class="r-date"><span class="r-day">'+dayLabel(it.caduca)+'</span><span class="r-rel">'+rel(d)+'</span></span>'+
+    '</button></li>';
+  }
+  function renderList(){
+    var vis = data.items.filter(visible);
+    if(!data.items.length){
+      $("list").innerHTML = '<div class="empty"><p>Encara no hi ha cap caducitat apuntada.</p><button type="button" class="btn primary" data-act="new">+ Afegeix la primera</button></div>';
+      return;
+    }
+    if(!vis.length){
+      $("list").innerHTML = '<div class="empty"><p>Cap document coincideix amb aquests filtres.</p><button type="button" class="btn" data-act="clearall">Treu els filtres</button></div>';
+      return;
+    }
+    var by = {};
+    vis.forEach(function(it){ var g=group(it); (by[g]=by[g]||[]).push(it); });
+    $("list").innerHTML = GROUPS.filter(function(g){ return by[g[0]]; }).map(function(g){
+      var items = by[g[0]].sort(function(a,b){ return a.caduca<b.caduca?-1:a.caduca>b.caduca?1:0; });
+      return '<section class="group" style="--gcol:'+g[2]+'"><div class="gh"><h2><span class="dot"></span>'+g[1]+' <span class="n">'+items.length+'</span></h2></div>'+
+        '<ul class="panel rows">'+items.map(rowHTML).join("")+'</ul></section>';
+    }).join("");
+  }
+  function renderMain(){ renderHeader(); renderStats(); renderList(); }
+  function buildChips(){
+    $("chips").innerHTML = FILTRES.map(function(f){ return '<button type="button" class="chip" data-tipus="'+f[0]+'" aria-pressed="'+(F.tipus===f[0])+'">'+f[1]+'</button>'; }).join("");
+  }
+
+  /* ---------- Missatge ---------- */
+  function msg(it){
+    var g = it.tipus==="rep" || /\b(SL|SA|SCP|SLU)\b/.test(it.client);
+    var nom = it.client.split(" ")[0];
+    var salut = g ? "Bon dia, us escric de la gestoria." : "Hola "+nom+", t’escric de la gestoria.";
+    var d = daysTo(it.caduca), past = d<0, quan = past ? " va caducar "+artDate(it.caduca)+"." : " caduca "+artDate(it.caduca)+".";
+    var teu = g ? "El vostre" : "El teu";
+    switch(it.tipus){
+      case "cert":
+        if(past) return salut+" "+teu+" certificat digital"+quan+" Ara ja no es pot renovar per internet: cal demanar-ne un de nou i identificar-"+(g?"vos":"te")+" en persona, amb cita, o per videotrucada. Si vols, t’ajudo a fer-ho. Gràcies!";
+        if(d<=60) return salut+" "+teu+" certificat digital"+quan+(it.online
+          ? " Com que l’última vegada ja el vas renovar per internet, aquest cop caldrà identificar-te en persona, amb cita, o per videotrucada. Si vols, ho mirem junts."
+          : " Ja el pots renovar per internet des del web de la FNMT. Si vols, passa per la gestoria i ho fem junts.")+" Gràcies!";
+        return salut+" "+teu+" certificat digital"+quan+" Es podrà renovar per internet a partir "+delDate(windowOpens(it))+"; ja t’avisaré. Gràcies!";
+      case "rep":
+        return salut+" El certificat digital de representant de "+it.client+quan+(past
+          ? " Cal demanar-ne un de nou perquè l’empresa torni a tenir signatura electrònica."
+          : " Convé renovar-lo abans perquè l’empresa no es quedi sense signatura electrònica per a tràmits i notificacions.")+" Gràcies!";
+      case "dni":
+        return salut+" "+teu+" DNI"+quan+" Per renovar-lo cal demanar cita prèvia a la Policia Nacional. Quan el tinguis, envia’m una foto del nou i l’actualitzo. Gràcies!";
+      case "carnet":
+        return salut+" "+teu+" carnet de conduir"+quan+" Abans de renovar-lo cal passar la revisió en un centre de reconeixement de conductors. Gràcies!";
+      case "itv":
+        return salut+" La ITV del vehicle"+(it.detall?" "+it.detall:"")+quan+(past ? " Convé passar-la com més aviat millor: circular-hi es pot multar." : " Recorda demanar hora a l’estació.")+" Gràcies!";
+      default:
+        return salut+" Et recordo que "+(it.detall || "el document")+quan+" Gràcies!";
+    }
+  }
+
+  /* ---------- Fitxa ---------- */
+  var openId = null;
+  function infoNote(it){
+    var d = daysTo(it.caduca);
+    switch(it.tipus){
+      case "cert":
+        if(d<0) return '<p class="note bad">Un certificat caducat no es pot renovar per internet. Cal demanar-ne un de nou a la FNMT i identificar-se <b>en persona, amb cita, o per videotrucada</b>.</p>';
+        return '<p class="note'+(d<=60?' hot':'')+'">La FNMT deixa renovar-lo per internet durant els 60 dies abans que caduqui, i només una vegada seguida. '+
+          (d<=60 ? '<b>La finestra ja és oberta.</b>' : 'Per a aquest, s’obre el <b>'+fShort(windowOpens(it))+'</b>.')+
+          (it.online ? ' L’última renovació va ser per internet, així que aquest cop caldrà identificar-se.' : '')+'</p>';
+      case "rep": return '<p class="note">Si caduca, l’empresa es queda sense signatura electrònica per a tràmits i notificacions.'+(it.caduca<=NEXT_TRIM && d>=0 ? ' <b>Caduca abans del trimestral del '+fDM(NEXT_TRIM)+'.</b>' : '')+'</p>';
+      case "dni": return '<p class="note">Per renovar-lo cal cita prèvia a una oficina d’expedició del DNI.</p>';
+      case "carnet": return '<p class="note">Abans de renovar-lo cal passar la revisió en un centre de reconeixement de conductors.</p>';
+      case "itv": return '<p class="note">Circular amb la ITV caducada es pot multar.</p>';
+      default: return '';
+    }
+  }
+  function detailHTML(it){
+    var d = daysTo(it.caduca);
+    var suggest = it.tipus==="cert" ? iso(addMonths(today(), 48)) : "";
+    var hist = it.hist.length ? '<ul class="hist">'+it.hist.slice().reverse().map(function(h){
+      return '<li><time datetime="'+h.d+'">'+fShort(h.d)+'</time><span>'+esc(h.t)+'</span></li>';
+    }).join("")+'</ul>' : '<p class="hint">Encara no hi ha moviments.</p>';
+    return ''+
+      '<div class="s-head"><div><span class="tag">'+TIPUS[it.tipus].curt+'</span><h2 id="s-title">'+esc(it.client)+'</h2>'+(it.detall?'<p class="s-sub">'+esc(it.detall)+'</p>':'')+'</div>'+
+        '<button type="button" class="x" data-act="close" aria-label="Tanca la fitxa">×</button></div>'+
+      '<div class="due '+(d<0?'late':(d<=30?'soon':''))+'"><span class="due-d">'+(d<0?'Va caducar el ':'Caduca el ')+longDate(it.caduca)+'</span><span class="due-r">'+rel(d)+'</span></div>'+
+      infoNote(it)+
+      '<section class="s-sec"><h3>Missatge per al client</h3><textarea id="d-msg" class="msg" readonly rows="6" aria-label="Missatge per al client">'+esc(msg(it))+'</textarea>'+
+        '<div><button type="button" class="btn" data-act="copymsg">Copia el missatge</button></div></section>'+
+      '<section class="s-sec"><h3>Renovació</h3><div class="renew">'+
+        '<label class="fld">Nova data de caducitat<input id="r-date" type="date" value="'+suggest+'"></label>'+
+        (it.tipus==="cert" ? '<label class="check"><input type="checkbox" id="r-online"> Renovat per internet</label><p class="hint">La data proposada és d’aquí a 4 anys, la validesa d’un certificat de persona física. Comprova-la al certificat nou.</p>' : '')+
+        '<p class="err" id="r-err" hidden></p>'+
+        '<div><button type="button" class="btn primary" data-act="renew">Marca com a renovat</button></div></div></section>'+
+      '<section class="s-sec"><h3>Contacte</h3><dl class="kv"><dt>Telèfon</dt><dd>'+(it.tel ? '<span class="mono">'+esc(it.tel)+'</span><button type="button" class="mini" data-act="copytel">Copia</button>' : '—')+'</dd></dl></section>'+
+      '<section class="s-sec"><h3>Notes</h3><textarea id="d-notes" rows="3" placeholder="Cita demanada, què li falta…">'+esc(it.notes)+'</textarea></section>'+
+      '<section class="s-sec"><h3>Historial</h3>'+hist+'</section>'+
+      '<div class="s-foot"><button type="button" class="btn danger" data-act="del">Elimina</button></div>';
+  }
+  function showDetail(id){
+    var it = byId(id); if(!it) return;
+    openId = id; G.openSheet(detailHTML(it));
+  }
+  function closeSheet(){
+    var id = openId; openId = null;
+    G.closeSheet(id ? document.querySelector('.row[data-id="'+id+'"]') : null);
+  }
+  function renew(it){
+    var v = $("r-date").value, err = $("r-err");
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(v)){ err.textContent = "Posa la data de caducitat del document nou."; err.hidden=false; $("r-date").focus(); return; }
+    if(daysTo(v)<=0){ err.textContent = "La data nova ha de ser posterior a avui."; err.hidden=false; $("r-date").focus(); return; }
+    var on = it.tipus==="cert" && $("r-online") && $("r-online").checked;
+    it.hist.push({d:iso(today()), t:"Renovat"+(on?" per internet":"")+". Caducava el "+fShort(it.caduca)+", ara el "+fShort(v)+"."});
+    it.caduca = v; if(it.tipus==="cert") it.online = on;
+    save(); renderMain(); showDetail(it.id); toast("Renovat. Caduca el "+fShort(v)+".");
+  }
+
+  function newForm(){
+    openId = null;
+    G.openSheet(''+
+      '<div class="s-head"><div><h2 id="s-title">Nova caducitat</h2></div><button type="button" class="x" data-act="close" aria-label="Tanca">×</button></div>'+
+      '<form class="nf" id="nf" novalidate>'+
+        '<label class="fld">Client<input id="n-client" required autocomplete="off"></label>'+
+        '<div class="two"><label class="fld">Document<select id="n-tipus">'+Object.keys(TIPUS).map(function(k){ return '<option value="'+k+'">'+TIPUS[k].nom+'</option>'; }).join("")+'</select></label>'+
+        '<label class="fld">Caduca el<input id="n-cad" type="date" required></label></div>'+
+        '<label class="fld">Detall <span class="opt">(matrícula, representant…)</span><input id="n-det" autocomplete="off" placeholder="'+DETALL_PH.cert+'"></label>'+
+        '<label class="fld">Telèfon<input id="n-tel" type="tel" autocomplete="off"></label>'+
+        '<label class="check" id="n-onl-w"><input type="checkbox" id="n-onl"> L’última vegada es va renovar per internet</label>'+
+        '<p class="err" id="n-err" hidden></p>'+
+        '<div><button class="btn primary" type="submit">Afegeix</button></div>'+
+      '</form>', "#n-client");
+  }
+  function submitNew(){
+    var c = $("n-client").value.trim(), cad = $("n-cad").value, err = $("n-err");
+    if(!c || !/^\d{4}-\d{2}-\d{2}$/.test(cad)){ err.textContent = !c ? "Falta el nom del client." : "Falta la data de caducitat."; err.hidden=false; (!c?$("n-client"):$("n-cad")).focus(); return; }
+    var tp = $("n-tipus").value, id = "k"+Date.now().toString(36);
+    data.items.push({id:id, client:c, tipus:tp, detall:$("n-det").value.trim(), caduca:cad, tel:$("n-tel").value.trim(), online:tp==="cert" && $("n-onl").checked, notes:"", hist:[{d:iso(today()), t:"Alta"}]});
+    save(); renderMain(); G.closeSheet(); toast("Afegit.");
+    var r = document.querySelector('.row[data-id="'+id+'"]'); if(r){ r.scrollIntoView({block:"center"}); r.focus({preventScroll:true}); }
+  }
+
+  document.addEventListener("click", function(e){
+    var t = e.target;
+    var row = t.closest(".row"); if(row){ showDetail(row.getAttribute("data-id")); return; }
+    var ch = t.closest(".chip"); if(ch){ F.tipus = ch.getAttribute("data-tipus"); buildChips(); renderList(); return; }
+    var act = t.closest("[data-act]");
+    if(act){
+      var a = act.getAttribute("data-act");
+      if(a==="close"){ closeSheet(); return; }
+      if(a==="new"){ newForm(); return; }
+      if(a==="clearall"){ F={q:"",tipus:""}; $("q").value=""; buildChips(); renderList(); return; }
+      var it = openId && byId(openId);
+      if(a==="copymsg" && it){ G.copyText($("d-msg").value, $("d-msg"), "Missatge copiat."); return; }
+      if(a==="copytel" && it){ G.copyText(it.tel.replace(/\s+/g,""), null, "Telèfon copiat."); return; }
+      if(a==="renew" && it){ renew(it); return; }
+      if(a==="del" && it){
+        if(!G.arm(act, "Toca un altre cop per eliminar-lo")) return;
+        data.items = data.items.filter(function(x){ return x.id!==it.id; });
+        save(); openId=null; G.closeSheet(); renderMain(); toast("Eliminat."); return;
+      }
+    }
+    if(t === $("bd")) closeSheet();
+  });
+  $("sheet").addEventListener("change", function(e){
+    if(e.target.id==="n-tipus"){
+      var v = e.target.value; $("n-det").placeholder = DETALL_PH[v]||""; $("n-onl-w").hidden = v!=="cert";
+    }
+  });
+  var nt = null;
+  $("sheet").addEventListener("input", function(e){
+    if(e.target.id!=="d-notes" || !openId) return;
+    var it = byId(openId); if(!it) return;
+    it.notes = e.target.value; clearTimeout(nt); nt = setTimeout(save, 400);
+  });
+  $("sheet").addEventListener("submit", function(e){ if(e.target.id==="nf"){ e.preventDefault(); submitNew(); } });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeSheet(); });
+  $("q").addEventListener("input", function(e){ F.q = e.target.value; renderList(); });
+  $("b-new").addEventListener("click", newForm);
+  $("b-reset").addEventListener("click", function(e){
+    if(!G.arm(e.currentTarget, "Segur? Es perden els canvis. Toca un altre cop")) return;
+    e.currentTarget.textContent = "Torna a les dades de prova";
+    data = seed(); save(); openId=null; G.closeSheet(); F={q:"",tipus:""}; $("q").value=""; buildChips(); renderMain(); toast("Dades de prova restablertes.");
+  });
+
+  buildChips();
+  G.start(STORE, function(d){ data = d; renderMain(); });
+})();
+</script>
+
+</body>
+</html>

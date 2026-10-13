@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/webp;base64,UklGRk4EAABXRUJQVlA4IEIEAABQFwCdASpuAHgAPj0ejUQiIaGTunUcIAPEtIBqW4pnD3tH+cx87fiJlat3h/unmZpPscHoVZ4/qLgJeiAWymoGxwoBzK9sp422w1LUo2+ZOYW8AyZJ7bpqtSzpO136l7n3vHd4d75Hkq2/Vc3eNdJMwghqA//rxT85OdFrv0JIMTFXrBPvh9b2O9wEcsBCkTrA86Q99bAmSVFqZDRJuq11kCqNI4qzGTf0FZeUKkZOkSiDjrolsxxJDlW6yiVmWgbHCSAA/u7p37DCYMqwm7NBJOBurnADhgBrfgRbJ0+HsCwwUhi8v94EltwxlCwWGejuq/FNvX/Dd/uXrfcsBAo8TZVDb/S8rCHtXgKBfd7XRSCU99hrBa+LmKr9sm7HR2shWSRjxZE8LYo+j4v73oE/lVMBoDMh0P9euKeppVcIM8zy2fn8DTcS0g83e//oCM0i8GNBbI2p81vyZfMn17s2oR9rdqUaneL/P+LuPhRR5L+ldXWnhuX3ZvvrIf+zT8/lYviVSTT6LOF04JNTUg3XMizwVPwzQcT3Lhe7MInzq21QtoIY+EVR971B8CMmsDiUlIibM530uB6HJef6uix7nxBPBADcbTy6iCGLIRFAR5+ystpFn8gkHW2+p45mq6ZNWAcyoT19MNXDto0Ho4QNV0DO9V/XPj6OtwK5PdoQqP+oTlEdfSGJ86ujGAwq0PAALK22Sb4I3Oe8bZ7R3clnZ/43hDb69040LGgPIPKYT4KmmO1hyQPPXoOpqGKFC5iX0E2gkOahBxmlbguqbCGcRIsN4N49E5cqTGJSNFX8I6d7c5TrfgJ/C6dY0MGonKPxHy4F9OUaSiwf5ZyAAnP4Fc7iEnVN4VZWgNQey9A/hOf15FrRwtNfL4v+QyB81s3bz2DnjzNqu+GCB5x1NwXpRO0cTUe6xSTGU+xFwE7gE92t6EGnSrpo9r0WU8vax6NrhYm7bLgtWfKMdA+2OD6Nc/0oOlHYJIdIfiPkGBogkZNRz58rrJHZ4Furfvn9mfGnZ8Azvv5yt8Bt/7nv8v5uuU39ziWjN8HQJ09in7hj6hbLWHg8KLE4+qXVQ9hGm+gybBo+YUDYSDptvY4TND5+yRRP2O4Uk5NBoQxxVxrTUl+EjrvzV+aXM78Ic5+807LIkw8Ud39+M1WcdO68cEHJp9WkGfcoa8HcCepUgJiNpJ7jL8I9haN6LpyrtUuaFNoMqEwPoG2tNsRgFNGowdyq7kBLQ5Od/I6zt3AXxVEU9aiJNbAKiTDCeJGBsL38HtrtvlpFRO8IZjPzdbP1dlzl2xAyPx+rcVWgVOHQqZuwTQYMxfGsiSllpaOUI1F7eFWcG+CBZrxI5Fk5qs/KrVD/9UjlnfYlXj4uKCPzLRcRSIFsMAk+QQUNPBM9s+LzlR8uhQICQFwjzRCbUbtt1r3Nv042S5HDxHFLMFq8AAAAAAAA">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
+<script src="config.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<title>Control de trimestrals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Franklin:wght@400;500;600;700;800&display=swap">
+<style>
+/* Galindo grup — base comuna de les eines internes.
+   Columna de treball única; capçalera amb el monograma i menú entre eines; gris càlid de marca sobre blanc. */
+:root{
+  --bg:#f6f5f3; --surface:#ffffff; --sunk:#eeebe7; --hover:#f8f7f5;
+  --ink:#2a2723; --muted:#6c675f; --line:#e1ddd7; --bar:#cfc9c0;
+  --brand:#a39c92; --accent:#5d564c; --accent-soft:#ece8e2; --on-accent:#ffffff;
+  --info:#2f5f8a; --info-soft:#e3ebf3;
+  --late:#b3391f; --late-soft:#f7e3dc;
+  --soon:#8f5d00; --soon-soft:#f5ebd6;
+  --ok:#36744b; --ok-soft:#e1eee4;
+  --scrim:rgba(20,18,15,.45);
+  --f-display:"Libre Franklin","Franklin Gothic Medium","Arial Narrow",Arial,system-ui,sans-serif;
+  --f-body:"Libre Franklin",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#191816; --surface:#22201d; --sunk:#2c2a26; --hover:#282622;
+    --ink:#ece9e4; --muted:#a8a298; --line:#38352f; --bar:#55504a;
+    --brand:#a39c92; --accent:#d9d3ca; --accent-soft:#38342e; --on-accent:#191816;
+    --info:#93bde6; --info-soft:#1e2c3a;
+    --late:#ff8f72; --late-soft:#40221a;
+    --soon:#e2b45c; --soon-soft:#3a2f17;
+    --ok:#7cc896; --ok-soft:#1d3426;
+    --scrim:rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#191816; --surface:#22201d; --sunk:#2c2a26; --hover:#282622;
+  --ink:#ece9e4; --muted:#a8a298; --line:#38352f; --bar:#55504a;
+  --brand:#a39c92; --accent:#d9d3ca; --accent-soft:#38342e; --on-accent:#191816;
+  --info:#93bde6; --info-soft:#1e2c3a;
+  --late:#ff8f72; --late-soft:#40221a;
+  --soon:#e2b45c; --soon-soft:#3a2f17;
+  --ok:#7cc896; --ok-soft:#1d3426;
+  --scrim:rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.wrap{max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:14px 72px;display:flex;flex-direction:column;gap:18px}
+@media (min-width:760px){.wrap{padding-inline:28px;padding-block:22px 88px;gap:22px}}
+
+/* Capçalera corporativa */
+.brandbar{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px}
+.mark{display:block;width:37px;height:40px;flex:none}
+.wm{display:flex;flex-direction:column;align-items:center;line-height:1;color:var(--brand)}
+.wm1{font-family:var(--f-display);font-weight:700;font-size:21px;letter-spacing:.005em}
+.wm2{font-family:var(--f-display);font-weight:600;font-size:13px;margin-top:1px}
+.apps{display:flex;gap:4px;flex-wrap:wrap}
+.app{font-size:13.5px;font-weight:500;padding:6px 11px;border-radius:7px;color:var(--muted);text-decoration:none;border:1px solid transparent}
+a.app:hover{background:var(--hover);color:var(--ink);border-color:var(--line)}
+.app.cur{color:var(--ink);font-weight:700;background:var(--surface);border-color:var(--line)}
+
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 20px}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,6.5vw,2.75rem);line-height:1;letter-spacing:-.015em;margin:0;text-wrap:balance}
+.sub{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);margin:8px 0 0}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font-weight:600;font-size:14px;border-radius:8px;padding:9px 14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--hover)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.primary:hover{filter:brightness(1.1)}
+.btn.danger{color:var(--late);border-color:var(--late-soft);background:transparent}
+.btn.danger[data-armed="1"]{background:var(--late);color:var(--surface);border-color:var(--late)}
+.linkbtn{background:none;border:0;padding:0;color:var(--ink);text-decoration:underline;text-decoration-color:var(--brand);text-underline-offset:3px;cursor:pointer;font-size:inherit}
+
+.demo{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin:0}
+
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:760px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.stat .k{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.stat .v{font-family:var(--f-display);font-weight:800;font-size:2rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat .v small{font-size:1rem;font-weight:600;color:var(--muted)}
+.stat .s{font-size:12.5px;color:var(--muted)}
+.stat.alert .v{color:var(--late)}
+.stat.warn .v{color:var(--soon)}
+.stat.good .v{color:var(--ok)}
+
+.filters{display:flex;flex-direction:column;gap:10px}
+.search{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.frow{display:flex;gap:8px 12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:13px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.chip:hover{background:var(--hover)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fside{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.fside select{padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:13.5px}
+.check{display:flex;gap:6px;align-items:center;font-size:13.5px;color:var(--muted);cursor:pointer}
+
+.group{display:flex;flex-direction:column;gap:8px}
+.gh{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 2px}
+.gh h2{font-family:var(--f-display);font-size:16px;font-weight:700;margin:0;display:flex;gap:8px;align-items:center;text-wrap:balance}
+.gh .dot{width:10px;height:10px;border-radius:2px;background:var(--gcol);flex:none}
+.gh .n{font-family:var(--f-mono);font-weight:400;font-size:12.5px;color:var(--muted)}
+.gh .gs{font-size:12.5px;color:var(--muted);font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+
+.tag{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border:1px solid var(--line);border-radius:4px;color:var(--muted);flex:none;line-height:1.5}
+.pill{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap}
+
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:28px 16px;text-align:center;color:var(--muted);display:flex;flex-direction:column;gap:12px;align-items:center}
+.empty p{margin:0}
+
+/* Fitxa: full inferior al mòbil, panell lateral a l'escriptori */
+.backdrop{position:fixed;inset:0;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;z-index:20;opacity:0;transition:opacity .18s ease}
+.backdrop.open{opacity:1}
+.sheet{background:var(--surface);color:var(--ink);width:100%;max-height:90%;overflow:auto;overscroll-behavior:contain;border-radius:14px 14px 0 0;padding:18px 16px calc(28px + env(safe-area-inset-bottom,0px));transform:translateY(18px);transition:transform .2s ease;display:flex;flex-direction:column;gap:18px}
+.backdrop.open .sheet{transform:none}
+@media (min-width:760px){
+  .backdrop{justify-content:flex-end;align-items:stretch}
+  .sheet{width:480px;max-height:none;height:100%;border-radius:0;padding:calc(24px + env(safe-area-inset-top,0px)) 26px calc(32px + env(safe-area-inset-bottom,0px));transform:translateX(24px)}
+}
+@media (prefers-reduced-motion: reduce){.backdrop,.sheet{transition:none}}
+.s-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.s-head .tag{display:inline-block;margin-bottom:6px}
+.s-head h2{font-family:var(--f-display);font-weight:800;font-size:1.55rem;line-height:1.08;margin:0;text-wrap:balance}
+.s-head .s-sub{margin:4px 0 0;font-size:13.5px;color:var(--muted)}
+.x{border:1px solid var(--line);background:var(--surface);border-radius:8px;width:36px;height:36px;font-size:20px;line-height:1;cursor:pointer;flex:none}
+.x:hover{background:var(--hover)}
+.due{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 14px;border-radius:10px;background:var(--sunk)}
+.due-d{font-family:var(--f-display);font-weight:700;font-size:1.2rem}
+.due-r{font-size:13.5px;color:var(--muted)}
+.due.late .due-d{color:var(--late)}
+.due.soon .due-d{color:var(--soon)}
+.due.good .due-d{color:var(--ok)}
+.note{margin:0;font-size:13.5px;color:var(--muted);border-left:3px solid var(--line);padding:2px 0 2px 12px}
+.note b{color:var(--ink);font-weight:600}
+.note.hot{border-left-color:var(--soon)}
+.note.hot b{color:var(--soon)}
+.note.bad{border-left-color:var(--late)}
+.note.bad b{color:var(--late)}
+.s-sec{display:flex;flex-direction:column;gap:8px}
+.s-sec h3{margin:0;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font-size:13px;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.seg button:hover{background:var(--hover)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:0;font-size:14px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;overflow-wrap:anywhere;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mono{font-family:var(--f-mono);font-size:13.5px}
+.mini{font-family:var(--f-body);font-size:12px;padding:2px 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fld{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);min-width:0}
+.fld .opt{font-weight:400;opacity:.85}
+.fld input,.fld select,.fld textarea,.sheet textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:14.5px}
+.sheet textarea{resize:vertical;line-height:1.45}
+.msg{background:var(--sunk) !important;font-size:14px !important}
+.hint{margin:0;font-size:12.5px;color:var(--muted)}
+.checks{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px}
+.checks label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.hist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13.5px}
+.hist li{display:grid;grid-template-columns:78px minmax(0,1fr);gap:10px}
+.hist time{font-family:var(--f-mono);font-size:12px;color:var(--muted);padding-top:1px}
+.s-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-top:6px;border-top:1px solid var(--line)}
+.err{margin:0;color:var(--late);font-size:13.5px}
+form.nf{display:flex;flex-direction:column;gap:12px}
+
+/* Versió connectada al Drive: porta d'entrada i estat del desament */
+html.locked .wrap > :not(.brandbar):not(.gate){display:none !important}
+.gate{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:26px 20px;display:flex;flex-direction:column;gap:12px;align-items:flex-start;max-width:540px}
+.gate h2{font-family:var(--f-display);font-weight:800;font-size:1.4rem;line-height:1.15;margin:0;text-wrap:balance}
+.gate p{margin:0;color:var(--muted);max-width:60ch}
+.gate p b{color:var(--ink)}
+.gate code{font-family:var(--f-mono);font-size:.92em;background:var(--sunk);padding:1px 5px;border-radius:4px}
+.gate-btns{display:flex;gap:8px;flex-wrap:wrap}
+.sync{display:flex;align-items:center;gap:6px 8px;font-size:12.5px;color:var(--muted);flex-wrap:wrap;flex-basis:100%}
+@media (min-width:760px){.sync{flex-basis:auto}}
+.sync .sd{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
+.sync.s-busy .sd{background:var(--soon)}
+.sync.s-err{color:var(--late)}
+.sync.s-err .sd{background:var(--late)}
+.brandlink{display:flex;align-items:center;gap:10px;text-decoration:none}
+
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;z-index:40;max-width:calc(100% - 32px);box-shadow:0 6px 20px rgba(0,0,0,.18)}
+
+/* Trimestrals: terminis a dalt, graella clients × models a sota */
+.camps{display:flex;gap:6px;flex-wrap:wrap}
+.camp{display:flex;flex-direction:column;align-items:flex-start;gap:1px;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface);cursor:pointer;text-align:left}
+.camp:hover{background:var(--hover)}
+.camp .c1{font-weight:600;font-size:14px}
+.camp .c2{font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.camp[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.camp[aria-pressed="true"] .c2{color:var(--bg);opacity:.75}
+.camp .now{font-family:var(--f-body);font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--brand)}
+
+.terms{background:var(--surface);border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column}
+.tl{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;padding:12px 14px;border-top:1px solid var(--line)}
+.tl:first-child{border-top:0}
+.tl .tm{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);min-width:7.5em}
+.tl .td{font-family:var(--f-display);font-weight:800;font-size:1.25rem}
+.tl .tr{font-size:13px;color:var(--muted)}
+.tl .tdom{flex-basis:100%;font-size:13px;color:var(--muted)}
+.tl .tdom b{color:var(--ink);font-weight:600}
+.tl.soon .td{color:var(--soon)}
+.tl.past .td{color:var(--muted)}
+
+.tblwrap{overflow-x:auto}
+table.grid{width:100%;border-collapse:separate;border-spacing:0;min-width:440px}
+.grid th,.grid td{padding:0;border-top:1px solid var(--line);text-align:center;vertical-align:middle}
+.grid thead th{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:500;padding:9px 4px;border-top:0;background:var(--sunk)}
+.grid thead th abbr{text-decoration:none}
+.grid .c-name{text-align:left;position:sticky;left:0;z-index:1;background:var(--surface);min-width:132px;border-right:1px solid var(--line)}
+@media (min-width:760px){.grid .c-name{min-width:220px}}
+.grid thead th.c-name{background:var(--sunk);padding-left:14px;font-family:var(--f-body);font-weight:600;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase}
+.grid tr.gr th{border-top:1px solid var(--line);background:var(--surface);text-align:left;padding:14px 14px 6px;position:static}
+.grid tr.gr:first-child th{border-top:0}
+.grid tr.gr .gl{position:sticky;left:14px;display:inline-flex;gap:8px;align-items:center;font-family:var(--f-display);font-weight:700;font-size:14.5px;color:var(--ink)}
+.grid tr.gr .gl .dot{width:10px;height:10px;border-radius:2px;background:var(--gcol)}
+.grid tr.gr .gl .n{font-family:var(--f-mono);font-weight:400;font-size:12px;color:var(--muted)}
+.cl{display:flex;flex-direction:column;gap:2px;width:100%;text-align:left;background:none;border:0;padding:10px 10px 10px 14px;cursor:pointer}
+.cl:hover{background:var(--hover)}
+.cl .n{font-weight:600;font-size:14.5px;line-height:1.25}
+.cl .s{font-size:12px;color:var(--muted)}
+.cl .s.hot{color:var(--soon);font-weight:600}
+td.cw{width:58px;padding:6px 3px}
+.cell{width:100%;min-width:44px;font-size:12px;font-weight:700;padding:8px 2px;border-radius:7px;border:1px solid transparent;cursor:pointer;letter-spacing:.01em}
+.cell:hover{filter:brightness(.97)}
+.c-falta{background:var(--late-soft);color:var(--late)}
+.c-rebut{background:var(--soon-soft);color:var(--soon)}
+.c-presentat{background:var(--ok-soft);color:var(--ok)}
+td.na{color:var(--muted);font-size:14px;opacity:.5}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--muted);align-items:center}
+.legend .cell{width:auto;min-width:0;padding:2px 8px;cursor:default;font-size:11.5px}
+
+.decl{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--line);border-radius:10px}
+.dh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.dh .code{font-family:var(--f-mono);font-weight:500;font-size:13px}
+.dh .nm{font-weight:600;font-size:14px}
+.dh .dl{margin-left:auto;font-size:12.5px;color:var(--muted)}
+.decl .fld{max-width:220px}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="brandbar"><a class="brandlink" href="./" aria-label="Inici"><img class="mark" src="data:image/webp;base64,UklGRk4EAABXRUJQVlA4IEIEAABQFwCdASpuAHgAPj0ejUQiIaGTunUcIAPEtIBqW4pnD3tH+cx87fiJlat3h/unmZpPscHoVZ4/qLgJeiAWymoGxwoBzK9sp422w1LUo2+ZOYW8AyZJ7bpqtSzpO136l7n3vHd4d75Hkq2/Vc3eNdJMwghqA//rxT85OdFrv0JIMTFXrBPvh9b2O9wEcsBCkTrA86Q99bAmSVFqZDRJuq11kCqNI4qzGTf0FZeUKkZOkSiDjrolsxxJDlW6yiVmWgbHCSAA/u7p37DCYMqwm7NBJOBurnADhgBrfgRbJ0+HsCwwUhi8v94EltwxlCwWGejuq/FNvX/Dd/uXrfcsBAo8TZVDb/S8rCHtXgKBfd7XRSCU99hrBa+LmKr9sm7HR2shWSRjxZE8LYo+j4v73oE/lVMBoDMh0P9euKeppVcIM8zy2fn8DTcS0g83e//oCM0i8GNBbI2p81vyZfMn17s2oR9rdqUaneL/P+LuPhRR5L+ldXWnhuX3ZvvrIf+zT8/lYviVSTT6LOF04JNTUg3XMizwVPwzQcT3Lhe7MInzq21QtoIY+EVR971B8CMmsDiUlIibM530uB6HJef6uix7nxBPBADcbTy6iCGLIRFAR5+ystpFn8gkHW2+p45mq6ZNWAcyoT19MNXDto0Ho4QNV0DO9V/XPj6OtwK5PdoQqP+oTlEdfSGJ86ujGAwq0PAALK22Sb4I3Oe8bZ7R3clnZ/43hDb69040LGgPIPKYT4KmmO1hyQPPXoOpqGKFC5iX0E2gkOahBxmlbguqbCGcRIsN4N49E5cqTGJSNFX8I6d7c5TrfgJ/C6dY0MGonKPxHy4F9OUaSiwf5ZyAAnP4Fc7iEnVN4VZWgNQey9A/hOf15FrRwtNfL4v+QyB81s3bz2DnjzNqu+GCB5x1NwXpRO0cTUe6xSTGU+xFwE7gE92t6EGnSrpo9r0WU8vax6NrhYm7bLgtWfKMdA+2OD6Nc/0oOlHYJIdIfiPkGBogkZNRz58rrJHZ4Furfvn9mfGnZ8Azvv5yt8Bt/7nv8v5uuU39ziWjN8HQJ09in7hj6hbLWHg8KLE4+qXVQ9hGm+gybBo+YUDYSDptvY4TND5+yRRP2O4Uk5NBoQxxVxrTUl+EjrvzV+aXM78Ic5+807LIkw8Ud39+M1WcdO68cEHJp9WkGfcoa8HcCepUgJiNpJ7jL8I9haN6LpyrtUuaFNoMqEwPoG2tNsRgFNGowdyq7kBLQ5Od/I6zt3AXxVEU9aiJNbAKiTDCeJGBsL38HtrtvlpFRO8IZjPzdbP1dlzl2xAyPx+rcVWgVOHQqZuwTQYMxfGsiSllpaOUI1F7eFWcG+CBZrxI5Fk5qs/KrVD/9UjlnfYlXj4uKCPzLRcRSIFsMAk+QQUNPBM9s+LzlR8uhQICQFwjzRCbUbtt1r3Nv042S5HDxHFLMFq8AAAAAAAA" alt="Galindo grup" width="37" height="40"><span class="wm" aria-hidden="true"><span class="wm1">Galindo</span><span class="wm2">grup</span></span></a><nav class="apps" aria-label="Eines de la gestoria"><a class="app" href="venciments.html">Venciments</a><span class="app cur" aria-current="page">Trimestrals</span><a class="app" href="caducitats.html">Caducitats</a></nav></div>
+  <header class="top">
+    <div>
+      <h1>Trimestrals</h1>
+      <p class="sub" id="sub"></p>
+    </div>
+    <div class="actions">
+      <button class="btn" id="b-rem" type="button">Recordatoris de papers</button>
+      <button class="btn primary" id="b-new" type="button">+ Nou client</button>
+    </div>
+  </header>
+
+  <p class="demo">
+    <span>Clients inventats per provar. Els terminis són els del calendari de l’Agència Tributària. El que hi canviïs es guarda només en aquest navegador.</span>
+    <button class="linkbtn" id="b-reset" type="button">Torna a les dades de prova</button>
+  </p>
+
+  <div class="camps" id="camps" role="group" aria-label="Termini"></div>
+  <section class="terms" id="terms" aria-label="Terminis de presentació"></section>
+  <section class="stats" id="stats" aria-label="Resum"></section>
+
+  <section class="filters" aria-label="Filtres">
+    <input class="search" id="q" type="search" placeholder="Busca un client o una activitat" autocomplete="off">
+    <div class="frow">
+      <div class="chips" id="chips">
+        <button type="button" class="chip" data-tipus="" aria-pressed="true">Tots</button>
+        <button type="button" class="chip" data-tipus="Autònom" aria-pressed="false">Autònoms</button>
+        <button type="button" class="chip" data-tipus="Societat" aria-pressed="false">Societats i entitats</button>
+      </div>
+      <div class="fside">
+        <label class="check"><input type="checkbox" id="f-hide"> Amaga els que ja estan presentats</label>
+      </div>
+    </div>
+    <div class="legend"><span>Toca una casella per canviar-ne l’estat:</span><span class="cell c-falta">falta</span><span>falten papers</span><span class="cell c-rebut">rebut</span><span>papers rebuts</span><span class="cell c-presentat">fet</span><span>presentat</span></div>
+  </section>
+
+  <div id="list" aria-live="polite"></div>
+</div>
+
+<div class="backdrop" id="bd" hidden><aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="s-title"></aside></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+var G = (function(){
+  "use strict";
+  var DAY = 86400000;
+  var MESOS = ["gener","febrer","març","abril","maig","juny","juliol","agost","setembre","octubre","novembre","desembre"];
+  var MESC = ["gen.","febr.","març","abr.","maig","juny","jul.","ag.","set.","oct.","nov.","des."];
+  var DIES = ["diumenge","dilluns","dimarts","dimecres","dijous","divendres","dissabte"];
+  var eurF = new Intl.NumberFormat("ca-ES",{style:"currency",currency:"EUR",maximumFractionDigits:0});
+  var pctF = new Intl.NumberFormat("ca-ES",{maximumFractionDigits:1,minimumFractionDigits:1});
+
+  function eur(n){ return (n==null || isNaN(n)) ? "—" : eurF.format(n); }
+  function fPct(v){ return (v>0?"+":"")+pctF.format(v)+" %"; }
+  function pad(n){ return (n<10?"0":"")+n; }
+  function today(){ var d=new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  function parse(s){ var a=String(s).split("-").map(Number); return new Date(a[0], a[1]-1, a[2]||1); }
+  function iso(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+  function addDays(d,n){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()+n); }
+  function addMonths(d,n){
+    var t = new Date(d.getFullYear(), d.getMonth()+n, 1);
+    var last = new Date(t.getFullYear(), t.getMonth()+1, 0).getDate();
+    t.setDate(Math.min(d.getDate(), last));
+    return t;
+  }
+  function daysTo(s){ return Math.round((parse(s) - today())/DAY); }
+  function fShort(s){ var d=parse(s); return pad(d.getDate())+"/"+pad(d.getMonth()+1)+"/"+d.getFullYear(); }
+  function fDM(s){ var d=parse(s); return pad(d.getDate())+"/"+pad(d.getMonth()+1); }
+  function fDayMon(s){ var d=parse(s); return d.getDate()+" "+MESC[d.getMonth()]; }
+  function monthPhrase(d){ var m=MESOS[d.getMonth()]; return (/^[aeiouà]/.test(m) ? "d’" : "de ")+m; }
+  function longDate(s){ var d=parse(s); return d.getDate()+" "+monthPhrase(d)+" de "+d.getFullYear(); }
+  function dayMonth(s){ var d=parse(s); return d.getDate()+" "+monthPhrase(d); }
+  function artDate(s){ var d=parse(s), n=d.getDate(); return (n===1||n===11 ? "l’" : "el ")+n+" "+monthPhrase(d); }
+  function delDate(s){ var d=parse(s), n=d.getDate(); return (n===1||n===11 ? "de l’" : "del ")+n+" "+monthPhrase(d); }
+  function weekday(s){ return DIES[parse(s).getDay()]; }
+  function rel(n){
+    if(n===0) return "avui";
+    if(n===1) return "demà";
+    if(n===-1) return "ahir";
+    if(n<-90) return "fa "+Math.round(-n/30.44)+" mesos";
+    if(n<0) return "fa "+(-n)+" dies";
+    if(n>90) return "d’aquí a "+Math.round(n/30.44)+" mesos";
+    return "d’aquí a "+n+" dies";
+  }
+  function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+  function norm(s){ return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
+  function $(id){ return document.getElementById(id); }
+
+  function load(key){ try { var r = localStorage.getItem(key); return r ? JSON.parse(r) : null; } catch(e){ return null; } }
+  function store(key, v){ try { localStorage.setItem(key, JSON.stringify(v)); } catch(e){} }
+
+  var tt = null;
+  function toast(t){
+    var el = $("toast"); if(!el) return;
+    el.textContent = t; el.hidden = false;
+    clearTimeout(tt); tt = setTimeout(function(){ el.hidden = true; }, 2800);
+  }
+
+  var lastFocus = null;
+  function sheetOpen(){ return !$("bd").hidden; }
+  function openSheet(html, focusSel){
+    var bd = $("bd"), sh = $("sheet");
+    sh.innerHTML = html;
+    if(bd.hidden){
+      lastFocus = document.activeElement;
+      bd.hidden = false;
+      document.documentElement.style.overflow = "hidden";
+      requestAnimationFrame(function(){ bd.classList.add("open"); });
+      sh.scrollTop = 0;
+    }
+    var f = sh.querySelector(focusSel || '[data-act="close"]');
+    if(f) f.focus({preventScroll:true});
+  }
+  function closeSheet(focusEl){
+    var bd = $("bd");
+    if(bd.hidden) return;
+    bd.classList.remove("open");
+    bd.hidden = true;
+    document.documentElement.style.overflow = "";
+    var f = focusEl || lastFocus;
+    if(f && document.body.contains(f)) f.focus({preventScroll:true});
+  }
+
+  function copyText(text, selectEl, okMsg){
+    function fallback(){
+      if(selectEl){ selectEl.focus(); selectEl.select(); toast("Text seleccionat. Copia’l amb Ctrl+C o mantenint-lo premut."); }
+      else copyBox("Text per copiar", text);
+    }
+    try {
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){ toast(okMsg); }, fallback);
+      } else fallback();
+    } catch(e){ fallback(); }
+  }
+  function copyBox(title, text, hint){
+    openSheet('<div class="s-head"><div><h2 id="s-title">'+esc(title)+'</h2></div><button type="button" class="x" data-act="close" aria-label="Tanca">×</button></div>'+
+      (hint ? '<p class="hint">'+esc(hint)+'</p>' : '')+
+      '<textarea id="cbox" class="msg" rows="14" readonly>'+esc(text)+'</textarea>'+
+      '<div><button type="button" class="btn" data-act="copybox">Copia-ho tot</button></div>', "#cbox");
+  }
+  document.addEventListener("click", function(e){
+    if(e.target.closest && e.target.closest('[data-act="copybox"]')){ var b=$("cbox"); if(b) copyText(b.value, b, "Copiat."); }
+  });
+
+  // Botó de confirmació en dos tocs (el visor no mostra confirm()).
+  function arm(btn, armedText){
+    if(btn.getAttribute("data-armed")==="1"){ btn.removeAttribute("data-armed"); return true; }
+    var normal = btn.textContent;
+    btn.setAttribute("data-armed","1"); btn.textContent = armedText;
+    setTimeout(function(){ if(document.body.contains(btn) && btn.getAttribute("data-armed")==="1"){ btn.removeAttribute("data-armed"); btn.textContent = normal; } }, 4000);
+    return false;
+  }
+
+  /* ---------- Desament ----------
+     Mode local: cada eina guarda les dades al navegador (versió de prova).
+     Mode "sheets": sync.js substitueix start() i save() per llegir i escriure al full de càlcul del Drive. */
+  var current = null;
+  function start(s, onData){
+    current = s;
+    var d = load(s.key);
+    if(!s.valid(d)) d = s.seed();
+    onData(d);
+  }
+  function save(d){ if(current) store(current.key, d); }
+
+  /* Conversió de files del full de càlcul */
+  function objs(table){
+    if(!table || !table.length) return [];
+    var head = table[0].map(function(h){ return String(h).trim(); });
+    return table.slice(1).map(function(r){ var o={}; head.forEach(function(h,i){ o[h] = r[i]==null ? "" : r[i]; }); return o; });
+  }
+  function num(v){
+    if(v===""||v==null) return null;
+    if(typeof v==="number") return v;
+    var s = String(v).replace(/[€\s]/g,"");
+    if(s.indexOf(",")>=0) s = s.replace(/\./g,"").replace(",",".");
+    var n = parseFloat(s); return isNaN(n) ? null : n;
+  }
+  function str(v){ return v==null ? "" : String(v); }
+  function bool(v){ return v===true || /^(true|s|si|sí|1|x)$/i.test(String(v).trim()); }
+  function dateStr(v){
+    if(typeof v==="number"){ return iso(new Date(1899, 11, 30 + Math.floor(v))); }
+    var s = String(v||"").trim(), m;
+    if((m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/))) return m[1]+"-"+pad(+m[2])+"-"+pad(+m[3]);
+    if((m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/))) return m[3]+"-"+pad(+m[2])+"-"+pad(+m[1]);
+    return "";
+  }
+  function jsonArr(v){ try { var a = JSON.parse(v); return Array.isArray(a) ? a : []; } catch(e){ return []; } }
+  function blank(v){ return v==null ? "" : v; }
+
+  return {DAY:DAY, MESOS:MESOS, MESC:MESC, DIES:DIES, eur:eur, fPct:fPct, pad:pad, today:today, parse:parse, iso:iso,
+    addDays:addDays, addMonths:addMonths, daysTo:daysTo, fShort:fShort, fDM:fDM, fDayMon:fDayMon, longDate:longDate,
+    dayMonth:dayMonth, artDate:artDate, delDate:delDate, weekday:weekday, rel:rel, esc:esc, norm:norm, $:$,
+    load:load, store:store, toast:toast, openSheet:openSheet, closeSheet:closeSheet, sheetOpen:sheetOpen,
+    copyText:copyText, copyBox:copyBox, arm:arm, mode:"local", start:start, save:save,
+    objs:objs, num:num, str:str, bool:bool, dateStr:dateStr, jsonArr:jsonArr, blank:blank};
+})();
+
+/* Desament al full de càlcul de Google (versió publicada a GitHub Pages).
+   Qui entra ho fa amb el seu compte de Google; el full només és compartit amb els comptes autoritzats,
+   així que un compte sense permís rep un error de l'API i no veu res. */
+(function(){
+  "use strict";
+  var C = window.GALINDO_CONFIG || {};
+  var API = "https://sheets.googleapis.com/v4/spreadsheets/";
+  var SHEETS_SCOPE = "https://www.googleapis.com/auth/spreadsheets";
+  var SCOPE = SHEETS_SCOPE+" openid email";
+  var TOKEN_KEY = "galindo-token", HINT_KEY = "galindo-login-hint";
+  var S = null, onData = null, data = null, counts = {};
+  var token = null, tokenExp = 0, email = "", tc = null;
+  var dirty = false, saving = false, saveT = null, lastLoad = 0, afterLogin = null;
+  var gateEl = null, statusEl = null;
+  var esc = G.esc;
+
+  function sget(k){ try { return sessionStorage.getItem(k); } catch(e){ return null; } }
+  function sset(k,v){ try { sessionStorage.setItem(k,v); } catch(e){} }
+  function lget(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+  function lset(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+  function hhmm(){ var d=new Date(); return G.pad(d.getHours())+":"+G.pad(d.getMinutes()); }
+
+  /* ---------- Interfície: porta d'entrada i estat ---------- */
+  function ui(){
+    document.documentElement.classList.add("locked");
+    var demo = document.querySelector(".demo"); if(demo) demo.hidden = true;
+    var bar = document.querySelector(".brandbar");
+    statusEl = document.createElement("div"); statusEl.className = "sync"; statusEl.hidden = true; statusEl.setAttribute("role","status");
+    bar.appendChild(statusEl);
+    gateEl = document.createElement("section"); gateEl.className = "gate"; gateEl.setAttribute("aria-live","polite");
+    bar.insertAdjacentElement("afterend", gateEl);
+  }
+  function gate(title, text, btns){
+    gateEl.innerHTML = (title ? '<h2>'+esc(title)+'</h2>' : '')+(text ? '<p>'+text+'</p>' : '')+
+      (btns && btns.length ? '<div class="gate-btns">'+btns.map(function(b,i){ return '<button type="button" class="btn'+(i===0?' primary':'')+'" data-sync="'+b[0]+'">'+esc(b[1])+'</button>'; }).join("")+'</div>' : '');
+    gateEl.hidden = false;
+    document.documentElement.classList.add("locked");
+  }
+  function unlock(){ gateEl.hidden = true; document.documentElement.classList.remove("locked"); }
+  function status(kind, text, btn){
+    statusEl.hidden = false;
+    statusEl.className = "sync s-"+kind;
+    statusEl.innerHTML = '<span class="sd" aria-hidden="true"></span><span class="st">'+esc(text)+'</span>'+
+      (btn ? '<button type="button" class="linkbtn" data-sync="'+btn[0]+'">'+esc(btn[1])+'</button>' : '');
+  }
+  function okStatus(){ status("ok", "Desat al Drive · "+hhmm()+(email ? " · "+email : "")); }
+
+  /* ---------- Accés amb Google ---------- */
+  function gisReady(){ return !!(window.google && google.accounts && google.accounts.oauth2); }
+  function initClient(){
+    if(tc) return true;
+    if(!gisReady()) return false;
+    tc = google.accounts.oauth2.initTokenClient({
+      client_id: C.clientId, scope: SCOPE, callback: onToken,
+      error_callback: function(err){
+        if(err && err.type==="popup_closed") gateOrStatus("Has tancat la finestra de Google abans d’acabar.");
+        else gateOrStatus("No s’ha pogut obrir la finestra de Google. Si el navegador bloqueja finestres emergents, permet-les per a aquesta pàgina.");
+      }
+    });
+    return true;
+  }
+  function gateOrStatus(msg){
+    if(data) status("err", msg, ["login","Torna a entrar"]);
+    else gate("Entra per veure les dades", esc(msg), [["login","Entra amb Google"]]);
+  }
+  function login(select){
+    if(!initClient()) return;
+    var hint = lget(HINT_KEY);
+    var opts = {prompt: select ? "select_account" : ""};
+    if(!select && hint) opts.login_hint = hint;
+    tc.requestAccessToken(opts);
+  }
+  function onToken(r){
+    if(!r || r.error){
+      gateOrStatus(r && r.error==="access_denied" ? "Google no ha donat accés a aquest compte. Comprova que és un dels comptes autoritzats." : "No s’ha pogut entrar amb Google.");
+      return;
+    }
+    if(!google.accounts.oauth2.hasGrantedAllScopes(r, SHEETS_SCOPE)){
+      gate("Falta un permís", "Cal marcar el permís per veure i editar els fulls de càlcul. Sense aquest permís l’eina no pot llegir les dades.", [["switch","Torna-ho a provar"]]);
+      return;
+    }
+    token = r.access_token;
+    tokenExp = Date.now() + (Number(r.expires_in)||3600)*1000 - 60000;
+    sset(TOKEN_KEY, JSON.stringify({t:token, e:tokenExp}));
+    fetch("https://www.googleapis.com/oauth2/v3/userinfo", {headers:{Authorization:"Bearer "+token}})
+      .then(function(x){ return x.ok ? x.json() : {}; })
+      .then(function(j){ if(j.email){ email = j.email; lset(HINT_KEY, email); sset(TOKEN_KEY, JSON.stringify({t:token, e:tokenExp, m:email})); } })
+      .catch(function(){})
+      .then(function(){ var f = afterLogin || loadData; afterLogin = null; f(); });
+  }
+  function needLogin(then){
+    afterLogin = then;
+    token = null;
+    if(data) status("err", "La sessió ha caducat. Els canvis encara no estan desats.", ["login","Torna a entrar"]);
+    else gate("Entra per veure les dades", "La sessió ha caducat.", [["login","Entra amb Google"]]);
+  }
+
+  /* ---------- Crides a l'API ---------- */
+  function api(method, url, body){
+    if(!token || Date.now()>tokenExp) return Promise.reject({auth:true});
+    return fetch(url, {method:method, headers:{"Authorization":"Bearer "+token, "Content-Type":"application/json"}, body: body ? JSON.stringify(body) : undefined})
+      .then(function(r){
+        if(r.status===401) throw {auth:true};
+        if(r.status===403 || r.status===404) throw {denied:true};
+        if(!r.ok) return r.text().then(function(t){ throw {msg:"L’API de Google ha respost amb l’error "+r.status+".", detail:t}; });
+        return r.json();
+      }, function(){ throw {offline:true}; });
+  }
+  function tabs(){ return Object.keys(S.tabs); }
+  function fetchTables(){
+    var id = C.spreadsheetId, ts = tabs();
+    return api("GET", API+id+"?fields=sheets.properties.title").then(function(meta){
+      var have = (meta.sheets||[]).map(function(s){ return s.properties.title; });
+      var missing = ts.filter(function(t){ return have.indexOf(t)<0; });
+      if(!missing.length) return;
+      return api("POST", API+id+":batchUpdate", {requests: missing.map(function(t){ return {addSheet:{properties:{title:t, gridProperties:{frozenRowCount:1}}}}; })})
+        .then(function(){ return api("POST", API+id+"/values:batchUpdate", {valueInputOption:"RAW", data: missing.map(function(t){ return {range:t+"!A1", values:[S.tabs[t]]}; })}); });
+    }).then(function(){
+      return api("GET", API+id+"/values:batchGet?valueRenderOption=UNFORMATTED_VALUE&"+ts.map(function(t){ return "ranges="+encodeURIComponent(t+"!A1:Z"); }).join("&"));
+    }).then(function(r){
+      var tables = {};
+      (r.valueRanges||[]).forEach(function(vr, i){ var t = ts[i], v = vr.values || []; tables[t] = v; counts[t] = Math.max(0, v.length-1); });
+      return tables;
+    });
+  }
+  function handleErr(e, inBackground){
+    if(e && e.auth){ needLogin(inBackground ? push : loadData); return; }
+    if(e && e.denied){
+      gate("Aquest compte no té accés", (email ? "Has entrat com a <b>"+esc(email)+"</b>. " : "")+"Les dades només es poden obrir amb els comptes autoritzats.", [["switch","Canvia de compte"]]);
+      data = null; statusEl.hidden = true; return;
+    }
+    var msg = e && e.offline ? "No hi ha connexió amb Google. Comprova la connexió a internet." : ((e && e.msg) || "Error desconegut.");
+    if(inBackground && data){ status("err", msg, ["retry","Torna-ho a provar"]); return; }
+    gate("No s’han pogut carregar les dades", esc(msg), [["retry","Torna-ho a provar"]]);
+  }
+  function loadData(){
+    gate("", "Carregant les dades del Drive…");
+    fetchTables().then(function(tables){
+      data = S.fromTables(tables);
+      lastLoad = Date.now();
+      unlock(); okStatus();
+      onData(data);
+    }).catch(function(e){ handleErr(e, false); });
+  }
+  function refresh(){
+    if(!data || dirty || saving || !token || Date.now()>tokenExp) return;
+    fetchTables().then(function(tables){
+      if(dirty || saving) return;
+      data = S.fromTables(tables); lastLoad = Date.now();
+      onData(data); okStatus();
+    }).catch(function(e){ handleErr(e, true); });
+  }
+
+  /* ---------- Desar ---------- */
+  function push(){
+    clearTimeout(saveT);
+    if(!data) return;
+    if(saving){ dirty = true; return; }
+    if(!token || Date.now()>tokenExp){ needLogin(push); return; }
+    saving = true; dirty = false;
+    status("busy", "Desant…");
+    var tables = S.toTables(data), payload = [], next = {};
+    Object.keys(tables).forEach(function(t){
+      var head = S.tabs[t], rows = tables[t].map(function(r){ return r.map(G.blank); });
+      var n = rows.length, prev = counts[t] || 0;
+      for(var i=n; i<prev; i++){ var b=[]; for(var j=0;j<head.length;j++) b.push(""); rows.push(b); }
+      payload.push({range:t+"!A1", values:[head].concat(rows)});
+      next[t] = n;
+    });
+    api("POST", API+C.spreadsheetId+"/values:batchUpdate", {valueInputOption:"RAW", data:payload})
+      .then(function(){
+        saving = false;
+        Object.keys(next).forEach(function(t){ counts[t] = next[t]; });
+        lastLoad = Date.now();
+        if(dirty) push(); else okStatus();
+      })
+      .catch(function(e){ saving = false; dirty = true; handleErr(e, true); });
+  }
+
+  document.addEventListener("click", function(e){
+    var b = e.target.closest && e.target.closest("[data-sync]");
+    if(!b) return;
+    var a = b.getAttribute("data-sync");
+    if(a==="login") login(false);
+    else if(a==="switch"){ afterLogin = null; login(true); }
+    else if(a==="retry"){ if(data) push(); else if(token) loadData(); else login(false); }
+  });
+  document.addEventListener("visibilitychange", function(){
+    if(document.visibilityState==="visible" && Date.now()-lastLoad > 30000) refresh();
+  });
+  window.addEventListener("beforeunload", function(e){
+    if(dirty || saving){ e.preventDefault(); e.returnValue = ""; }
+  });
+
+  /* ---------- Punt d'entrada per a les eines ---------- */
+  G.mode = "sheets";
+  G.start = function(s, cb){
+    S = s; onData = cb;
+    ui();
+    if(!C.clientId || !C.spreadsheetId){
+      gate("Falta acabar la configuració", "Cal posar l’identificador d’accés de Google al fitxer <code>config.js</code> del repositori.", []);
+      return;
+    }
+    try { var saved = JSON.parse(sget(TOKEN_KEY)||"null"); if(saved && saved.t && saved.e > Date.now()){ token = saved.t; tokenExp = saved.e; email = saved.m || ""; } } catch(e){}
+    if(token) loadData(); else gate("", "Connectant amb Google…");
+    var tries = 0;
+    (function wait(){
+      if(gisReady()){
+        initClient();
+        if(!token) gate("Entra per veure les dades", "Les dades són en un full de càlcul privat al Drive de la gestoria. Només hi poden entrar els comptes autoritzats.", [["login","Entra amb Google"]]);
+        return;
+      }
+      if(++tries > 100){ if(!token) gate("No s’ha pogut connectar amb Google", "Comprova la connexió a internet i torna a carregar la pàgina.", []); return; }
+      setTimeout(wait, 100);
+    })();
+  };
+  G.save = function(d){
+    data = d;
+    if(!S) return;
+    dirty = true;
+    status("busy", "Canvis pendents de desar…");
+    clearTimeout(saveT); saveT = setTimeout(push, 800);
+  };
+})();
+
+(function(){
+  "use strict";
+  var eur=G.eur, today=G.today, parse=G.parse, iso=G.iso, addDays=G.addDays, daysTo=G.daysTo, fShort=G.fShort, fDM=G.fDM,
+      longDate=G.longDate, artDate=G.artDate, delDate=G.delDate, dayMonth=G.dayMonth, weekday=G.weekday, rel=G.rel,
+      esc=G.esc, norm=G.norm, $=G.$, toast=G.toast, pad=G.pad;
+
+  var KEY = "galindo-trimestrals-v1";
+  var MODELS = {
+    "303":{nom:"IVA", curt:"IVA (303)", docs:"les factures emeses i rebudes"},
+    "130":{nom:"Pagament fraccionat d’IRPF", curt:"IRPF (130)", docs:"les factures emeses i rebudes"},
+    "111":{nom:"Retencions de treballadors i professionals", curt:"Retencions (111)", docs:"les nòmines i les factures de professionals amb retenció"},
+    "115":{nom:"Retencions del lloguer", curt:"Lloguer (115)", docs:"els rebuts del lloguer del local"},
+    "202":{nom:"Pagament fraccionat de l’impost de societats", curt:"Societats (202)", docs:"els extractes del banc del període"}
+  };
+  var ORDER = ["303","130","111","115","202"];
+  var ST = {falta:"Falten papers", rebut:"Papers rebuts", presentat:"Presentat"};
+  var SHORT = {falta:"falta", rebut:"rebut", presentat:"fet"};
+  var NEXT = {falta:"rebut", rebut:"presentat", presentat:"falta"};
+  var TIPUS_CL = ["Autònom","Societat","Entitat"];
+  var DEF_MODELS = {"Autònom":["303","130"], "Societat":["303","111","202"], "Entitat":["303","111"]};
+  var MES_CAP = ["Gener","Febrer","Març","Abril","Maig","Juny","Juliol","Agost","Setembre","Octubre","Novembre","Desembre"];
+
+  /* ---------- Calendari ----------
+     Presentació fins al 20 (303 i 130 del 4T, fins al 30 de gener). Si cau en cap de setmana, passa al dilluns.
+     Domiciliació: 5 dies abans del final (3 dies per al 303 i el 130 de gener), com al calendari de l'AEAT 2026. */
+  function shiftWE(d){ var w=d.getDay(); return w===6 ? addDays(d,2) : (w===0 ? addDays(d,1) : d); }
+  function campaign(y, m){
+    function mk(day, back){ var p = shiftWE(new Date(y, m-1, day)); return {pres:iso(p), dom:iso(addDays(p,-back))}; }
+    var c = {key:y+"-"+pad(m), y:y, m:m, models:{}, label:MES_CAP[m-1]+" "+y};
+    if(m===1){
+      c.tag = "4T "+(y-1); c.periode = "el quart trimestre (octubre, novembre i desembre)";
+      c.models["303"]=mk(30,3); c.models["130"]=mk(30,3); c.models["111"]=mk(20,5); c.models["115"]=mk(20,5);
+    } else if(m===12){
+      c.tag = "202"; c.periode = "el pagament fraccionat de desembre de l’impost de societats";
+      c.models["202"]=mk(20,5);
+    } else {
+      var q = {4:1,7:2,10:3}[m];
+      c.tag = q+"T "+y;
+      c.periode = "el trimestre de "+{1:"gener, febrer i març",2:"abril, maig i juny",3:"juliol, agost i setembre"}[q];
+      ["303","130","111","115"].forEach(function(k){ c.models[k]=mk(20,5); });
+      if(m===4 || m===10) c.models["202"]=mk(20,5);
+    }
+    c.last = Object.keys(c.models).reduce(function(a,k){ return c.models[k].pres>a ? c.models[k].pres : a; }, "");
+    return c;
+  }
+  var CAMPS = (function(){
+    var y = today().getFullYear(), list = [];
+    [y-1,y,y+1].forEach(function(yy){ [1,4,7,10,12].forEach(function(m){ list.push(campaign(yy,m)); }); });
+    return list;
+  })();
+  var CUR = (function(){ var t=iso(today()); for(var i=0;i<CAMPS.length;i++) if(CAMPS[i].last>=t) return i; return CAMPS.length-1; })();
+  var SHOWN = CAMPS.slice(Math.max(0,CUR-1), CUR+3);
+  var sel = CAMPS[CUR];
+
+  /* ---------- Dades de prova ---------- */
+  function seed(){
+    var cl = [
+      ["c1","Jordi Casals Vila","Autònom","Lampista",["303","130"],true,"600 000 052"],
+      ["c2","Núria Bosch","Autònom","Perruqueria, amb una treballadora",["303","130","111","115"],false,"600 000 102"],
+      ["c3","Marta Puigdollers","Autònom","Dissenyadora gràfica",["303","130"],true,"600 000 034"],
+      ["c4","Pere Ribas Soler","Autònom","Fisioterapeuta, exempt d’IVA",["130"],false,"600 000 089"],
+      ["c5","Laia Pujol","Autònom","Traductora; factura amb retenció",["303"],false,"600 000 073"],
+      ["c6","Toni Garriga","Autònom","Fotògraf",["303","130"],true,"600 000 027"],
+      ["c7","Montse Ferrer","Autònom","Botiga de roba, en recàrrec d’equivalència",["130","115"],false,"600 000 148"],
+      ["c8","Carles Soler Mas","Autònom","Arquitecte tècnic",["303","130","111"],false,"600 000 117"],
+      ["c9","Imma Serra","Autònom","Psicòloga, exempta d’IVA",["130","115"],false,"600 000 153"],
+      ["c10","Gemma Torrent","Autònom","Botiga en línia",["303","130"],false,"600 000 172"],
+      ["c11","Oriol Planas","Autònom","Electricista",["303","130"],true,"600 000 184"],
+      ["c12","Instal·lacions Vallès SL","Societat","Climatització",["303","111","115","202"],true,"600 000 301"],
+      ["c13","Fusteria Codina SL","Societat","Fusteria",["303","111","202"],false,"600 000 312"],
+      ["c14","Bar Can Pep SL","Societat","Bar",["303","111","115","202"],true,"600 000 045"],
+      ["c15","Ferreteria Sala SL","Societat","Ferreteria",["303","111","115","202"],false,"600 000 094"],
+      ["c16","Restaurant El Racó SCP","Entitat","Restaurant, societat civil",["303","111","115"],false,"600 000 218"]
+    ].map(function(r){ return {id:r[0], nom:r[1], tipus:r[2], act:r[3], models:r[4], dom:r[5], tel:r[6], notes:""}; });
+    // Estat del termini actual: F = falten papers, R = papers rebuts, P = presentat (amb el resultat)
+    var now = {
+      c1:{"303":["P",846],"130":["P",312]},
+      c2:{"303":"R","130":"R","111":["P",410],"115":["P",171]},
+      c3:{"303":"F","130":"F"},
+      c4:{"130":"F"},
+      c5:{"303":["P",1215]},
+      c6:{"303":"R","130":"R"},
+      c7:{"130":"R","115":["P",228]},
+      c8:{"303":"F","130":"F","111":"F"},
+      c9:{"130":["P",0],"115":["P",190]},
+      c10:{"303":["P",-184],"130":["P",95]},
+      c11:{"303":"F","130":"F"},
+      c12:{"303":"R","111":["P",1980],"115":["P",342],"202":"R"},
+      c13:{"303":"F","111":"F","202":"F"},
+      c14:{"303":["P",2140],"111":["P",620],"115":["P",285],"202":["P",410]},
+      c15:{"303":"R","111":"R","115":"R","202":"R"},
+      c16:{"303":"F","111":"R","115":"R"}
+    };
+    cl[2].notes = "Sempre ho porta l’últim dia. Té el pagament domiciliat.";
+    cl[12].notes = "Les factures les porta el fill, en Pau.";
+    var st = {}, curKey = CAMPS[CUR].key, prev = CAMPS[CUR-1];
+    st[curKey] = {};
+    Object.keys(now).forEach(function(cid){
+      st[curKey][cid] = {};
+      Object.keys(now[cid]).forEach(function(m){
+        var v = now[cid][m];
+        st[curKey][cid][m] = Array.isArray(v) ? {s:"presentat", imp:v[1]} : {s:{F:"falta",R:"rebut",P:"presentat"}[v], imp:null};
+      });
+    });
+    if(prev){
+      st[prev.key] = {};
+      cl.forEach(function(c){
+        st[prev.key][c.id] = {};
+        c.models.forEach(function(m){ if(prev.models[m]) st[prev.key][c.id][m] = {s:"presentat", imp:null}; });
+      });
+    }
+    return {clients:cl, st:st};
+  }
+
+  var data = {clients:[], st:{}};
+  var STORE = {
+    key: KEY,
+    tabs: {
+      trimestrals_clients: ["id","nom","tipus","activitat","models","domiciliat","telefon","notes"],
+      trimestrals_estat: ["termini","client_id","model","estat","resultat"]
+    },
+    valid: function(d){ return !!(d && Array.isArray(d.clients) && d.st); },
+    seed: seed,
+    toTables: function(d){
+      var est = [];
+      Object.keys(d.st).sort().forEach(function(ck){
+        Object.keys(d.st[ck]).forEach(function(cid){
+          if(!byId(cid)) return;
+          Object.keys(d.st[ck][cid]).forEach(function(m){ var s = d.st[ck][cid][m]; est.push([ck, cid, m, s.s, s.imp]); });
+        });
+      });
+      return {
+        trimestrals_clients: d.clients.map(function(c){ return [c.id, c.nom, c.tipus, c.act, c.models.join(", "), !!c.dom, c.tel, c.notes]; }),
+        trimestrals_estat: est
+      };
+    },
+    fromTables: function(t){
+      var clients = G.objs(t.trimestrals_clients).filter(function(o){ return String(o.id).trim() && String(o.nom).trim(); }).map(function(o){
+        var ms = String(o.models||"").split(/[^0-9]+/).filter(function(m){ return ORDER.indexOf(m)>=0; });
+        return {id:String(o.id), nom:G.str(o.nom), tipus:TIPUS_CL.indexOf(o.tipus)>=0 ? o.tipus : "Autònom", act:G.str(o.activitat),
+          models:ORDER.filter(function(m){ return ms.indexOf(m)>=0; }), dom:G.bool(o.domiciliat), tel:G.str(o.telefon), notes:G.str(o.notes)};
+      });
+      var st = {};
+      G.objs(t.trimestrals_estat).forEach(function(o){
+        var ck = String(o.termini).trim(), cid = String(o.client_id).trim(), m = String(o.model).trim();
+        if(!/^\d{4}-\d{2}$/.test(ck) || !cid || ORDER.indexOf(m)<0) return;
+        st[ck] = st[ck] || {}; st[ck][cid] = st[ck][cid] || {};
+        st[ck][cid][m] = {s: ST[o.estat] ? o.estat : "falta", imp: G.num(o.resultat)};
+      });
+      return {clients:clients, st:st};
+    }
+  };
+  function save(){ G.save(data); }
+  function byId(id){ for(var i=0;i<data.clients.length;i++) if(data.clients[i].id===id) return data.clients[i]; return null; }
+  function getSt(ck, cid, m){ var a=data.st[ck], b=a&&a[cid], c=b&&b[m]; return c || {s:"falta", imp:null}; }
+  function setSt(ck, cid, m, patch){
+    data.st[ck] = data.st[ck] || {}; data.st[ck][cid] = data.st[ck][cid] || {};
+    var cur = getSt(ck, cid, m), nx = {s:cur.s, imp:cur.imp};
+    Object.keys(patch).forEach(function(k){ nx[k]=patch[k]; });
+    data.st[ck][cid][m] = nx;
+  }
+  function modelsIn(c, camp){ return ORDER.filter(function(m){ return camp.models[m] && c.models.indexOf(m)>=0; }); }
+  function stateOf(c, camp){
+    var ms = modelsIn(c, camp), w = "fet";
+    ms.forEach(function(m){ var s=getSt(camp.key,c.id,m).s; if(s==="falta") w="falta"; else if(s==="rebut" && w!=="falta") w="rebut"; });
+    return w;
+  }
+  // Termini que compta per a aquest client: el de domiciliació si la té i encara és a temps.
+  function modelDeadline(c, camp, m){
+    var t = camp.models[m];
+    return (c.dom && daysTo(t.dom)>=0) ? t.dom : t.pres;
+  }
+  function clientDeadline(c, camp){
+    var best = null;
+    modelsIn(c, camp).forEach(function(m){
+      if(getSt(camp.key,c.id,m).s==="presentat") return;
+      var d = modelDeadline(c, camp, m);
+      if(!best || d<best) best = d;
+    });
+    return best;
+  }
+  function domLost(c, camp){
+    return c.dom && modelsIn(c,camp).some(function(m){ return getSt(camp.key,c.id,m).s!=="presentat" && daysTo(camp.models[m].dom)<0 && daysTo(camp.models[m].pres)>=0; });
+  }
+
+  /* ---------- Filtres ---------- */
+  var F = {q:"", tipus:"", hide:false};
+  function visible(c){
+    if(!modelsIn(c, sel).length) return false;
+    if(F.tipus==="Autònom" && c.tipus!=="Autònom") return false;
+    if(F.tipus==="Societat" && c.tipus==="Autònom") return false;
+    if(F.hide && stateOf(c, sel)==="fet") return false;
+    if(F.q && norm(c.nom+" "+c.act+" "+c.notes).indexOf(norm(F.q))<0) return false;
+    return true;
+  }
+
+  /* ---------- Render ---------- */
+  function renderHeader(){
+    var t = iso(today());
+    $("sub").textContent = data.clients.length+" clients · "+weekday(t)+", "+longDate(t);
+  }
+  function renderCamps(){
+    $("camps").innerHTML = SHOWN.map(function(c){
+      return '<button type="button" class="camp" data-camp="'+c.key+'" aria-pressed="'+(c.key===sel.key)+'">'+
+        (c===CAMPS[CUR] ? '<span class="now">Ara</span>' : '')+
+        '<span class="c1">'+c.label+'</span><span class="c2">'+c.tag+'</span></button>';
+    }).join("");
+  }
+  function joinCat(a){ return a.length<2 ? (a[0]||"") : a.slice(0,-1).join(", ")+" i "+a[a.length-1]; }
+  function renderTerms(){
+    var groups = {};
+    ORDER.forEach(function(m){ var t=sel.models[m]; if(!t) return; var k=t.pres+"|"+t.dom; (groups[k]=groups[k]||{pres:t.pres, dom:t.dom, ms:[]}).ms.push(m); });
+    var keys = Object.keys(groups).sort();
+    $("terms").innerHTML = keys.map(function(k){
+      var g = groups[k], d = daysTo(g.pres), dd = daysTo(g.dom);
+      var cls = d<0 ? "past" : (d<=10 ? "soon" : "");
+      return '<div class="tl '+cls+'"><span class="tm">'+joinCat(g.ms)+'</span>'+
+        '<span class="td">'+weekday(g.pres)+' '+dayMonth(g.pres)+'</span><span class="tr">'+(d<0 ? 'termini acabat '+rel(d) : rel(d))+'</span>'+
+        '<span class="tdom">Pagament domiciliat: fins al <b>'+weekday(g.dom)+' '+dayMonth(g.dom)+'</b>'+(dd<0 && d>=0 ? ' (ja ha passat; ara cal pagar amb document d’ingrés)' : '')+'</span></div>';
+    }).join("");
+  }
+  function stat(k,v,s,cls){ return '<div class="stat '+cls+'"><span class="k">'+k+'</span><span class="v">'+v+'</span><span class="s">'+s+'</span></div>'; }
+  function renderStats(){
+    var tot=0, pres=0, reb=0, debtors=0, domPend=0, minDom=null;
+    data.clients.forEach(function(c){
+      var ms = modelsIn(c, sel); if(!ms.length) return;
+      var owes=false, domOpen=false;
+      ms.forEach(function(m){
+        var s = getSt(sel.key,c.id,m).s; tot++;
+        if(s==="presentat") pres++; else { if(s==="rebut") reb++; else owes=true; }
+        if(s!=="presentat" && c.dom && daysTo(sel.models[m].dom)>=0){ domOpen=true; if(!minDom || sel.models[m].dom<minDom) minDom = sel.models[m].dom; }
+      });
+      if(owes) debtors++;
+      if(domOpen) domPend++;
+    });
+    var dd = minDom ? daysTo(minDom) : null;
+    $("stats").innerHTML =
+      stat("Presentades", pres+' <small>de '+tot+'</small>', "Declaracions d’aquest termini", pres===tot && tot ? "good" : "") +
+      stat("Per preparar", reb, "Amb els papers a punt", "") +
+      stat("Deuen papers", debtors, debtors===1 ? "Client per trucar" : "Clients per trucar", debtors?"alert":"") +
+      stat("Domiciliats pendents", domPend, minDom ? "Domiciliació fins al "+fDM(minDom)+" ("+rel(dd)+")" : "Cap domiciliació pendent", domPend && dd!=null && dd<=5 ? "warn" : "");
+  }
+  function renderList(){
+    var vis = data.clients.filter(visible);
+    if(!data.clients.length){
+      $("list").innerHTML = '<div class="empty"><p>Encara no hi ha cap client.</p><button type="button" class="btn primary" data-act="new">+ Afegeix el primer</button></div>';
+      return;
+    }
+    if(!vis.length){
+      $("list").innerHTML = '<div class="empty"><p>'+(data.clients.some(function(c){ return modelsIn(c,sel).length; }) ? 'Cap client coincideix amb aquests filtres.' : 'En aquest termini no hi ha cap model dels teus clients.')+'</p><button type="button" class="btn" data-act="clearall">Treu els filtres</button></div>';
+      return;
+    }
+    var cols = ORDER.filter(function(m){ return sel.models[m] && vis.some(function(c){ return c.models.indexOf(m)>=0; }); });
+    var GR = [["falta","Falten papers","var(--late)"],["rebut","Papers rebuts, per preparar","var(--soon)"],["fet","Tot presentat","var(--ok)"]];
+    var by = {falta:[], rebut:[], fet:[]};
+    vis.forEach(function(c){ by[stateOf(c, sel)].push(c); });
+    var body = GR.filter(function(g){ return by[g[0]].length; }).map(function(g){
+      var items = by[g[0]].sort(function(a,b){
+        var da = clientDeadline(a,sel)||"9", db = clientDeadline(b,sel)||"9";
+        return da<db ? -1 : da>db ? 1 : a.nom.localeCompare(b.nom,"ca");
+      });
+      return '<tbody style="--gcol:'+g[2]+'"><tr class="gr"><th colspan="'+(cols.length+1)+'"><span class="gl"><span class="dot"></span>'+g[1]+' <span class="n">'+items.length+'</span></span></th></tr>'+
+        items.map(function(c){
+          var dl = clientDeadline(c, sel), dd = dl ? daysTo(dl) : null;
+          var sub = c.tipus+(c.dom ? ' · domiciliat' : '')+(dl ? ' · fins al '+fDM(dl) : '');
+          return '<tr><th class="c-name" scope="row"><button type="button" class="cl" data-cl="'+c.id+'"><span class="n">'+esc(c.nom)+'</span><span class="s'+(dd!=null && dd<=3 && dd>=0 ? ' hot' : '')+'">'+sub+'</span></button></th>'+
+            cols.map(function(m){
+              if(c.models.indexOf(m)<0) return '<td class="na" aria-label="No el presenta">·</td>';
+              var s = getSt(sel.key, c.id, m).s;
+              return '<td class="cw"><button type="button" class="cell c-'+s+'" data-cl="'+c.id+'" data-m="'+m+'" aria-label="'+esc(c.nom)+', model '+m+': '+ST[s]+'. Toca per passar a '+ST[NEXT[s]].toLowerCase()+'">'+SHORT[s]+'</button></td>';
+            }).join("")+'</tr>';
+        }).join("")+'</tbody>';
+    }).join("");
+    $("list").innerHTML = '<div class="panel tblwrap"><table class="grid"><thead><tr><th class="c-name" scope="col">Client</th>'+
+      cols.map(function(m){ return '<th scope="col"><abbr title="'+MODELS[m].nom+'">'+m+'</abbr></th>'; }).join("")+'</tr></thead>'+body+'</table></div>';
+  }
+  function renderMain(){ renderHeader(); renderCamps(); renderTerms(); renderStats(); renderList(); }
+
+  /* ---------- Missatges ---------- */
+  function msg(c, camp){
+    var g = c.tipus!=="Autònom", nom = c.nom.split(" ")[0];
+    var salut = g ? "Bon dia, us escric de la gestoria." : "Hola "+nom+", t’escric de la gestoria.";
+    var ms = modelsIn(c, camp);
+    if(!ms.length) return "";
+    var falta = ms.filter(function(m){ return getSt(camp.key,c.id,m).s==="falta"; });
+    var dl = clientDeadline(c, camp);
+    if(falta.length){
+      var docs = []; falta.forEach(function(m){ if(docs.indexOf(MODELS[m].docs)<0) docs.push(MODELS[m].docs); });
+      var t = salut+" Per presentar "+camp.periode+" em falten "+joinCat(docs)+".";
+      if(dl) t += (c.dom && daysTo(camp.models[falta[0]].dom)>=0) ? " Com que el pagament està domiciliat, el termini acaba "+artDate(dl)+"." : " El termini acaba "+artDate(dl)+".";
+      return t+(g ? " Quan ho tingueu, envieu-m’ho i ho deixem enllestit." : " Quan ho tinguis, envia-m’ho i ho deixem enllestit.")+" Gràcies!";
+    }
+    var reb = ms.filter(function(m){ return getSt(camp.key,c.id,m).s==="rebut"; });
+    if(reb.length){
+      return salut+" Ja tinc tots els papers per presentar "+camp.periode+". Ho presentaré abans "+delDate(dl)+" i "+(g?"us":"et")+" diré què surt. Gràcies!";
+    }
+    var parts = [], ingr = 0;
+    ms.forEach(function(m){
+      var imp = getSt(camp.key,c.id,m).imp;
+      if(imp==null) return;
+      if(imp>0){ parts.push(MODELS[m].curt+", "+eur(imp)+" a ingressar"); ingr += imp; }
+      else if(imp<0) parts.push(MODELS[m].curt+", "+eur(-imp)+" a compensar");
+      else parts.push(MODELS[m].curt+", sense quota");
+    });
+    var t2 = salut+" Ja hem presentat "+camp.periode+".";
+    if(parts.length) t2 += (parts.length>1 ? " Resultats: " : " Resultat: ")+parts.join("; ")+".";
+    if(ingr>0){
+      var lastPres = ms.reduce(function(a,m){ return camp.models[m].pres>a ? camp.models[m].pres : a; }, "");
+      t2 += c.dom ? " El banc ho cobrarà "+artDate(lastPres)+"." : (g ? " Us enviem" : " T’envio")+" el document per pagar-ho abans "+delDate(lastPres)+".";
+    }
+    return t2+" Gràcies!";
+  }
+
+  /* ---------- Fitxa del client ---------- */
+  var openId = null;
+  function detailHTML(c){
+    var ms = modelsIn(c, sel), dl = clientDeadline(c, sel), st = stateOf(c, sel);
+    var due;
+    if(!ms.length) due = '<div class="due"><span class="due-d">No presenta res en aquest termini</span></div>';
+    else if(st==="fet") due = '<div class="due good"><span class="due-d">Tot presentat</span><span class="due-r">'+sel.label+' · '+sel.tag+'</span></div>';
+    else { var d = daysTo(dl); due = '<div class="due '+(d<=3?'late':(d<=10?'soon':''))+'"><span class="due-d">Fins al '+weekday(dl)+' '+dayMonth(dl)+'</span><span class="due-r">'+rel(d)+'</span></div>'; }
+    var note = domLost(c, sel)
+      ? '<p class="note bad">La domiciliació ja s’ha tancat i encara hi ha models per presentar. Es poden presentar fins al <b>'+fShort(sel.last)+'</b>, però el client haurà de pagar amb document d’ingrés al banc.</p>'
+      : (c.dom ? '<p class="note">Pagament domiciliat: el termini per presentar és més curt, però el banc cobra l’últim dia del període.</p>' : '');
+    var decls = ms.map(function(m){
+      var s = getSt(sel.key, c.id, m), t = modelDeadline(c, sel, m);
+      return '<div class="decl"><div class="dh"><span class="code">'+m+'</span><span class="nm">'+MODELS[m].nom+'</span><span class="dl">fins al '+fDM(t)+'</span></div>'+
+        '<div class="seg">'+Object.keys(ST).map(function(k){ return '<button type="button" data-ms="'+m+':'+k+'" aria-pressed="'+(s.s===k)+'">'+ST[k]+'</button>'; }).join("")+'</div>'+
+        '<label class="fld">Resultat (€) <span class="opt">positiu a ingressar, negatiu a compensar</span><input id="imp-'+m+'" data-imp="'+m+'" type="number" inputmode="decimal" step="1" value="'+(s.imp==null?'':s.imp)+'"></label></div>';
+    }).join("");
+    var mtext = msg(c, sel);
+    return ''+
+      '<div class="s-head"><div><span class="tag">'+esc(c.tipus)+'</span><h2 id="s-title">'+esc(c.nom)+'</h2><p class="s-sub">'+esc(c.act)+'</p></div>'+
+        '<button type="button" class="x" data-act="close" aria-label="Tanca la fitxa">×</button></div>'+
+      due+note+
+      (ms.length ? '<section class="s-sec"><h3>'+sel.label+' · '+sel.tag+'</h3>'+decls+'</section>' : '')+
+      (mtext ? '<section class="s-sec"><h3>Missatge per al client</h3><textarea id="d-msg" class="msg" readonly rows="6" aria-label="Missatge per al client">'+esc(mtext)+'</textarea>'+
+        '<div><button type="button" class="btn" data-act="copymsg">Copia el missatge</button></div></section>' : '')+
+      '<section class="s-sec"><h3>Models que presenta</h3><div class="checks">'+ORDER.map(function(m){
+        return '<label title="'+MODELS[m].nom+'"><input type="checkbox" data-model="'+m+'"'+(c.models.indexOf(m)>=0?' checked':'')+'> '+m+'</label>';
+      }).join("")+'</div><label class="check"><input type="checkbox" id="d-dom"'+(c.dom?' checked':'')+'> Pagament domiciliat</label></section>'+
+      '<section class="s-sec"><h3>Contacte</h3><dl class="kv"><dt>Telèfon</dt><dd>'+(c.tel ? '<span class="mono">'+esc(c.tel)+'</span><button type="button" class="mini" data-act="copytel">Copia</button>' : '—')+'</dd></dl></section>'+
+      '<section class="s-sec"><h3>Notes</h3><textarea id="d-notes" rows="3" placeholder="Com porta els papers, a qui cal trucar…">'+esc(c.notes)+'</textarea></section>'+
+      '<div class="s-foot"><button type="button" class="btn danger" data-act="del">Elimina el client</button></div>';
+  }
+  function showDetail(id, keepScroll){
+    var c = byId(id); if(!c) return;
+    openId = id;
+    var sh = $("sheet"), st = sh.scrollTop;
+    G.openSheet(detailHTML(c));
+    if(keepScroll) sh.scrollTop = st;
+  }
+  function closeSheet(){
+    var id = openId; openId = null;
+    G.closeSheet(id ? document.querySelector('.cl[data-cl="'+id+'"]') : null);
+  }
+  function refreshMsg(c){ var m=$("d-msg"); if(m) m.value = msg(c, sel); }
+
+  /* ---------- Nou client ---------- */
+  function newForm(){
+    openId = null;
+    G.openSheet(''+
+      '<div class="s-head"><div><h2 id="s-title">Nou client</h2></div><button type="button" class="x" data-act="close" aria-label="Tanca">×</button></div>'+
+      '<form class="nf" id="nf" novalidate>'+
+        '<label class="fld">Nom o raó social<input id="n-nom" required autocomplete="off"></label>'+
+        '<div class="two"><label class="fld">Tipus<select id="n-tipus">'+TIPUS_CL.map(function(t){ return '<option>'+t+'</option>'; }).join("")+'</select></label>'+
+        '<label class="fld">Telèfon<input id="n-tel" type="tel" autocomplete="off"></label></div>'+
+        '<label class="fld">Activitat<input id="n-act" autocomplete="off"></label>'+
+        '<div class="s-sec"><h3>Models que presenta</h3><div class="checks" id="n-models">'+ORDER.map(function(m){
+          return '<label title="'+MODELS[m].nom+'"><input type="checkbox" value="'+m+'"'+(DEF_MODELS["Autònom"].indexOf(m)>=0?' checked':'')+'> '+m+'</label>';
+        }).join("")+'</div></div>'+
+        '<label class="check"><input type="checkbox" id="n-dom"> Pagament domiciliat</label>'+
+        '<p class="err" id="n-err" hidden></p>'+
+        '<div><button class="btn primary" type="submit">Afegeix el client</button></div>'+
+      '</form>', "#n-nom");
+  }
+  function submitNew(){
+    var nom = $("n-nom").value.trim(), err = $("n-err");
+    var ms = Array.prototype.map.call(document.querySelectorAll('#n-models input:checked'), function(i){ return i.value; });
+    if(!nom){ err.textContent = "Falta el nom del client."; err.hidden=false; $("n-nom").focus(); return; }
+    if(!ms.length){ err.textContent = "Marca com a mínim un model."; err.hidden=false; return; }
+    var id = "c"+Date.now().toString(36);
+    data.clients.push({id:id, nom:nom, tipus:$("n-tipus").value, act:$("n-act").value.trim(), models:ms, dom:$("n-dom").checked, tel:$("n-tel").value.trim(), notes:""});
+    save(); renderMain(); G.closeSheet(); toast("Client afegit.");
+    var b = document.querySelector('.cl[data-cl="'+id+'"]'); if(b){ b.scrollIntoView({block:"center"}); b.focus({preventScroll:true}); }
+  }
+
+  function reminders(){
+    var list = data.clients.filter(function(c){ return modelsIn(c,sel).some(function(m){ return getSt(sel.key,c.id,m).s==="falta"; }); });
+    list.sort(function(a,b){ var da=clientDeadline(a,sel)||"9", db=clientDeadline(b,sel)||"9"; return da<db?-1:da>db?1:0; });
+    if(!list.length){ toast("Ningú deu papers en aquest termini."); return; }
+    var text = list.map(function(c){ return "— "+c.nom+(c.tel?" ("+c.tel+")":"")+"\n"+msg(c, sel); }).join("\n\n");
+    G.copyBox("Recordatoris de papers", text, list.length+" clients deuen papers per a "+sel.label.toLowerCase()+". Copia cada missatge al WhatsApp o al correu del client.");
+  }
+
+  /* ---------- Esdeveniments ---------- */
+  document.addEventListener("click", function(e){
+    var t = e.target;
+    var cell = t.closest(".cell[data-m]");
+    if(cell){
+      var cid = cell.getAttribute("data-cl"), m = cell.getAttribute("data-m"), s = getSt(sel.key,cid,m).s;
+      setSt(sel.key, cid, m, {s:NEXT[s]}); save(); renderStats(); renderList();
+      var again = document.querySelector('.cell[data-cl="'+cid+'"][data-m="'+m+'"]'); if(again) again.focus({preventScroll:true});
+      return;
+    }
+    var cl = t.closest(".cl"); if(cl){ showDetail(cl.getAttribute("data-cl")); return; }
+    var cp = t.closest(".camp"); if(cp){ var k=cp.getAttribute("data-camp"); SHOWN.forEach(function(c){ if(c.key===k) sel=c; }); renderMain(); return; }
+    var ch = t.closest(".chip"); if(ch){ F.tipus = ch.getAttribute("data-tipus"); Array.prototype.forEach.call(document.querySelectorAll(".chip"), function(x){ x.setAttribute("aria-pressed", String(x===ch)); }); renderList(); return; }
+    var ms = t.closest("[data-ms]");
+    if(ms && openId){
+      var parts = ms.getAttribute("data-ms").split(":"), c = byId(openId);
+      setSt(sel.key, c.id, parts[0], {s:parts[1]}); save(); renderMain(); showDetail(c.id, true); return;
+    }
+    var act = t.closest("[data-act]");
+    if(act){
+      var a = act.getAttribute("data-act");
+      if(a==="close"){ closeSheet(); return; }
+      if(a==="new"){ newForm(); return; }
+      if(a==="clearall"){ F={q:"",tipus:"",hide:false}; $("q").value=""; $("f-hide").checked=false; Array.prototype.forEach.call(document.querySelectorAll(".chip"), function(x){ x.setAttribute("aria-pressed", String(x.getAttribute("data-tipus")==="")); }); renderList(); return; }
+      var c2 = openId && byId(openId);
+      if(a==="copymsg" && c2){ G.copyText($("d-msg").value, $("d-msg"), "Missatge copiat."); return; }
+      if(a==="copytel" && c2){ G.copyText(c2.tel.replace(/\s+/g,""), null, "Telèfon copiat."); return; }
+      if(a==="del" && c2){
+        if(!G.arm(act, "Toca un altre cop per eliminar-lo")) return;
+        data.clients = data.clients.filter(function(x){ return x.id!==c2.id; });
+        Object.keys(data.st).forEach(function(k){ delete data.st[k][c2.id]; });
+        save(); openId=null; G.closeSheet(); renderMain(); toast("Client eliminat."); return;
+      }
+    }
+    if(t === $("bd")) closeSheet();
+  });
+  $("sheet").addEventListener("change", function(e){
+    var el = e.target, c = openId && byId(openId);
+    if(el.id==="n-tipus"){
+      var defs = DEF_MODELS[el.value] || [];
+      Array.prototype.forEach.call(document.querySelectorAll('#n-models input'), function(i){ i.checked = defs.indexOf(i.value)>=0; });
+      return;
+    }
+    if(!c) return;
+    if(el.hasAttribute("data-imp")){
+      var v = parseFloat(el.value); setSt(sel.key, c.id, el.getAttribute("data-imp"), {imp:isNaN(v)?null:v}); save(); refreshMsg(c); return;
+    }
+    if(el.hasAttribute("data-model")){
+      var m = el.getAttribute("data-model");
+      if(el.checked){ if(c.models.indexOf(m)<0) c.models.push(m); } else c.models = c.models.filter(function(x){ return x!==m; });
+      c.models.sort(function(a,b){ return ORDER.indexOf(a)-ORDER.indexOf(b); });
+      save(); renderMain(); showDetail(c.id, true); return;
+    }
+    if(el.id==="d-dom"){ c.dom = el.checked; save(); renderMain(); showDetail(c.id, true); return; }
+    if(el.id==="n-tipus"){
+      var def = DEF_MODELS[el.value] || [];
+      Array.prototype.forEach.call(document.querySelectorAll('#n-models input'), function(i){ i.checked = def.indexOf(i.value)>=0; });
+    }
+  });
+  var nt = null;
+  $("sheet").addEventListener("input", function(e){
+    if(e.target.id!=="d-notes" || !openId) return;
+    var c = byId(openId); if(!c) return;
+    c.notes = e.target.value; clearTimeout(nt); nt = setTimeout(save, 400);
+  });
+  $("sheet").addEventListener("submit", function(e){ if(e.target.id==="nf"){ e.preventDefault(); submitNew(); } });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeSheet(); });
+  $("q").addEventListener("input", function(e){ F.q = e.target.value; renderList(); });
+  $("f-hide").addEventListener("change", function(e){ F.hide = e.target.checked; renderList(); });
+  $("b-new").addEventListener("click", newForm);
+  $("b-rem").addEventListener("click", reminders);
+  $("b-reset").addEventListener("click", function(e){
+    if(!G.arm(e.currentTarget, "Segur? Es perden els canvis. Toca un altre cop")) return;
+    e.currentTarget.textContent = "Torna a les dades de prova";
+    data = seed(); save(); openId=null; G.closeSheet(); sel = CAMPS[CUR]; renderMain(); toast("Dades de prova restablertes.");
+  });
+
+  G.start(STORE, function(d){ data = d; renderMain(); });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/webp;base64,UklGRk4EAABXRUJQVlA4IEIEAABQFwCdASpuAHgAPj0ejUQiIaGTunUcIAPEtIBqW4pnD3tH+cx87fiJlat3h/unmZpPscHoVZ4/qLgJeiAWymoGxwoBzK9sp422w1LUo2+ZOYW8AyZJ7bpqtSzpO136l7n3vHd4d75Hkq2/Vc3eNdJMwghqA//rxT85OdFrv0JIMTFXrBPvh9b2O9wEcsBCkTrA86Q99bAmSVFqZDRJuq11kCqNI4qzGTf0FZeUKkZOkSiDjrolsxxJDlW6yiVmWgbHCSAA/u7p37DCYMqwm7NBJOBurnADhgBrfgRbJ0+HsCwwUhi8v94EltwxlCwWGejuq/FNvX/Dd/uXrfcsBAo8TZVDb/S8rCHtXgKBfd7XRSCU99hrBa+LmKr9sm7HR2shWSRjxZE8LYo+j4v73oE/lVMBoDMh0P9euKeppVcIM8zy2fn8DTcS0g83e//oCM0i8GNBbI2p81vyZfMn17s2oR9rdqUaneL/P+LuPhRR5L+ldXWnhuX3ZvvrIf+zT8/lYviVSTT6LOF04JNTUg3XMizwVPwzQcT3Lhe7MInzq21QtoIY+EVR971B8CMmsDiUlIibM530uB6HJef6uix7nxBPBADcbTy6iCGLIRFAR5+ystpFn8gkHW2+p45mq6ZNWAcyoT19MNXDto0Ho4QNV0DO9V/XPj6OtwK5PdoQqP+oTlEdfSGJ86ujGAwq0PAALK22Sb4I3Oe8bZ7R3clnZ/43hDb69040LGgPIPKYT4KmmO1hyQPPXoOpqGKFC5iX0E2gkOahBxmlbguqbCGcRIsN4N49E5cqTGJSNFX8I6d7c5TrfgJ/C6dY0MGonKPxHy4F9OUaSiwf5ZyAAnP4Fc7iEnVN4VZWgNQey9A/hOf15FrRwtNfL4v+QyB81s3bz2DnjzNqu+GCB5x1NwXpRO0cTUe6xSTGU+xFwE7gE92t6EGnSrpo9r0WU8vax6NrhYm7bLgtWfKMdA+2OD6Nc/0oOlHYJIdIfiPkGBogkZNRz58rrJHZ4Furfvn9mfGnZ8Azvv5yt8Bt/7nv8v5uuU39ziWjN8HQJ09in7hj6hbLWHg8KLE4+qXVQ9hGm+gybBo+YUDYSDptvY4TND5+yRRP2O4Uk5NBoQxxVxrTUl+EjrvzV+aXM78Ic5+807LIkw8Ud39+M1WcdO68cEHJp9WkGfcoa8HcCepUgJiNpJ7jL8I9haN6LpyrtUuaFNoMqEwPoG2tNsRgFNGowdyq7kBLQ5Od/I6zt3AXxVEU9aiJNbAKiTDCeJGBsL38HtrtvlpFRO8IZjPzdbP1dlzl2xAyPx+rcVWgVOHQqZuwTQYMxfGsiSllpaOUI1F7eFWcG+CBZrxI5Fk5qs/KrVD/9UjlnfYlXj4uKCPzLRcRSIFsMAk+QQUNPBM9s+LzlR8uhQICQFwjzRCbUbtt1r3Nv042S5HDxHFLMFq8AAAAAAAA">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
+
+<title>Eines de Galindo grup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Franklin:wght@400;500;600;700;800&display=swap">
+<style>
+/* Galindo grup — base comuna de les eines internes.
+   Columna de treball única; capçalera amb el monograma i menú entre eines; gris càlid de marca sobre blanc. */
+:root{
+  --bg:#f6f5f3; --surface:#ffffff; --sunk:#eeebe7; --hover:#f8f7f5;
+  --ink:#2a2723; --muted:#6c675f; --line:#e1ddd7; --bar:#cfc9c0;
+  --brand:#a39c92; --accent:#5d564c; --accent-soft:#ece8e2; --on-accent:#ffffff;
+  --info:#2f5f8a; --info-soft:#e3ebf3;
+  --late:#b3391f; --late-soft:#f7e3dc;
+  --soon:#8f5d00; --soon-soft:#f5ebd6;
+  --ok:#36744b; --ok-soft:#e1eee4;
+  --scrim:rgba(20,18,15,.45);
+  --f-display:"Libre Franklin","Franklin Gothic Medium","Arial Narrow",Arial,system-ui,sans-serif;
+  --f-body:"Libre Franklin",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#191816; --surface:#22201d; --sunk:#2c2a26; --hover:#282622;
+    --ink:#ece9e4; --muted:#a8a298; --line:#38352f; --bar:#55504a;
+    --brand:#a39c92; --accent:#d9d3ca; --accent-soft:#38342e; --on-accent:#191816;
+    --info:#93bde6; --info-soft:#1e2c3a;
+    --late:#ff8f72; --late-soft:#40221a;
+    --soon:#e2b45c; --soon-soft:#3a2f17;
+    --ok:#7cc896; --ok-soft:#1d3426;
+    --scrim:rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#191816; --surface:#22201d; --sunk:#2c2a26; --hover:#282622;
+  --ink:#ece9e4; --muted:#a8a298; --line:#38352f; --bar:#55504a;
+  --brand:#a39c92; --accent:#d9d3ca; --accent-soft:#38342e; --on-accent:#191816;
+  --info:#93bde6; --info-soft:#1e2c3a;
+  --late:#ff8f72; --late-soft:#40221a;
+  --soon:#e2b45c; --soon-soft:#3a2f17;
+  --ok:#7cc896; --ok-soft:#1d3426;
+  --scrim:rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.wrap{max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:14px 72px;display:flex;flex-direction:column;gap:18px}
+@media (min-width:760px){.wrap{padding-inline:28px;padding-block:22px 88px;gap:22px}}
+
+/* Capçalera corporativa */
+.brandbar{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px}
+.mark{display:block;width:37px;height:40px;flex:none}
+.wm{display:flex;flex-direction:column;align-items:center;line-height:1;color:var(--brand)}
+.wm1{font-family:var(--f-display);font-weight:700;font-size:21px;letter-spacing:.005em}
+.wm2{font-family:var(--f-display);font-weight:600;font-size:13px;margin-top:1px}
+.apps{display:flex;gap:4px;flex-wrap:wrap}
+.app{font-size:13.5px;font-weight:500;padding:6px 11px;border-radius:7px;color:var(--muted);text-decoration:none;border:1px solid transparent}
+a.app:hover{background:var(--hover);color:var(--ink);border-color:var(--line)}
+.app.cur{color:var(--ink);font-weight:700;background:var(--surface);border-color:var(--line)}
+
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 20px}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,6.5vw,2.75rem);line-height:1;letter-spacing:-.015em;margin:0;text-wrap:balance}
+.sub{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);margin:8px 0 0}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font-weight:600;font-size:14px;border-radius:8px;padding:9px 14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--hover)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.primary:hover{filter:brightness(1.1)}
+.btn.danger{color:var(--late);border-color:var(--late-soft);background:transparent}
+.btn.danger[data-armed="1"]{background:var(--late);color:var(--surface);border-color:var(--late)}
+.linkbtn{background:none;border:0;padding:0;color:var(--ink);text-decoration:underline;text-decoration-color:var(--brand);text-underline-offset:3px;cursor:pointer;font-size:inherit}
+
+.demo{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin:0}
+
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:760px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.stat .k{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.stat .v{font-family:var(--f-display);font-weight:800;font-size:2rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat .v small{font-size:1rem;font-weight:600;color:var(--muted)}
+.stat .s{font-size:12.5px;color:var(--muted)}
+.stat.alert .v{color:var(--late)}
+.stat.warn .v{color:var(--soon)}
+.stat.good .v{color:var(--ok)}
+
+.filters{display:flex;flex-direction:column;gap:10px}
+.search{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.frow{display:flex;gap:8px 12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:13px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.chip:hover{background:var(--hover)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fside{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.fside select{padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:13.5px}
+.check{display:flex;gap:6px;align-items:center;font-size:13.5px;color:var(--muted);cursor:pointer}
+
+.group{display:flex;flex-direction:column;gap:8px}
+.gh{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 2px}
+.gh h2{font-family:var(--f-display);font-size:16px;font-weight:700;margin:0;display:flex;gap:8px;align-items:center;text-wrap:balance}
+.gh .dot{width:10px;height:10px;border-radius:2px;background:var(--gcol);flex:none}
+.gh .n{font-family:var(--f-mono);font-weight:400;font-size:12.5px;color:var(--muted)}
+.gh .gs{font-size:12.5px;color:var(--muted);font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+
+.tag{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border:1px solid var(--line);border-radius:4px;color:var(--muted);flex:none;line-height:1.5}
+.pill{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap}
+
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:28px 16px;text-align:center;color:var(--muted);display:flex;flex-direction:column;gap:12px;align-items:center}
+.empty p{margin:0}
+
+/* Fitxa: full inferior al mòbil, panell lateral a l'escriptori */
+.backdrop{position:fixed;inset:0;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;z-index:20;opacity:0;transition:opacity .18s ease}
+.backdrop.open{opacity:1}
+.sheet{background:var(--surface);color:var(--ink);width:100%;max-height:90%;overflow:auto;overscroll-behavior:contain;border-radius:14px 14px 0 0;padding:18px 16px calc(28px + env(safe-area-inset-bottom,0px));transform:translateY(18px);transition:transform .2s ease;display:flex;flex-direction:column;gap:18px}
+.backdrop.open .sheet{transform:none}
+@media (min-width:760px){
+  .backdrop{justify-content:flex-end;align-items:stretch}
+  .sheet{width:480px;max-height:none;height:100%;border-radius:0;padding:calc(24px + env(safe-area-inset-top,0px)) 26px calc(32px + env(safe-area-inset-bottom,0px));transform:translateX(24px)}
+}
+@media (prefers-reduced-motion: reduce){.backdrop,.sheet{transition:none}}
+.s-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.s-head .tag{display:inline-block;margin-bottom:6px}
+.s-head h2{font-family:var(--f-display);font-weight:800;font-size:1.55rem;line-height:1.08;margin:0;text-wrap:balance}
+.s-head .s-sub{margin:4px 0 0;font-size:13.5px;color:var(--muted)}
+.x{border:1px solid var(--line);background:var(--surface);border-radius:8px;width:36px;height:36px;font-size:20px;line-height:1;cursor:pointer;flex:none}
+.x:hover{background:var(--hover)}
+.due{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 14px;border-radius:10px;background:var(--sunk)}
+.due-d{font-family:var(--f-display);font-weight:700;font-size:1.2rem}
+.due-r{font-size:13.5px;color:var(--muted)}
+.due.late .due-d{color:var(--late)}
+.due.soon .due-d{color:var(--soon)}
+.due.good .due-d{color:var(--ok)}
+.note{margin:0;font-size:13.5px;color:var(--muted);border-left:3px solid var(--line);padding:2px 0 2px 12px}
+.note b{color:var(--ink);font-weight:600}
+.note.hot{border-left-color:var(--soon)}
+.note.hot b{color:var(--soon)}
+.note.bad{border-left-color:var(--late)}
+.note.bad b{color:var(--late)}
+.s-sec{display:flex;flex-direction:column;gap:8px}
+.s-sec h3{margin:0;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font-size:13px;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.seg button:hover{background:var(--hover)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:0;font-size:14px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;overflow-wrap:anywhere;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mono{font-family:var(--f-mono);font-size:13.5px}
+.mini{font-family:var(--f-body);font-size:12px;padding:2px 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fld{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);min-width:0}
+.fld .opt{font-weight:400;opacity:.85}
+.fld input,.fld select,.fld textarea,.sheet textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:14.5px}
+.sheet textarea{resize:vertical;line-height:1.45}
+.msg{background:var(--sunk) !important;font-size:14px !important}
+.hint{margin:0;font-size:12.5px;color:var(--muted)}
+.checks{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px}
+.checks label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.hist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13.5px}
+.hist li{display:grid;grid-template-columns:78px minmax(0,1fr);gap:10px}
+.hist time{font-family:var(--f-mono);font-size:12px;color:var(--muted);padding-top:1px}
+.s-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-top:6px;border-top:1px solid var(--line)}
+.err{margin:0;color:var(--late);font-size:13.5px}
+form.nf{display:flex;flex-direction:column;gap:12px}
+
+/* Versió connectada al Drive: porta d'entrada i estat del desament */
+html.locked .wrap > :not(.brandbar):not(.gate){display:none !important}
+.gate{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:26px 20px;display:flex;flex-direction:column;gap:12px;align-items:flex-start;max-width:540px}
+.gate h2{font-family:var(--f-display);font-weight:800;font-size:1.4rem;line-height:1.15;margin:0;text-wrap:balance}
+.gate p{margin:0;color:var(--muted);max-width:60ch}
+.gate p b{color:var(--ink)}
+.gate code{font-family:var(--f-mono);font-size:.92em;background:var(--sunk);padding:1px 5px;border-radius:4px}
+.gate-btns{display:flex;gap:8px;flex-wrap:wrap}
+.sync{display:flex;align-items:center;gap:6px 8px;font-size:12.5px;color:var(--muted);flex-wrap:wrap;flex-basis:100%}
+@media (min-width:760px){.sync{flex-basis:auto}}
+.sync .sd{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
+.sync.s-busy .sd{background:var(--soon)}
+.sync.s-err{color:var(--late)}
+.sync.s-err .sd{background:var(--late)}
+.brandlink{display:flex;align-items:center;gap:10px;text-decoration:none}
+
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;z-index:40;max-width:calc(100% - 32px);box-shadow:0 6px 20px rgba(0,0,0,.18)}
+
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.tool{display:flex;flex-direction:column;gap:6px;padding:18px;background:var(--surface);border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--ink)}
+.tool:hover{border-color:var(--brand);background:var(--hover)}
+.tool .tag{align-self:flex-start}
+.tool h2{font-family:var(--f-display);font-weight:800;font-size:1.35rem;margin:4px 0 0}
+.tool p{margin:0;color:var(--muted);font-size:14px;max-width:46ch}
+.tool .go{margin-top:auto;padding-top:8px;font-weight:600;font-size:14px}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="brandbar"><a class="brandlink" href="./" aria-label="Inici"><img class="mark" src="data:image/webp;base64,UklGRk4EAABXRUJQVlA4IEIEAABQFwCdASpuAHgAPj0ejUQiIaGTunUcIAPEtIBqW4pnD3tH+cx87fiJlat3h/unmZpPscHoVZ4/qLgJeiAWymoGxwoBzK9sp422w1LUo2+ZOYW8AyZJ7bpqtSzpO136l7n3vHd4d75Hkq2/Vc3eNdJMwghqA//rxT85OdFrv0JIMTFXrBPvh9b2O9wEcsBCkTrA86Q99bAmSVFqZDRJuq11kCqNI4qzGTf0FZeUKkZOkSiDjrolsxxJDlW6yiVmWgbHCSAA/u7p37DCYMqwm7NBJOBurnADhgBrfgRbJ0+HsCwwUhi8v94EltwxlCwWGejuq/FNvX/Dd/uXrfcsBAo8TZVDb/S8rCHtXgKBfd7XRSCU99hrBa+LmKr9sm7HR2shWSRjxZE8LYo+j4v73oE/lVMBoDMh0P9euKeppVcIM8zy2fn8DTcS0g83e//oCM0i8GNBbI2p81vyZfMn17s2oR9rdqUaneL/P+LuPhRR5L+ldXWnhuX3ZvvrIf+zT8/lYviVSTT6LOF04JNTUg3XMizwVPwzQcT3Lhe7MInzq21QtoIY+EVR971B8CMmsDiUlIibM530uB6HJef6uix7nxBPBADcbTy6iCGLIRFAR5+ystpFn8gkHW2+p45mq6ZNWAcyoT19MNXDto0Ho4QNV0DO9V/XPj6OtwK5PdoQqP+oTlEdfSGJ86ujGAwq0PAALK22Sb4I3Oe8bZ7R3clnZ/43hDb69040LGgPIPKYT4KmmO1hyQPPXoOpqGKFC5iX0E2gkOahBxmlbguqbCGcRIsN4N49E5cqTGJSNFX8I6d7c5TrfgJ/C6dY0MGonKPxHy4F9OUaSiwf5ZyAAnP4Fc7iEnVN4VZWgNQey9A/hOf15FrRwtNfL4v+QyB81s3bz2DnjzNqu+GCB5x1NwXpRO0cTUe6xSTGU+xFwE7gE92t6EGnSrpo9r0WU8vax6NrhYm7bLgtWfKMdA+2OD6Nc/0oOlHYJIdIfiPkGBogkZNRz58rrJHZ4Furfvn9mfGnZ8Azvv5yt8Bt/7nv8v5uuU39ziWjN8HQJ09in7hj6hbLWHg8KLE4+qXVQ9hGm+gybBo+YUDYSDptvY4TND5+yRRP2O4Uk5NBoQxxVxrTUl+EjrvzV+aXM78Ic5+807LIkw8Ud39+M1WcdO68cEHJp9WkGfcoa8HcCepUgJiNpJ7jL8I9haN6LpyrtUuaFNoMqEwPoG2tNsRgFNGowdyq7kBLQ5Od/I6zt3AXxVEU9aiJNbAKiTDCeJGBsL38HtrtvlpFRO8IZjPzdbP1dlzl2xAyPx+rcVWgVOHQqZuwTQYMxfGsiSllpaOUI1F7eFWcG+CBZrxI5Fk5qs/KrVD/9UjlnfYlXj4uKCPzLRcRSIFsMAk+QQUNPBM9s+LzlR8uhQICQFwjzRCbUbtt1r3Nv042S5HDxHFLMFq8AAAAAAAA" alt="Galindo grup" width="37" height="40"><span class="wm" aria-hidden="true"><span class="wm1">Galindo</span><span class="wm2">grup</span></span></a><nav class="apps" aria-label="Eines de la gestoria"><a class="app" href="venciments.html">Venciments</a><a class="app" href="trimestrals.html">Trimestrals</a><a class="app" href="caducitats.html">Caducitats</a></nav></div>
+  <header class="top">
+    <div>
+      <h1>Eines de la gestoria</h1>
+      <p class="sub">Venciments · trimestrals · caducitats</p>
+    </div>
+  </header>
+
+  <section class="tools" aria-label="Eines">
+    <a class="tool" href="venciments.html">
+      <span class="tag">Assegurances</span>
+      <h2>Venciments</h2>
+      <p>Pòlisses ordenades per data de venciment, amb el termini perquè el client les pugui donar de baixa i el missatge per avisar-lo.</p>
+      <span class="go">Obre →</span>
+    </a>
+    <a class="tool" href="trimestrals.html">
+      <span class="tag">Hisenda</span>
+      <h2>Trimestrals</h2>
+      <p>Quins clients deuen papers, què està preparat i què ja s’ha presentat dels models 303, 130, 111, 115 i 202.</p>
+      <span class="go">Obre →</span>
+    </a>
+    <a class="tool" href="caducitats.html">
+      <span class="tag">Documents</span>
+      <h2>Caducitats</h2>
+      <p>Certificats digitals, DNI, carnets i ITV dels clients, amb avís quan es poden renovar per internet.</p>
+      <span class="go">Obre →</span>
+    </a>
+  </section>
+
+  <p class="note">Les dades es guarden en un full de càlcul privat al Drive. Per veure-les cal entrar amb un compte de Google autoritzat.</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1128 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/webp;base64,UklGRk4EAABXRUJQVlA4IEIEAABQFwCdASpuAHgAPj0ejUQiIaGTunUcIAPEtIBqW4pnD3tH+cx87fiJlat3h/unmZpPscHoVZ4/qLgJeiAWymoGxwoBzK9sp422w1LUo2+ZOYW8AyZJ7bpqtSzpO136l7n3vHd4d75Hkq2/Vc3eNdJMwghqA//rxT85OdFrv0JIMTFXrBPvh9b2O9wEcsBCkTrA86Q99bAmSVFqZDRJuq11kCqNI4qzGTf0FZeUKkZOkSiDjrolsxxJDlW6yiVmWgbHCSAA/u7p37DCYMqwm7NBJOBurnADhgBrfgRbJ0+HsCwwUhi8v94EltwxlCwWGejuq/FNvX/Dd/uXrfcsBAo8TZVDb/S8rCHtXgKBfd7XRSCU99hrBa+LmKr9sm7HR2shWSRjxZE8LYo+j4v73oE/lVMBoDMh0P9euKeppVcIM8zy2fn8DTcS0g83e//oCM0i8GNBbI2p81vyZfMn17s2oR9rdqUaneL/P+LuPhRR5L+ldXWnhuX3ZvvrIf+zT8/lYviVSTT6LOF04JNTUg3XMizwVPwzQcT3Lhe7MInzq21QtoIY+EVR971B8CMmsDiUlIibM530uB6HJef6uix7nxBPBADcbTy6iCGLIRFAR5+ystpFn8gkHW2+p45mq6ZNWAcyoT19MNXDto0Ho4QNV0DO9V/XPj6OtwK5PdoQqP+oTlEdfSGJ86ujGAwq0PAALK22Sb4I3Oe8bZ7R3clnZ/43hDb69040LGgPIPKYT4KmmO1hyQPPXoOpqGKFC5iX0E2gkOahBxmlbguqbCGcRIsN4N49E5cqTGJSNFX8I6d7c5TrfgJ/C6dY0MGonKPxHy4F9OUaSiwf5ZyAAnP4Fc7iEnVN4VZWgNQey9A/hOf15FrRwtNfL4v+QyB81s3bz2DnjzNqu+GCB5x1NwXpRO0cTUe6xSTGU+xFwE7gE92t6EGnSrpo9r0WU8vax6NrhYm7bLgtWfKMdA+2OD6Nc/0oOlHYJIdIfiPkGBogkZNRz58rrJHZ4Furfvn9mfGnZ8Azvv5yt8Bt/7nv8v5uuU39ziWjN8HQJ09in7hj6hbLWHg8KLE4+qXVQ9hGm+gybBo+YUDYSDptvY4TND5+yRRP2O4Uk5NBoQxxVxrTUl+EjrvzV+aXM78Ic5+807LIkw8Ud39+M1WcdO68cEHJp9WkGfcoa8HcCepUgJiNpJ7jL8I9haN6LpyrtUuaFNoMqEwPoG2tNsRgFNGowdyq7kBLQ5Od/I6zt3AXxVEU9aiJNbAKiTDCeJGBsL38HtrtvlpFRO8IZjPzdbP1dlzl2xAyPx+rcVWgVOHQqZuwTQYMxfGsiSllpaOUI1F7eFWcG+CBZrxI5Fk5qs/KrVD/9UjlnfYlXj4uKCPzLRcRSIFsMAk+QQUNPBM9s+LzlR8uhQICQFwjzRCbUbtt1r3Nv042S5HDxHFLMFq8AAAAAAAA">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
+<script src="config.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<title>Tauler de venciments</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Franklin:wght@400;500;600;700;800&display=swap">
+<style>
+/* Galindo grup — base comuna de les eines internes.
+   Columna de treball única; capçalera amb el monograma i menú entre eines; gris càlid de marca sobre blanc. */
+:root{
+  --bg:#f6f5f3; --surface:#ffffff; --sunk:#eeebe7; --hover:#f8f7f5;
+  --ink:#2a2723; --muted:#6c675f; --line:#e1ddd7; --bar:#cfc9c0;
+  --brand:#a39c92; --accent:#5d564c; --accent-soft:#ece8e2; --on-accent:#ffffff;
+  --info:#2f5f8a; --info-soft:#e3ebf3;
+  --late:#b3391f; --late-soft:#f7e3dc;
+  --soon:#8f5d00; --soon-soft:#f5ebd6;
+  --ok:#36744b; --ok-soft:#e1eee4;
+  --scrim:rgba(20,18,15,.45);
+  --f-display:"Libre Franklin","Franklin Gothic Medium","Arial Narrow",Arial,system-ui,sans-serif;
+  --f-body:"Libre Franklin",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#191816; --surface:#22201d; --sunk:#2c2a26; --hover:#282622;
+    --ink:#ece9e4; --muted:#a8a298; --line:#38352f; --bar:#55504a;
+    --brand:#a39c92; --accent:#d9d3ca; --accent-soft:#38342e; --on-accent:#191816;
+    --info:#93bde6; --info-soft:#1e2c3a;
+    --late:#ff8f72; --late-soft:#40221a;
+    --soon:#e2b45c; --soon-soft:#3a2f17;
+    --ok:#7cc896; --ok-soft:#1d3426;
+    --scrim:rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#191816; --surface:#22201d; --sunk:#2c2a26; --hover:#282622;
+  --ink:#ece9e4; --muted:#a8a298; --line:#38352f; --bar:#55504a;
+  --brand:#a39c92; --accent:#d9d3ca; --accent-soft:#38342e; --on-accent:#191816;
+  --info:#93bde6; --info-soft:#1e2c3a;
+  --late:#ff8f72; --late-soft:#40221a;
+  --soon:#e2b45c; --soon-soft:#3a2f17;
+  --ok:#7cc896; --ok-soft:#1d3426;
+  --scrim:rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.wrap{max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:14px 72px;display:flex;flex-direction:column;gap:18px}
+@media (min-width:760px){.wrap{padding-inline:28px;padding-block:22px 88px;gap:22px}}
+
+/* Capçalera corporativa */
+.brandbar{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px}
+.mark{display:block;width:37px;height:40px;flex:none}
+.wm{display:flex;flex-direction:column;align-items:center;line-height:1;color:var(--brand)}
+.wm1{font-family:var(--f-display);font-weight:700;font-size:21px;letter-spacing:.005em}
+.wm2{font-family:var(--f-display);font-weight:600;font-size:13px;margin-top:1px}
+.apps{display:flex;gap:4px;flex-wrap:wrap}
+.app{font-size:13.5px;font-weight:500;padding:6px 11px;border-radius:7px;color:var(--muted);text-decoration:none;border:1px solid transparent}
+a.app:hover{background:var(--hover);color:var(--ink);border-color:var(--line)}
+.app.cur{color:var(--ink);font-weight:700;background:var(--surface);border-color:var(--line)}
+
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 20px}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,6.5vw,2.75rem);line-height:1;letter-spacing:-.015em;margin:0;text-wrap:balance}
+.sub{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);margin:8px 0 0}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font-weight:600;font-size:14px;border-radius:8px;padding:9px 14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--hover)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.primary:hover{filter:brightness(1.1)}
+.btn.danger{color:var(--late);border-color:var(--late-soft);background:transparent}
+.btn.danger[data-armed="1"]{background:var(--late);color:var(--surface);border-color:var(--late)}
+.linkbtn{background:none;border:0;padding:0;color:var(--ink);text-decoration:underline;text-decoration-color:var(--brand);text-underline-offset:3px;cursor:pointer;font-size:inherit}
+
+.demo{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;border:1px dashed var(--line);border-radius:8px;padding:8px 12px;margin:0}
+
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:760px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.stat .k{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.stat .v{font-family:var(--f-display);font-weight:800;font-size:2rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat .v small{font-size:1rem;font-weight:600;color:var(--muted)}
+.stat .s{font-size:12.5px;color:var(--muted)}
+.stat.alert .v{color:var(--late)}
+.stat.warn .v{color:var(--soon)}
+.stat.good .v{color:var(--ok)}
+
+.filters{display:flex;flex-direction:column;gap:10px}
+.search{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.frow{display:flex;gap:8px 12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:13px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.chip:hover{background:var(--hover)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fside{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.fside select{padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:13.5px}
+.check{display:flex;gap:6px;align-items:center;font-size:13.5px;color:var(--muted);cursor:pointer}
+
+.group{display:flex;flex-direction:column;gap:8px}
+.gh{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 2px}
+.gh h2{font-family:var(--f-display);font-size:16px;font-weight:700;margin:0;display:flex;gap:8px;align-items:center;text-wrap:balance}
+.gh .dot{width:10px;height:10px;border-radius:2px;background:var(--gcol);flex:none}
+.gh .n{font-family:var(--f-mono);font-weight:400;font-size:12.5px;color:var(--muted)}
+.gh .gs{font-size:12.5px;color:var(--muted);font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+
+.tag{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border:1px solid var(--line);border-radius:4px;color:var(--muted);flex:none;line-height:1.5}
+.pill{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap}
+
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:28px 16px;text-align:center;color:var(--muted);display:flex;flex-direction:column;gap:12px;align-items:center}
+.empty p{margin:0}
+
+/* Fitxa: full inferior al mòbil, panell lateral a l'escriptori */
+.backdrop{position:fixed;inset:0;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;z-index:20;opacity:0;transition:opacity .18s ease}
+.backdrop.open{opacity:1}
+.sheet{background:var(--surface);color:var(--ink);width:100%;max-height:90%;overflow:auto;overscroll-behavior:contain;border-radius:14px 14px 0 0;padding:18px 16px calc(28px + env(safe-area-inset-bottom,0px));transform:translateY(18px);transition:transform .2s ease;display:flex;flex-direction:column;gap:18px}
+.backdrop.open .sheet{transform:none}
+@media (min-width:760px){
+  .backdrop{justify-content:flex-end;align-items:stretch}
+  .sheet{width:480px;max-height:none;height:100%;border-radius:0;padding:calc(24px + env(safe-area-inset-top,0px)) 26px calc(32px + env(safe-area-inset-bottom,0px));transform:translateX(24px)}
+}
+@media (prefers-reduced-motion: reduce){.backdrop,.sheet{transition:none}}
+.s-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.s-head .tag{display:inline-block;margin-bottom:6px}
+.s-head h2{font-family:var(--f-display);font-weight:800;font-size:1.55rem;line-height:1.08;margin:0;text-wrap:balance}
+.s-head .s-sub{margin:4px 0 0;font-size:13.5px;color:var(--muted)}
+.x{border:1px solid var(--line);background:var(--surface);border-radius:8px;width:36px;height:36px;font-size:20px;line-height:1;cursor:pointer;flex:none}
+.x:hover{background:var(--hover)}
+.due{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 14px;border-radius:10px;background:var(--sunk)}
+.due-d{font-family:var(--f-display);font-weight:700;font-size:1.2rem}
+.due-r{font-size:13.5px;color:var(--muted)}
+.due.late .due-d{color:var(--late)}
+.due.soon .due-d{color:var(--soon)}
+.due.good .due-d{color:var(--ok)}
+.note{margin:0;font-size:13.5px;color:var(--muted);border-left:3px solid var(--line);padding:2px 0 2px 12px}
+.note b{color:var(--ink);font-weight:600}
+.note.hot{border-left-color:var(--soon)}
+.note.hot b{color:var(--soon)}
+.note.bad{border-left-color:var(--late)}
+.note.bad b{color:var(--late)}
+.s-sec{display:flex;flex-direction:column;gap:8px}
+.s-sec h3{margin:0;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font-size:13px;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.seg button:hover{background:var(--hover)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:0;font-size:14px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;overflow-wrap:anywhere;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mono{font-family:var(--f-mono);font-size:13.5px}
+.mini{font-family:var(--f-body);font-size:12px;padding:2px 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fld{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);min-width:0}
+.fld .opt{font-weight:400;opacity:.85}
+.fld input,.fld select,.fld textarea,.sheet textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:14.5px}
+.sheet textarea{resize:vertical;line-height:1.45}
+.msg{background:var(--sunk) !important;font-size:14px !important}
+.hint{margin:0;font-size:12.5px;color:var(--muted)}
+.checks{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px}
+.checks label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.hist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13.5px}
+.hist li{display:grid;grid-template-columns:78px minmax(0,1fr);gap:10px}
+.hist time{font-family:var(--f-mono);font-size:12px;color:var(--muted);padding-top:1px}
+.s-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding-top:6px;border-top:1px solid var(--line)}
+.err{margin:0;color:var(--late);font-size:13.5px}
+form.nf{display:flex;flex-direction:column;gap:12px}
+
+/* Versió connectada al Drive: porta d'entrada i estat del desament */
+html.locked .wrap > :not(.brandbar):not(.gate){display:none !important}
+.gate{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:26px 20px;display:flex;flex-direction:column;gap:12px;align-items:flex-start;max-width:540px}
+.gate h2{font-family:var(--f-display);font-weight:800;font-size:1.4rem;line-height:1.15;margin:0;text-wrap:balance}
+.gate p{margin:0;color:var(--muted);max-width:60ch}
+.gate p b{color:var(--ink)}
+.gate code{font-family:var(--f-mono);font-size:.92em;background:var(--sunk);padding:1px 5px;border-radius:4px}
+.gate-btns{display:flex;gap:8px;flex-wrap:wrap}
+.sync{display:flex;align-items:center;gap:6px 8px;font-size:12.5px;color:var(--muted);flex-wrap:wrap;flex-basis:100%}
+@media (min-width:760px){.sync{flex-basis:auto}}
+.sync .sd{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
+.sync.s-busy .sd{background:var(--soon)}
+.sync.s-err{color:var(--late)}
+.sync.s-err .sd{background:var(--late)}
+.brandlink{display:flex;align-items:center;gap:10px;text-decoration:none}
+
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;z-index:40;max-width:calc(100% - 32px);box-shadow:0 6px 20px rgba(0,0,0,.18)}
+
+/* Venciments: franja de 12 mesos + llista per urgència */
+.months{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 12px 8px;display:flex;flex-direction:column;gap:8px}
+.mh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.mh h2{margin:0;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.mh .mf{font-size:13px;color:var(--ink)}
+.mscroll{overflow-x:auto}
+.mgrid{display:grid;grid-template-columns:repeat(12,minmax(26px,1fr));gap:4px;height:104px;min-width:330px}
+.mcol{display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;background:none;border:0;border-radius:6px;padding:2px 0 3px;cursor:pointer;color:var(--muted)}
+.mcol:hover{background:var(--hover)}
+.mcol .mc{font-family:var(--f-mono);font-size:11px;color:var(--ink);font-variant-numeric:tabular-nums;min-height:15px}
+.mcol .mb{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center}
+.mcol .bar{width:62%;max-width:26px;background:var(--bar);border-radius:3px 3px 0 0;min-height:2px}
+.mcol .mn{font-size:11px}
+.mcol.now .bar{background:var(--accent)}
+.mcol.now .mn{color:var(--ink);font-weight:700}
+.mcol[aria-pressed="true"]{background:var(--accent-soft)}
+.mcol[aria-pressed="true"] .mn{color:var(--ink);font-weight:700}
+
+#list{display:flex;flex-direction:column;gap:22px}
+ul.rows{list-style:none;margin:0;padding:0}
+.row{width:100%;text-align:left;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;background:transparent;border:0;border-top:1px solid var(--line);padding:12px 14px;cursor:pointer}
+ul.rows li:first-child .row{border-top:0}
+.row:hover{background:var(--hover)}
+.row:focus-visible{outline-offset:-2px}
+.r-main{display:flex;flex-direction:column;gap:3px;min-width:0}
+.r-name{font-weight:600;font-size:15.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.r-meta{font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center;min-width:0}
+.r-meta .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.r-foot{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;font-size:13px;margin-top:3px}
+.prem{font-variant-numeric:tabular-nums;white-space:nowrap}
+.prem b{font-weight:600}
+.pct{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.pct.up{color:var(--late);font-weight:500}
+.pct.down{color:var(--ok)}
+.term{color:var(--muted);white-space:nowrap}
+.term.hot{color:var(--soon);font-weight:600}
+.r-date{display:flex;flex-direction:column;align-items:flex-end;gap:2px;text-align:right}
+.r-day{font-family:var(--f-display);font-weight:800;font-size:17px;color:var(--gcol);white-space:nowrap;font-variant-numeric:tabular-nums}
+.r-rel{font-size:12px;color:var(--muted);white-space:nowrap}
+.row.done .r-day{color:var(--ok)}
+.row.done .r-name{color:var(--muted)}
+.row.gone .r-name{text-decoration:line-through;color:var(--muted)}
+
+.st-pendent{background:var(--sunk);color:var(--muted)}
+.st-contactat{background:var(--info-soft);color:var(--info)}
+.st-esperant{background:var(--soon-soft);color:var(--soon)}
+.st-renovada,.st-canvi{background:var(--ok-soft);color:var(--ok)}
+.st-baixa{color:var(--muted);border:1px solid var(--line)}
+
+.pct-line{margin:0;font-size:13.5px;color:var(--muted)}
+.pct-line b{color:var(--ink)}
+.pct-line b.up{color:var(--late)}
+.pct-line b.down{color:var(--ok)}
+.canvi{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--line);border-radius:10px;margin-top:2px}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="brandbar"><a class="brandlink" href="./" aria-label="Inici"><img class="mark" src="data:image/webp;base64,UklGRk4EAABXRUJQVlA4IEIEAABQFwCdASpuAHgAPj0ejUQiIaGTunUcIAPEtIBqW4pnD3tH+cx87fiJlat3h/unmZpPscHoVZ4/qLgJeiAWymoGxwoBzK9sp422w1LUo2+ZOYW8AyZJ7bpqtSzpO136l7n3vHd4d75Hkq2/Vc3eNdJMwghqA//rxT85OdFrv0JIMTFXrBPvh9b2O9wEcsBCkTrA86Q99bAmSVFqZDRJuq11kCqNI4qzGTf0FZeUKkZOkSiDjrolsxxJDlW6yiVmWgbHCSAA/u7p37DCYMqwm7NBJOBurnADhgBrfgRbJ0+HsCwwUhi8v94EltwxlCwWGejuq/FNvX/Dd/uXrfcsBAo8TZVDb/S8rCHtXgKBfd7XRSCU99hrBa+LmKr9sm7HR2shWSRjxZE8LYo+j4v73oE/lVMBoDMh0P9euKeppVcIM8zy2fn8DTcS0g83e//oCM0i8GNBbI2p81vyZfMn17s2oR9rdqUaneL/P+LuPhRR5L+ldXWnhuX3ZvvrIf+zT8/lYviVSTT6LOF04JNTUg3XMizwVPwzQcT3Lhe7MInzq21QtoIY+EVR971B8CMmsDiUlIibM530uB6HJef6uix7nxBPBADcbTy6iCGLIRFAR5+ystpFn8gkHW2+p45mq6ZNWAcyoT19MNXDto0Ho4QNV0DO9V/XPj6OtwK5PdoQqP+oTlEdfSGJ86ujGAwq0PAALK22Sb4I3Oe8bZ7R3clnZ/43hDb69040LGgPIPKYT4KmmO1hyQPPXoOpqGKFC5iX0E2gkOahBxmlbguqbCGcRIsN4N49E5cqTGJSNFX8I6d7c5TrfgJ/C6dY0MGonKPxHy4F9OUaSiwf5ZyAAnP4Fc7iEnVN4VZWgNQey9A/hOf15FrRwtNfL4v+QyB81s3bz2DnjzNqu+GCB5x1NwXpRO0cTUe6xSTGU+xFwE7gE92t6EGnSrpo9r0WU8vax6NrhYm7bLgtWfKMdA+2OD6Nc/0oOlHYJIdIfiPkGBogkZNRz58rrJHZ4Furfvn9mfGnZ8Azvv5yt8Bt/7nv8v5uuU39ziWjN8HQJ09in7hj6hbLWHg8KLE4+qXVQ9hGm+gybBo+YUDYSDptvY4TND5+yRRP2O4Uk5NBoQxxVxrTUl+EjrvzV+aXM78Ic5+807LIkw8Ud39+M1WcdO68cEHJp9WkGfcoa8HcCepUgJiNpJ7jL8I9haN6LpyrtUuaFNoMqEwPoG2tNsRgFNGowdyq7kBLQ5Od/I6zt3AXxVEU9aiJNbAKiTDCeJGBsL38HtrtvlpFRO8IZjPzdbP1dlzl2xAyPx+rcVWgVOHQqZuwTQYMxfGsiSllpaOUI1F7eFWcG+CBZrxI5Fk5qs/KrVD/9UjlnfYlXj4uKCPzLRcRSIFsMAk+QQUNPBM9s+LzlR8uhQICQFwjzRCbUbtt1r3Nv042S5HDxHFLMFq8AAAAAAAA" alt="Galindo grup" width="37" height="40"><span class="wm" aria-hidden="true"><span class="wm1">Galindo</span><span class="wm2">grup</span></span></a><nav class="apps" aria-label="Eines de la gestoria"><span class="app cur" aria-current="page">Venciments</span><a class="app" href="trimestrals.html">Trimestrals</a><a class="app" href="caducitats.html">Caducitats</a></nav></div>
+  <header class="top">
+    <div>
+      <h1>Venciments</h1>
+      <p class="sub" id="sub"></p>
+    </div>
+    <div class="actions">
+      <button class="btn" id="b-copy" type="button">Copia la llista</button>
+      <button class="btn primary" id="b-new" type="button">+ Nova pòlissa</button>
+    </div>
+  </header>
+
+  <p class="demo">
+    <span>Clients i pòlisses inventats per provar el tauler. El que hi canviïs es guarda només en aquest navegador.</span>
+    <button class="linkbtn" id="b-reset" type="button">Torna a les dades de prova</button>
+  </p>
+
+  <section class="stats" id="stats" aria-label="Resum"></section>
+
+  <section class="months" aria-labelledby="mh-t">
+    <div class="mh"><h2 id="mh-t">Venciments per mes</h2><span class="mf" id="mfilter"></span></div>
+    <div class="mscroll"><div class="mgrid" id="mgrid"></div></div>
+  </section>
+
+  <section class="filters" aria-label="Filtres">
+    <input class="search" id="q" type="search" placeholder="Busca per client, matrícula, adreça o núm. de pòlissa" autocomplete="off">
+    <div class="frow">
+      <div class="chips" id="chips"></div>
+      <div class="fside">
+        <select id="f-estat" aria-label="Estat"><option value="">Tots els estats</option></select>
+        <label class="check"><input type="checkbox" id="f-baixes"> Mostra les baixes</label>
+      </div>
+    </div>
+  </section>
+
+  <div id="list" aria-live="polite"></div>
+</div>
+
+<div class="backdrop" id="bd" hidden><aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="s-title"></aside></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+var G = (function(){
+  "use strict";
+  var DAY = 86400000;
+  var MESOS = ["gener","febrer","març","abril","maig","juny","juliol","agost","setembre","octubre","novembre","desembre"];
+  var MESC = ["gen.","febr.","març","abr.","maig","juny","jul.","ag.","set.","oct.","nov.","des."];
+  var DIES = ["diumenge","dilluns","dimarts","dimecres","dijous","divendres","dissabte"];
+  var eurF = new Intl.NumberFormat("ca-ES",{style:"currency",currency:"EUR",maximumFractionDigits:0});
+  var pctF = new Intl.NumberFormat("ca-ES",{maximumFractionDigits:1,minimumFractionDigits:1});
+
+  function eur(n){ return (n==null || isNaN(n)) ? "—" : eurF.format(n); }
+  function fPct(v){ return (v>0?"+":"")+pctF.format(v)+" %"; }
+  function pad(n){ return (n<10?"0":"")+n; }
+  function today(){ var d=new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  function parse(s){ var a=String(s).split("-").map(Number); return new Date(a[0], a[1]-1, a[2]||1); }
+  function iso(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+  function addDays(d,n){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()+n); }
+  function addMonths(d,n){
+    var t = new Date(d.getFullYear(), d.getMonth()+n, 1);
+    var last = new Date(t.getFullYear(), t.getMonth()+1, 0).getDate();
+    t.setDate(Math.min(d.getDate(), last));
+    return t;
+  }
+  function daysTo(s){ return Math.round((parse(s) - today())/DAY); }
+  function fShort(s){ var d=parse(s); return pad(d.getDate())+"/"+pad(d.getMonth()+1)+"/"+d.getFullYear(); }
+  function fDM(s){ var d=parse(s); return pad(d.getDate())+"/"+pad(d.getMonth()+1); }
+  function fDayMon(s){ var d=parse(s); return d.getDate()+" "+MESC[d.getMonth()]; }
+  function monthPhrase(d){ var m=MESOS[d.getMonth()]; return (/^[aeiouà]/.test(m) ? "d’" : "de ")+m; }
+  function longDate(s){ var d=parse(s); return d.getDate()+" "+monthPhrase(d)+" de "+d.getFullYear(); }
+  function dayMonth(s){ var d=parse(s); return d.getDate()+" "+monthPhrase(d); }
+  function artDate(s){ var d=parse(s), n=d.getDate(); return (n===1||n===11 ? "l’" : "el ")+n+" "+monthPhrase(d); }
+  function delDate(s){ var d=parse(s), n=d.getDate(); return (n===1||n===11 ? "de l’" : "del ")+n+" "+monthPhrase(d); }
+  function weekday(s){ return DIES[parse(s).getDay()]; }
+  function rel(n){
+    if(n===0) return "avui";
+    if(n===1) return "demà";
+    if(n===-1) return "ahir";
+    if(n<-90) return "fa "+Math.round(-n/30.44)+" mesos";
+    if(n<0) return "fa "+(-n)+" dies";
+    if(n>90) return "d’aquí a "+Math.round(n/30.44)+" mesos";
+    return "d’aquí a "+n+" dies";
+  }
+  function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+  function norm(s){ return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
+  function $(id){ return document.getElementById(id); }
+
+  function load(key){ try { var r = localStorage.getItem(key); return r ? JSON.parse(r) : null; } catch(e){ return null; } }
+  function store(key, v){ try { localStorage.setItem(key, JSON.stringify(v)); } catch(e){} }
+
+  var tt = null;
+  function toast(t){
+    var el = $("toast"); if(!el) return;
+    el.textContent = t; el.hidden = false;
+    clearTimeout(tt); tt = setTimeout(function(){ el.hidden = true; }, 2800);
+  }
+
+  var lastFocus = null;
+  function sheetOpen(){ return !$("bd").hidden; }
+  function openSheet(html, focusSel){
+    var bd = $("bd"), sh = $("sheet");
+    sh.innerHTML = html;
+    if(bd.hidden){
+      lastFocus = document.activeElement;
+      bd.hidden = false;
+      document.documentElement.style.overflow = "hidden";
+      requestAnimationFrame(function(){ bd.classList.add("open"); });
+      sh.scrollTop = 0;
+    }
+    var f = sh.querySelector(focusSel || '[data-act="close"]');
+    if(f) f.focus({preventScroll:true});
+  }
+  function closeSheet(focusEl){
+    var bd = $("bd");
+    if(bd.hidden) return;
+    bd.classList.remove("open");
+    bd.hidden = true;
+    document.documentElement.style.overflow = "";
+    var f = focusEl || lastFocus;
+    if(f && document.body.contains(f)) f.focus({preventScroll:true});
+  }
+
+  function copyText(text, selectEl, okMsg){
+    function fallback(){
+      if(selectEl){ selectEl.focus(); selectEl.select(); toast("Text seleccionat. Copia’l amb Ctrl+C o mantenint-lo premut."); }
+      else copyBox("Text per copiar", text);
+    }
+    try {
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){ toast(okMsg); }, fallback);
+      } else fallback();
+    } catch(e){ fallback(); }
+  }
+  function copyBox(title, text, hint){
+    openSheet('<div class="s-head"><div><h2 id="s-title">'+esc(title)+'</h2></div><button type="button" class="x" data-act="close" aria-label="Tanca">×</button></div>'+
+      (hint ? '<p class="hint">'+esc(hint)+'</p>' : '')+
+      '<textarea id="cbox" class="msg" rows="14" readonly>'+esc(text)+'</textarea>'+
+      '<div><button type="button" class="btn" data-act="copybox">Copia-ho tot</button></div>', "#cbox");
+  }
+  document.addEventListener("click", function(e){
+    if(e.target.closest && e.target.closest('[data-act="copybox"]')){ var b=$("cbox"); if(b) copyText(b.value, b, "Copiat."); }
+  });
+
+  // Botó de confirmació en dos tocs (el visor no mostra confirm()).
+  function arm(btn, armedText){
+    if(btn.getAttribute("data-armed")==="1"){ btn.removeAttribute("data-armed"); return true; }
+    var normal = btn.textContent;
+    btn.setAttribute("data-armed","1"); btn.textContent = armedText;
+    setTimeout(function(){ if(document.body.contains(btn) && btn.getAttribute("data-armed")==="1"){ btn.removeAttribute("data-armed"); btn.textContent = normal; } }, 4000);
+    return false;
+  }
+
+  /* ---------- Desament ----------
+     Mode local: cada eina guarda les dades al navegador (versió de prova).
+     Mode "sheets": sync.js substitueix start() i save() per llegir i escriure al full de càlcul del Drive. */
+  var current = null;
+  function start(s, onData){
+    current = s;
+    var d = load(s.key);
+    if(!s.valid(d)) d = s.seed();
+    onData(d);
+  }
+  function save(d){ if(current) store(current.key, d); }
+
+  /* Conversió de files del full de càlcul */
+  function objs(table){
+    if(!table || !table.length) return [];
+    var head = table[0].map(function(h){ return String(h).trim(); });
+    return table.slice(1).map(function(r){ var o={}; head.forEach(function(h,i){ o[h] = r[i]==null ? "" : r[i]; }); return o; });
+  }
+  function num(v){
+    if(v===""||v==null) return null;
+    if(typeof v==="number") return v;
+    var s = String(v).replace(/[€\s]/g,"");
+    if(s.indexOf(",")>=0) s = s.replace(/\./g,"").replace(",",".");
+    var n = parseFloat(s); return isNaN(n) ? null : n;
+  }
+  function str(v){ return v==null ? "" : String(v); }
+  function bool(v){ return v===true || /^(true|s|si|sí|1|x)$/i.test(String(v).trim()); }
+  function dateStr(v){
+    if(typeof v==="number"){ return iso(new Date(1899, 11, 30 + Math.floor(v))); }
+    var s = String(v||"").trim(), m;
+    if((m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/))) return m[1]+"-"+pad(+m[2])+"-"+pad(+m[3]);
+    if((m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/))) return m[3]+"-"+pad(+m[2])+"-"+pad(+m[1]);
+    return "";
+  }
+  function jsonArr(v){ try { var a = JSON.parse(v); return Array.isArray(a) ? a : []; } catch(e){ return []; } }
+  function blank(v){ return v==null ? "" : v; }
+
+  return {DAY:DAY, MESOS:MESOS, MESC:MESC, DIES:DIES, eur:eur, fPct:fPct, pad:pad, today:today, parse:parse, iso:iso,
+    addDays:addDays, addMonths:addMonths, daysTo:daysTo, fShort:fShort, fDM:fDM, fDayMon:fDayMon, longDate:longDate,
+    dayMonth:dayMonth, artDate:artDate, delDate:delDate, weekday:weekday, rel:rel, esc:esc, norm:norm, $:$,
+    load:load, store:store, toast:toast, openSheet:openSheet, closeSheet:closeSheet, sheetOpen:sheetOpen,
+    copyText:copyText, copyBox:copyBox, arm:arm, mode:"local", start:start, save:save,
+    objs:objs, num:num, str:str, bool:bool, dateStr:dateStr, jsonArr:jsonArr, blank:blank};
+})();
+
+/* Desament al full de càlcul de Google (versió publicada a GitHub Pages).
+   Qui entra ho fa amb el seu compte de Google; el full només és compartit amb els comptes autoritzats,
+   així que un compte sense permís rep un error de l'API i no veu res. */
+(function(){
+  "use strict";
+  var C = window.GALINDO_CONFIG || {};
+  var API = "https://sheets.googleapis.com/v4/spreadsheets/";
+  var SHEETS_SCOPE = "https://www.googleapis.com/auth/spreadsheets";
+  var SCOPE = SHEETS_SCOPE+" openid email";
+  var TOKEN_KEY = "galindo-token", HINT_KEY = "galindo-login-hint";
+  var S = null, onData = null, data = null, counts = {};
+  var token = null, tokenExp = 0, email = "", tc = null;
+  var dirty = false, saving = false, saveT = null, lastLoad = 0, afterLogin = null;
+  var gateEl = null, statusEl = null;
+  var esc = G.esc;
+
+  function sget(k){ try { return sessionStorage.getItem(k); } catch(e){ return null; } }
+  function sset(k,v){ try { sessionStorage.setItem(k,v); } catch(e){} }
+  function lget(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+  function lset(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+  function hhmm(){ var d=new Date(); return G.pad(d.getHours())+":"+G.pad(d.getMinutes()); }
+
+  /* ---------- Interfície: porta d'entrada i estat ---------- */
+  function ui(){
+    document.documentElement.classList.add("locked");
+    var demo = document.querySelector(".demo"); if(demo) demo.hidden = true;
+    var bar = document.querySelector(".brandbar");
+    statusEl = document.createElement("div"); statusEl.className = "sync"; statusEl.hidden = true; statusEl.setAttribute("role","status");
+    bar.appendChild(statusEl);
+    gateEl = document.createElement("section"); gateEl.className = "gate"; gateEl.setAttribute("aria-live","polite");
+    bar.insertAdjacentElement("afterend", gateEl);
+  }
+  function gate(title, text, btns){
+    gateEl.innerHTML = (title ? '<h2>'+esc(title)+'</h2>' : '')+(text ? '<p>'+text+'</p>' : '')+
+      (btns && btns.length ? '<div class="gate-btns">'+btns.map(function(b,i){ return '<button type="button" class="btn'+(i===0?' primary':'')+'" data-sync="'+b[0]+'">'+esc(b[1])+'</button>'; }).join("")+'</div>' : '');
+    gateEl.hidden = false;
+    document.documentElement.classList.add("locked");
+  }
+  function unlock(){ gateEl.hidden = true; document.documentElement.classList.remove("locked"); }
+  function status(kind, text, btn){
+    statusEl.hidden = false;
+    statusEl.className = "sync s-"+kind;
+    statusEl.innerHTML = '<span class="sd" aria-hidden="true"></span><span class="st">'+esc(text)+'</span>'+
+      (btn ? '<button type="button" class="linkbtn" data-sync="'+btn[0]+'">'+esc(btn[1])+'</button>' : '');
+  }
+  function okStatus(){ status("ok", "Desat al Drive · "+hhmm()+(email ? " · "+email : "")); }
+
+  /* ---------- Accés amb Google ---------- */
+  function gisReady(){ return !!(window.google && google.accounts && google.accounts.oauth2); }
+  function initClient(){
+    if(tc) return true;
+    if(!gisReady()) return false;
+    tc = google.accounts.oauth2.initTokenClient({
+      client_id: C.clientId, scope: SCOPE, callback: onToken,
+      error_callback: function(err){
+        if(err && err.type==="popup_closed") gateOrStatus("Has tancat la finestra de Google abans d’acabar.");
+        else gateOrStatus("No s’ha pogut obrir la finestra de Google. Si el navegador bloqueja finestres emergents, permet-les per a aquesta pàgina.");
+      }
+    });
+    return true;
+  }
+  function gateOrStatus(msg){
+    if(data) status("err", msg, ["login","Torna a entrar"]);
+    else gate("Entra per veure les dades", esc(msg), [["login","Entra amb Google"]]);
+  }
+  function login(select){
+    if(!initClient()) return;
+    var hint = lget(HINT_KEY);
+    var opts = {prompt: select ? "select_account" : ""};
+    if(!select && hint) opts.login_hint = hint;
+    tc.requestAccessToken(opts);
+  }
+  function onToken(r){
+    if(!r || r.error){
+      gateOrStatus(r && r.error==="access_denied" ? "Google no ha donat accés a aquest compte. Comprova que és un dels comptes autoritzats." : "No s’ha pogut entrar amb Google.");
+      return;
+    }
+    if(!google.accounts.oauth2.hasGrantedAllScopes(r, SHEETS_SCOPE)){
+      gate("Falta un permís", "Cal marcar el permís per veure i editar els fulls de càlcul. Sense aquest permís l’eina no pot llegir les dades.", [["switch","Torna-ho a provar"]]);
+      return;
+    }
+    token = r.access_token;
+    tokenExp = Date.now() + (Number(r.expires_in)||3600)*1000 - 60000;
+    sset(TOKEN_KEY, JSON.stringify({t:token, e:tokenExp}));
+    fetch("https://www.googleapis.com/oauth2/v3/userinfo", {headers:{Authorization:"Bearer "+token}})
+      .then(function(x){ return x.ok ? x.json() : {}; })
+      .then(function(j){ if(j.email){ email = j.email; lset(HINT_KEY, email); sset(TOKEN_KEY, JSON.stringify({t:token, e:tokenExp, m:email})); } })
+      .catch(function(){})
+      .then(function(){ var f = afterLogin || loadData; afterLogin = null; f(); });
+  }
+  function needLogin(then){
+    afterLogin = then;
+    token = null;
+    if(data) status("err", "La sessió ha caducat. Els canvis encara no estan desats.", ["login","Torna a entrar"]);
+    else gate("Entra per veure les dades", "La sessió ha caducat.", [["login","Entra amb Google"]]);
+  }
+
+  /* ---------- Crides a l'API ---------- */
+  function api(method, url, body){
+    if(!token || Date.now()>tokenExp) return Promise.reject({auth:true});
+    return fetch(url, {method:method, headers:{"Authorization":"Bearer "+token, "Content-Type":"application/json"}, body: body ? JSON.stringify(body) : undefined})
+      .then(function(r){
+        if(r.status===401) throw {auth:true};
+        if(r.status===403 || r.status===404) throw {denied:true};
+        if(!r.ok) return r.text().then(function(t){ throw {msg:"L’API de Google ha respost amb l’error "+r.status+".", detail:t}; });
+        return r.json();
+      }, function(){ throw {offline:true}; });
+  }
+  function tabs(){ return Object.keys(S.tabs); }
+  function fetchTables(){
+    var id = C.spreadsheetId, ts = tabs();
+    return api("GET", API+id+"?fields=sheets.properties.title").then(function(meta){
+      var have = (meta.sheets||[]).map(function(s){ return s.properties.title; });
+      var missing = ts.filter(function(t){ return have.indexOf(t)<0; });
+      if(!missing.length) return;
+      return api("POST", API+id+":batchUpdate", {requests: missing.map(function(t){ return {addSheet:{properties:{title:t, gridProperties:{frozenRowCount:1}}}}; })})
+        .then(function(){ return api("POST", API+id+"/values:batchUpdate", {valueInputOption:"RAW", data: missing.map(function(t){ return {range:t+"!A1", values:[S.tabs[t]]}; })}); });
+    }).then(function(){
+      return api("GET", API+id+"/values:batchGet?valueRenderOption=UNFORMATTED_VALUE&"+ts.map(function(t){ return "ranges="+encodeURIComponent(t+"!A1:Z"); }).join("&"));
+    }).then(function(r){
+      var tables = {};
+      (r.valueRanges||[]).forEach(function(vr, i){ var t = ts[i], v = vr.values || []; tables[t] = v; counts[t] = Math.max(0, v.length-1); });
+      return tables;
+    });
+  }
+  function handleErr(e, inBackground){
+    if(e && e.auth){ needLogin(inBackground ? push : loadData); return; }
+    if(e && e.denied){
+      gate("Aquest compte no té accés", (email ? "Has entrat com a <b>"+esc(email)+"</b>. " : "")+"Les dades només es poden obrir amb els comptes autoritzats.", [["switch","Canvia de compte"]]);
+      data = null; statusEl.hidden = true; return;
+    }
+    var msg = e && e.offline ? "No hi ha connexió amb Google. Comprova la connexió a internet." : ((e && e.msg) || "Error desconegut.");
+    if(inBackground && data){ status("err", msg, ["retry","Torna-ho a provar"]); return; }
+    gate("No s’han pogut carregar les dades", esc(msg), [["retry","Torna-ho a provar"]]);
+  }
+  function loadData(){
+    gate("", "Carregant les dades del Drive…");
+    fetchTables().then(function(tables){
+      data = S.fromTables(tables);
+      lastLoad = Date.now();
+      unlock(); okStatus();
+      onData(data);
+    }).catch(function(e){ handleErr(e, false); });
+  }
+  function refresh(){
+    if(!data || dirty || saving || !token || Date.now()>tokenExp) return;
+    fetchTables().then(function(tables){
+      if(dirty || saving) return;
+      data = S.fromTables(tables); lastLoad = Date.now();
+      onData(data); okStatus();
+    }).catch(function(e){ handleErr(e, true); });
+  }
+
+  /* ---------- Desar ---------- */
+  function push(){
+    clearTimeout(saveT);
+    if(!data) return;
+    if(saving){ dirty = true; return; }
+    if(!token || Date.now()>tokenExp){ needLogin(push); return; }
+    saving = true; dirty = false;
+    status("busy", "Desant…");
+    var tables = S.toTables(data), payload = [], next = {};
+    Object.keys(tables).forEach(function(t){
+      var head = S.tabs[t], rows = tables[t].map(function(r){ return r.map(G.blank); });
+      var n = rows.length, prev = counts[t] || 0;
+      for(var i=n; i<prev; i++){ var b=[]; for(var j=0;j<head.length;j++) b.push(""); rows.push(b); }
+      payload.push({range:t+"!A1", values:[head].concat(rows)});
+      next[t] = n;
+    });
+    api("POST", API+C.spreadsheetId+"/values:batchUpdate", {valueInputOption:"RAW", data:payload})
+      .then(function(){
+        saving = false;
+        Object.keys(next).forEach(function(t){ counts[t] = next[t]; });
+        lastLoad = Date.now();
+        if(dirty) push(); else okStatus();
+      })
+      .catch(function(e){ saving = false; dirty = true; handleErr(e, true); });
+  }
+
+  document.addEventListener("click", function(e){
+    var b = e.target.closest && e.target.closest("[data-sync]");
+    if(!b) return;
+    var a = b.getAttribute("data-sync");
+    if(a==="login") login(false);
+    else if(a==="switch"){ afterLogin = null; login(true); }
+    else if(a==="retry"){ if(data) push(); else if(token) loadData(); else login(false); }
+  });
+  document.addEventListener("visibilitychange", function(){
+    if(document.visibilityState==="visible" && Date.now()-lastLoad > 30000) refresh();
+  });
+  window.addEventListener("beforeunload", function(e){
+    if(dirty || saving){ e.preventDefault(); e.returnValue = ""; }
+  });
+
+  /* ---------- Punt d'entrada per a les eines ---------- */
+  G.mode = "sheets";
+  G.start = function(s, cb){
+    S = s; onData = cb;
+    ui();
+    if(!C.clientId || !C.spreadsheetId){
+      gate("Falta acabar la configuració", "Cal posar l’identificador d’accés de Google al fitxer <code>config.js</code> del repositori.", []);
+      return;
+    }
+    try { var saved = JSON.parse(sget(TOKEN_KEY)||"null"); if(saved && saved.t && saved.e > Date.now()){ token = saved.t; tokenExp = saved.e; email = saved.m || ""; } } catch(e){}
+    if(token) loadData(); else gate("", "Connectant amb Google…");
+    var tries = 0;
+    (function wait(){
+      if(gisReady()){
+        initClient();
+        if(!token) gate("Entra per veure les dades", "Les dades són en un full de càlcul privat al Drive de la gestoria. Només hi poden entrar els comptes autoritzats.", [["login","Entra amb Google"]]);
+        return;
+      }
+      if(++tries > 100){ if(!token) gate("No s’ha pogut connectar amb Google", "Comprova la connexió a internet i torna a carregar la pàgina.", []); return; }
+      setTimeout(wait, 100);
+    })();
+  };
+  G.save = function(d){
+    data = d;
+    if(!S) return;
+    dirty = true;
+    status("busy", "Canvis pendents de desar…");
+    clearTimeout(saveT); saveT = setTimeout(push, 800);
+  };
+})();
+
+(function(){
+  "use strict";
+  var eur=G.eur, fPct=G.fPct, today=G.today, parse=G.parse, iso=G.iso, addDays=G.addDays, addMonths=G.addMonths,
+      daysTo=G.daysTo, fShort=G.fShort, fDM=G.fDM, longDate=G.longDate, artDate=G.artDate, delDate=G.delDate,
+      rel=G.rel, esc=G.esc, norm=G.norm, $=G.$, toast=G.toast, MESOS=G.MESOS, MESC=G.MESC, DIES=G.DIES, DAY=G.DAY, pad=G.pad;
+
+  var KEY = "tauler-venciments-v1";
+  var RAMS = ["Auto","Llar","Moto","Vida","Comerç","Comunitat"];
+  var COMPANYIES = ["Allianz","AXA","Caser","Generali","Mapfre","Occident","Reale","Zurich"];
+  var ESTATS = {pendent:"Pendent", contactat:"Contactat", esperant:"Esperant resposta", renovada:"Renovada", canvi:"Canvi de companyia", baixa:"Baixa"};
+  var OPEN = {pendent:1, contactat:1, esperant:1};
+  var DONE = {renovada:1, canvi:1};
+  var TIPUS = {Auto:"assegurança del cotxe", Llar:"assegurança de la llar", Moto:"assegurança de la moto", Vida:"assegurança de vida", "Comerç":"assegurança del negoci", Comunitat:"assegurança de la comunitat"};
+  var GROUPS = [
+    ["late","Ja han vençut sense tancar","var(--late)"],
+    ["g30","Pròxims 30 dies","var(--soon)"],
+    ["g60","D’aquí a 31–60 dies","var(--ink)"],
+    ["g90","D’aquí a 61–90 dies","var(--ink)"],
+    ["later","Més endavant","var(--muted)"],
+    ["baixa","Baixes","var(--muted)"]
+  ];
+  function terminiISO(p){ return iso(addMonths(parse(p.venc), -1)); }
+  function pct(p){ return (p.primaNova && p.prima) ? (p.primaNova - p.prima)/p.prima*100 : null; }
+  function isGroupClient(p){ return p.ram==="Comerç" || p.ram==="Comunitat"; }
+
+  function seed(){
+    var t = today();
+    var rows = [
+      ["Rosa Font Bertran","600 000 011","Llar","Occident","LH-0387712","C. de Sant Domènec 8, 3r 1a",286,318,-6,"Anual","pendent","",[[-50,"Avís de renovació rebut: 318 €"]]],
+      ["Toni Garriga","600 000 027","Auto","Mapfre","060-2291874","Seat León · 4821 KTB",512,541,-2,"Semestral","pendent","",[[-58,"Avís de renovació rebut: 541 €"]]],
+      ["Marta Puigdollers","600 000 034","Llar","Allianz","043158826","Pg. de Pere III 41, 2n 2a",312,349,4,"Anual","contactat","Té una oferta del banc per 290 €. Vol que li busquem alternativa abans de decidir.",[[-55,"Avís de renovació rebut: 349 €"],[-3,"Estat: Contactat"]]],
+      ["Bar Can Pep","600 000 045","Comerç","Generali","MR-77120934","Local a la pl. Major 3",980,1106,11,"Anual","esperant","Demanat preu a Reale i a AXA.",[[-52,"Avís de renovació rebut: 1106 €"],[-11,"Estat: Esperant resposta"]]],
+      ["Jordi Casals Vila","600 000 052","Auto","AXA","8004417263","Toyota Corolla · 7390 LMF",438,null,19,"Anual","pendent","",[]],
+      ["Comunitat de propietaris C. Nou 14","600 000 068","Comunitat","Caser","CP-0045512","Edifici de 12 habitatges",1640,1702,26,"Anual","renovada","La presidenta hi està d’acord.",[[-40,"Avís de renovació rebut: 1702 €"],[-6,"Estat: Renovada"]]],
+      ["Laia Pujol","600 000 073","Moto","Allianz","047720915","Yamaha MT-07 · 2156 HJW",189,214,33,"Anual","pendent","",[[-20,"Avís de renovació rebut: 214 €"]]],
+      ["Pere Ribas Soler","600 000 089","Llar","Reale","R-31188206","Casa a la urb. Can Sala",245,null,38,"Anual","pendent","",[]],
+      ["Ferreteria Sala SL","600 000 094","Comerç","Zurich","ZB-9013345","Botiga i magatzem, C. de la Indústria 23",1320,1395,44,"Anual","contactat","",[[-12,"Avís de renovació rebut: 1395 €"],[-4,"Estat: Contactat"]]],
+      ["Núria Bosch","600 000 102","Auto","Generali","AU-55031877","Peugeot 2008 · 3378 LBZ",603,688,52,"Anual","pendent","",[[-8,"Avís de renovació rebut: 688 €"]]],
+      ["Carles Soler Mas","600 000 117","Vida","Caser","VR-0018839","Vida risc vinculada a la hipoteca",420,null,58,"Anual","pendent","",[]],
+      ["Anna Vidal","600 000 121","Llar","AXA","8011902277","C. del Bruc 112, 1r 1a",268,null,67,"Trimestral","pendent","",[]],
+      ["Xavier Roca","600 000 136","Auto","Reale","R-40912215","Kia Sportage · 9065 KPN",455,null,74,"Anual","canvi","Accepta la proposta de Mapfre. Falta enviar la carta de baixa a Reale.",[[-5,"Estat: Canvi de companyia"]],{comp:"Mapfre",prima:398}],
+      ["Montse Ferrer","600 000 148","Llar","Occident","LH-0412290","Àtic al C. de Guimerà 17",334,null,81,"Anual","pendent","",[]],
+      ["Imma Serra","600 000 153","Auto","Mapfre","060-3318520","Renault Clio · 5520 JZS",377,null,96,"Anual","pendent","",[]],
+      ["Josep Mas Pla","600 000 169","Moto","Zurich","ZM-1120458","Honda PCX · 8812 MZR",156,null,118,"Anual","pendent","",[]],
+      ["Gemma Torrent","600 000 172","Llar","Allianz","043992107","Pis al C. de Viladomat 9, 4t 2a",298,null,140,"Anual","pendent","",[]],
+      ["Oriol Planas","600 000 184","Auto","AXA","8007735410","Volkswagen Golf · 6143 LGR",520,null,165,"Semestral","pendent","",[]],
+      ["Teresa Camps","600 000 195","Vida","Generali","VI-2208813","Vida risc, capital de 120.000 €",610,null,190,"Anual","pendent","",[]],
+      ["Albert Prat","600 000 203","Auto","Allianz","045510398","Dacia Duster · 1290 LDV",472,null,222,"Anual","pendent","",[]],
+      ["Restaurant El Racó","600 000 218","Comerç","Reale","R-28870041","Restaurant amb terrassa, ctra. de Vic 120",1150,null,251,"Anual","pendent","",[]],
+      ["Comunitat de propietaris C. Major 7","600 000 224","Comunitat","Zurich","ZC-5530172","Edifici de 20 habitatges i 2 locals",1980,null,280,"Anual","pendent","",[]],
+      ["Jaume Riera","600 000 239","Llar","Mapfre","060-1187744","Casa unifamiliar a Navarcles",255,null,305,"Anual","pendent","",[]],
+      ["Clara Vives","600 000 241","Auto","Generali","AU-60219983","Hyundai Tucson · 4471 LHK",498,null,340,"Anual","pendent","",[]],
+      ["Sílvia Ortega","600 000 256","Llar","Caser","CL-0098812","Pis al C. de la Pau 5",230,null,15,"Anual","baixa","Ha venut el pis. Baixa comunicada a Caser.",[[-35,"Estat: Baixa"]]]
+    ];
+    return rows.map(function(r,i){
+      var ex = r[13] || {};
+      return {
+        id:"p"+(i+1), client:r[0], tel:r[1], ram:r[2], comp:r[3], num:r[4], obj:r[5],
+        prima:r[6], primaNova:r[7], venc:iso(addDays(t,r[8])), pag:r[9], estat:r[10], notes:r[11],
+        hist:(r[12]||[]).map(function(h){ return {d:iso(addDays(t,h[0])), t:h[1]}; }),
+        novaComp:ex.comp||"", novaPrima:ex.prima==null?null:ex.prima
+      };
+    });
+  }
+
+  var data = {pol:[]};
+  var COLS = ["id","client","telefon","ram","companyia","num_polissa","risc","prima","prima_nova","venciment","pagament","estat","nova_companyia","nova_prima","notes","historial"];
+  var STORE = {
+    key: KEY,
+    tabs: {venciments: COLS},
+    valid: function(d){ return !!(d && Array.isArray(d.pol)); },
+    seed: function(){ return {pol:seed()}; },
+    toTables: function(d){
+      return {venciments: d.pol.map(function(p){
+        return [p.id,p.client,p.tel,p.ram,p.comp,p.num,p.obj,p.prima,p.primaNova,p.venc,p.pag,p.estat,p.novaComp,p.novaPrima,p.notes,JSON.stringify(p.hist||[])];
+      })};
+    },
+    fromTables: function(t){
+      return {pol: G.objs(t.venciments).filter(function(o){ return String(o.id).trim() && G.dateStr(o.venciment); }).map(function(o){
+        return {id:String(o.id), client:G.str(o.client), tel:G.str(o.telefon), ram:RAMS.indexOf(o.ram)>=0 ? o.ram : "Llar",
+          comp:G.str(o.companyia), num:G.str(o.num_polissa), obj:G.str(o.risc), prima:G.num(o.prima), primaNova:G.num(o.prima_nova),
+          venc:G.dateStr(o.venciment), pag:G.str(o.pagament)||"Anual", estat:ESTATS[o.estat] ? o.estat : "pendent",
+          novaComp:G.str(o.nova_companyia), novaPrima:G.num(o.nova_prima), notes:G.str(o.notes), hist:G.jsonArr(o.historial)};
+      })};
+    }
+  };
+  function save(){ G.save(data); }
+  function byId(id){ for(var i=0;i<data.pol.length;i++) if(data.pol[i].id===id) return data.pol[i]; return null; }
+
+  // Una pòlissa renovada o canviada de companyia, un cop passat el venciment, salta al cicle de l'any següent.
+  function rollOne(p){
+    var old = p.venc;
+    if(p.estat==="canvi"){
+      p.hist.push({d:iso(today()), t:"Passa a "+(p.novaComp||"una altra companyia")+(p.novaPrima?" per "+eur(p.novaPrima):"")+" (venciment "+fShort(old)+")"});
+      if(p.novaComp){ p.comp=p.novaComp; p.num=""; }
+      if(p.novaPrima) p.prima=p.novaPrima;
+    } else {
+      var np = p.primaNova || p.prima;
+      p.hist.push({d:iso(today()), t:"Renovada per "+eur(np)+" (venciment "+fShort(old)+")"});
+      p.prima = np;
+    }
+    var v = addMonths(parse(old), 12);
+    while(Math.round((v - today())/DAY) < 0) v = addMonths(v, 12);
+    p.venc = iso(v); p.primaNova = null; p.novaComp = ""; p.novaPrima = null; p.estat = "pendent";
+  }
+  function roll(){
+    var n=0;
+    data.pol.forEach(function(p){
+      if(daysTo(p.venc) >= 0) return;
+      if(p.estat==="renovada" || (p.estat==="canvi" && p.novaComp)){ rollOne(p); n++; }
+    });
+    return n;
+  }
+
+  var F = {q:"", ram:"", estat:"", mes:"", baixes:false};
+  function visible(p){
+    if(p.estat==="baixa" && !F.baixes) return false;
+    if(F.ram && p.ram!==F.ram) return false;
+    if(F.estat && p.estat!==F.estat) return false;
+    if(F.mes && p.venc.slice(0,7)!==F.mes) return false;
+    if(F.q && norm([p.client,p.comp,p.num,p.obj,p.notes,p.tel].join(" ")).indexOf(norm(F.q))<0) return false;
+    return true;
+  }
+  function group(p){
+    if(p.estat==="baixa") return "baixa";
+    var d = daysTo(p.venc);
+    if(d<0) return "late";
+    if(d<=30) return "g30";
+    if(d<=60) return "g60";
+    if(d<=90) return "g90";
+    return "later";
+  }
+
+  function renderHeader(){
+    var t = iso(today());
+    var act = data.pol.filter(function(p){ return p.estat!=="baixa"; }).length;
+    $("sub").textContent = act+" pòlisses actives · "+G.weekday(t)+", "+longDate(t);
+  }
+  function stat(k,v,s,cls){ return '<div class="stat '+cls+'"><span class="k">'+k+'</span><span class="v">'+v+'</span><span class="s">'+s+'</span></div>'; }
+  function renderStats(){
+    var act = data.pol.filter(function(p){ return p.estat!=="baixa"; });
+    var s30 = act.filter(function(p){ var d=daysTo(p.venc); return d>=0 && d<=30; });
+    var sum30 = s30.reduce(function(a,p){ return a+(p.prima||0); },0);
+    var late = act.filter(function(p){ return daysTo(p.venc)<0; });
+    var term = act.filter(function(p){ if(!OPEN[p.estat]) return false; var d=daysTo(terminiISO(p)); return d>=0 && d<=15; });
+    var puj = act.filter(function(p){ return OPEN[p.estat] && pct(p)>10; });
+    $("stats").innerHTML =
+      stat("Vencen en 30 dies", s30.length, eur(sum30)+" en primes", "") +
+      stat("Vençudes sense tancar", late.length, late.length ? "S’han renovat soles, sense revisar" : "Cap de pendent", late.length?"alert":"") +
+      stat("Últims dies de baixa", term.length, "El termini acaba en 15 dies o menys", term.length?"warn":"") +
+      stat("Pujades de més del 10 %", puj.length, "Avisos de renovació encara oberts", puj.length?"warn":"");
+  }
+  function renderMonths(){
+    var t = today(), cols = [], max = 1;
+    for(var i=0;i<12;i++){
+      var m = new Date(t.getFullYear(), t.getMonth()+i, 1);
+      var key = m.getFullYear()+"-"+pad(m.getMonth()+1);
+      var items = data.pol.filter(function(p){ return p.estat!=="baixa" && p.venc.slice(0,7)===key; });
+      var sum = items.reduce(function(a,p){ return a+(p.prima||0); },0);
+      cols.push({key:key, d:m, n:items.length, sum:sum, now:i===0});
+      if(items.length>max) max = items.length;
+    }
+    $("mgrid").innerHTML = cols.map(function(c){
+      var h = c.n ? Math.max(8, Math.round(c.n/max*100)) : 0;
+      var lbl = MESOS[c.d.getMonth()]+" "+c.d.getFullYear()+": "+c.n+" venciments, "+eur(c.sum);
+      return '<button type="button" class="mcol'+(c.now?' now':'')+'" data-mes="'+c.key+'" aria-pressed="'+(F.mes===c.key)+'" aria-label="'+esc(lbl)+'" title="'+esc(lbl)+'">'+
+        '<span class="mc">'+(c.n||"")+'</span><span class="mb"><span class="bar" style="height:'+h+'%"></span></span><span class="mn">'+MESC[c.d.getMonth()]+'</span></button>';
+    }).join("");
+    if(F.mes){
+      var d = parse(F.mes+"-01");
+      $("mfilter").innerHTML = 'Només '+MESOS[d.getMonth()]+' · <button type="button" class="linkbtn" data-act="clearmes">Treu el filtre</button>';
+    } else {
+      $("mfilter").textContent = "Toca un mes per filtrar";
+    }
+  }
+  function rowHTML(p){
+    var d = daysTo(p.venc), pc = pct(p), dt = daysTo(terminiISO(p)), prem;
+    if(p.estat==="canvi" && p.novaPrima){
+      prem = eur(p.prima)+' → <b>'+eur(p.novaPrima)+'</b> amb '+esc(p.novaComp||"…");
+    } else if(p.primaNova){
+      prem = eur(p.prima)+' → <b>'+eur(p.primaNova)+'</b> <span class="pct'+(pc>10?' up':(pc<0?' down':''))+'">'+fPct(pc)+'</span>';
+    } else {
+      prem = eur(p.prima);
+    }
+    var term = "";
+    if(OPEN[p.estat]){
+      term = dt>=0 ? '<span class="term'+(dt<=15?' hot':'')+'">Baixa fins al '+fDM(terminiISO(p))+'</span>' : '<span class="term">Termini de baixa tancat</span>';
+    }
+    var cls = "row"+(DONE[p.estat]?" done":"")+(p.estat==="baixa"?" gone":"");
+    return '<li><button type="button" class="'+cls+'" data-id="'+p.id+'">'+
+      '<span class="r-main">'+
+        '<span class="r-name">'+esc(p.client)+'</span>'+
+        '<span class="r-meta"><span class="tag">'+esc(p.ram)+'</span><span class="t">'+esc(p.comp)+(p.obj?' · '+esc(p.obj):'')+'</span></span>'+
+        '<span class="r-foot"><span class="prem">'+prem+'</span><span class="pill st-'+p.estat+'">'+ESTATS[p.estat]+'</span>'+term+'</span>'+
+      '</span>'+
+      '<span class="r-date"><span class="r-day">'+G.fDayMon(p.venc)+'</span><span class="r-rel">'+rel(d)+'</span></span>'+
+    '</button></li>';
+  }
+  function sorter(a,b){
+    var da = DONE[a.estat]?1:0, db = DONE[b.estat]?1:0;
+    if(da!==db) return da-db;
+    return a.venc<b.venc ? -1 : a.venc>b.venc ? 1 : 0;
+  }
+  function renderList(){
+    var vis = data.pol.filter(visible);
+    if(!data.pol.length){
+      $("list").innerHTML = '<div class="empty"><p>Encara no hi ha cap pòlissa al tauler.</p><button type="button" class="btn primary" data-act="new">+ Afegeix la primera</button></div>';
+      return;
+    }
+    if(!vis.length){
+      $("list").innerHTML = '<div class="empty"><p>Cap pòlissa coincideix amb aquests filtres.</p><button type="button" class="btn" data-act="clearall">Treu els filtres</button></div>';
+      return;
+    }
+    var by = {};
+    vis.forEach(function(p){ var g=group(p); (by[g]=by[g]||[]).push(p); });
+    $("list").innerHTML = GROUPS.filter(function(g){ return by[g[0]]; }).map(function(g){
+      var items = by[g[0]].sort(sorter);
+      var tot = items.reduce(function(a,p){ return a+(p.prima||0); },0);
+      return '<section class="group" style="--gcol:'+g[2]+'"><div class="gh"><h2><span class="dot"></span>'+g[1]+' <span class="n">'+items.length+'</span></h2><span class="gs">'+eur(tot)+'</span></div>'+
+        '<ul class="panel rows">'+items.map(rowHTML).join("")+'</ul></section>';
+    }).join("");
+  }
+  function renderMain(){ renderHeader(); renderStats(); renderMonths(); renderList(); }
+
+  function buildFilters(){
+    $("chips").innerHTML = ['<button type="button" class="chip" data-ram="" aria-pressed="true">Tots</button>'].concat(RAMS.map(function(r){
+      return '<button type="button" class="chip" data-ram="'+r+'" aria-pressed="false">'+r+'</button>';
+    })).join("");
+    var sel = $("f-estat");
+    Object.keys(ESTATS).forEach(function(k){ var o=document.createElement("option"); o.value=k; o.textContent=ESTATS[k]; sel.appendChild(o); });
+  }
+  function syncChips(){
+    Array.prototype.forEach.call(document.querySelectorAll(".chip"), function(c){ c.setAttribute("aria-pressed", String(c.getAttribute("data-ram")===F.ram)); });
+  }
+  function clearAll(){
+    F = {q:"", ram:"", estat:"", mes:"", baixes:false};
+    $("q").value=""; $("f-estat").value=""; $("f-baixes").checked=false; syncChips(); renderMain();
+  }
+
+  function msg(p){
+    var g = isGroupClient(p), tipus = TIPUS[p.ram] || "assegurança";
+    var nom = p.client.split(" ")[0];
+    var salut = g ? "Bon dia, us escric de la gestoria." : "Hola "+nom+", t’escric de la gestoria.";
+    var teva = g ? "La vostra" : "La teva";
+    if(p.estat==="renovada"){
+      return salut+" "+teva+" "+tipus+" amb "+p.comp+" queda renovada a partir "+delDate(p.venc)+", per "+eur(p.primaNova||p.prima)+" l’any. Gràcies!";
+    }
+    if(p.estat==="canvi"){
+      return salut+" "+teva+" nova "+tipus+" amb "+(p.novaComp||"la nova companyia")+" començarà "+artDate(p.venc)+(p.novaPrima?", per "+eur(p.novaPrima)+" l’any":"")+". Ens encarreguem de donar de baixa la de "+p.comp+". Gràcies!";
+    }
+    if(p.estat==="baixa"){
+      return salut+" Et confirmo la baixa de la "+(g?"vostra ":"teva ")+tipus+" amb "+p.comp+", que deixa de tenir efecte "+artDate(p.venc)+".";
+    }
+    var t = salut+" "+teva+" "+tipus+" amb "+p.comp+" venç "+artDate(p.venc)+".";
+    if(p.primaNova && p.prima) t += " La companyia ens ha avisat que la prima passa de "+eur(p.prima)+" a "+eur(p.primaNova)+".";
+    var term = terminiISO(p);
+    if(daysTo(term)>=0){
+      t += g ? " Si voleu que mirem si hi ha alguna opció millor, digueu-m’ho abans "+delDate(term)+", que és l’últim dia per comunicar la baixa a la companyia."
+             : " Si vols que mirem si hi ha alguna opció millor, digues-m’ho abans "+delDate(term)+", que és l’últim dia per comunicar la baixa a la companyia.";
+    } else {
+      t += g ? " Si voleu que en revisem les condicions, digueu-m’ho i ho mirem." : " Si vols que en revisem les condicions, digues-m’ho i ho mirem.";
+    }
+    return t+" Gràcies!";
+  }
+
+  var openId = null;
+  function pctLine(p){
+    var pc = pct(p);
+    if(pc==null) return "Quan arribi l’avís de renovació de la companyia, apunta-hi la prima nova.";
+    var diff = p.primaNova - p.prima;
+    return (pc>=0?"Puja ":"Baixa ")+'<b class="'+(pc>10?'up':(pc<0?'down':''))+'">'+fPct(pc)+'</b>, '+(diff>=0?"+":"")+eur(diff)+" l’any.";
+  }
+  function detailHTML(p){
+    var d = daysTo(p.venc), term = terminiISO(p), dt = daysTo(term);
+    var dueCls = (d<0 && !DONE[p.estat] && p.estat!=="baixa") ? "late" : (d<=30 && OPEN[p.estat] ? "soon" : "");
+    var termTxt = dt>=0
+      ? 'El client pot donar de baixa la pòlissa fins al <b>'+fShort(term)+'</b> ('+rel(dt)+'). La baixa s’ha de comunicar per escrit a la companyia com a mínim un mes abans del venciment (art. 22 de la Llei de contracte d’assegurança).'
+      : 'El termini per donar-la de baixa va acabar el <b>'+fShort(term)+'</b>. La companyia la pot renovar encara que el client no hi estigui d’acord; caldrà mirar-ho per a l’any vinent.';
+    var compOpts = COMPANYIES.filter(function(c){ return c!==p.comp; }).map(function(c){
+      return '<option'+(p.novaComp===c?' selected':'')+'>'+c+'</option>';
+    }).join("");
+    var canvi = p.estat==="canvi" ?
+      '<div class="canvi"><div class="two">'+
+        '<label class="fld">Nova companyia<select id="d-novaComp" data-field="novaComp"><option value="">Tria…</option>'+compOpts+'</select></label>'+
+        '<label class="fld">Prima nova (€)<input id="d-novaPrima" data-field="novaPrima" type="number" inputmode="decimal" min="0" step="1" value="'+(p.novaPrima==null?'':p.novaPrima)+'"></label>'+
+      '</div><p class="hint">'+(dt>=0 ? 'La carta de baixa a '+esc(p.comp)+' ha d’arribar abans del '+fShort(term)+'.' : 'El termini de baixa a '+esc(p.comp)+' ja ha passat: comprova que la baixa s’hagi enviat a temps.')+'</p></div>' : '';
+    var hist = p.hist.length ? '<ul class="hist">'+p.hist.slice().reverse().map(function(h){
+      return '<li><time datetime="'+h.d+'">'+fShort(h.d)+'</time><span>'+esc(h.t)+'</span></li>';
+    }).join("")+'</ul>' : '<p class="hint">Encara no hi ha moviments.</p>';
+    return ''+
+      '<div class="s-head"><div><span class="tag">'+esc(p.ram)+'</span><h2 id="s-title">'+esc(p.client)+'</h2></div>'+
+        '<button type="button" class="x" data-act="close" aria-label="Tanca la fitxa">×</button></div>'+
+      '<div class="due '+dueCls+'"><span class="due-d">Venç el '+longDate(p.venc)+'</span><span class="due-r">'+rel(d)+'</span></div>'+
+      '<p class="note'+(OPEN[p.estat] && dt>=0 && dt<=15?' hot':'')+'">'+termTxt+'</p>'+
+      '<section class="s-sec"><h3>Estat</h3><div class="seg">'+Object.keys(ESTATS).map(function(k){
+        return '<button type="button" data-estat="'+k+'" aria-pressed="'+(p.estat===k)+'">'+ESTATS[k]+'</button>';
+      }).join("")+'</div>'+canvi+'</section>'+
+      '<section class="s-sec"><h3>Prima anual</h3><div class="two">'+
+        '<label class="fld">Actual (€)<input id="d-prima" data-field="prima" type="number" inputmode="decimal" min="0" step="1" value="'+(p.prima==null?'':p.prima)+'"></label>'+
+        '<label class="fld">Avís de renovació (€)<input id="d-primaNova" data-field="primaNova" type="number" inputmode="decimal" min="0" step="1" placeholder="Encara no ha arribat" value="'+(p.primaNova==null?'':p.primaNova)+'"></label>'+
+      '</div><p class="pct-line" id="d-pct">'+pctLine(p)+'</p></section>'+
+      '<section class="s-sec"><h3>Missatge per al client</h3><textarea id="d-msg" class="msg" readonly rows="6" aria-label="Missatge per al client">'+esc(msg(p))+'</textarea>'+
+        '<div><button type="button" class="btn" data-act="copymsg">Copia el missatge</button></div></section>'+
+      '<section class="s-sec"><h3>Pòlissa</h3><dl class="kv">'+
+        '<dt>Companyia</dt><dd>'+esc(p.comp)+'</dd>'+
+        '<dt>Núm.</dt><dd class="mono">'+(esc(p.num)||'—')+'</dd>'+
+        '<dt>Risc</dt><dd>'+(esc(p.obj)||'—')+'</dd>'+
+        '<dt>Pagament</dt><dd>'+esc(p.pag)+'</dd>'+
+        '<dt>Telèfon</dt><dd>'+(p.tel ? '<span class="mono">'+esc(p.tel)+'</span><button type="button" class="mini" data-act="copytel">Copia</button>' : '—')+'</dd>'+
+      '</dl></section>'+
+      '<section class="s-sec"><h3>Notes</h3><textarea id="d-notes" rows="3" placeholder="Trucades, preus demanats, el que digui el client…">'+esc(p.notes)+'</textarea></section>'+
+      '<section class="s-sec"><h3>Historial</h3>'+hist+'</section>'+
+      '<div class="s-foot"><button type="button" class="btn danger" data-act="del">Elimina la pòlissa</button></div>';
+  }
+  function showDetail(id, keepScroll){
+    var p = byId(id); if(!p) return;
+    openId = id;
+    var sh = $("sheet"), st = sh.scrollTop;
+    G.openSheet(detailHTML(p), keepScroll ? '[data-estat="'+p.estat+'"]' : null);
+    if(keepScroll) sh.scrollTop = st;
+  }
+  function closeSheet(){
+    var id = openId; openId = null;
+    G.closeSheet(id ? document.querySelector('.row[data-id="'+id+'"]') : null);
+  }
+  function refreshDerived(p){
+    var pl = $("d-pct"); if(pl) pl.innerHTML = pctLine(p);
+    var m = $("d-msg"); if(m) m.value = msg(p);
+  }
+  function setEstat(p, k){
+    if(p.estat===k) return;
+    p.estat = k;
+    p.hist.push({d:iso(today()), t:"Estat: "+ESTATS[k]});
+    var rolled = false;
+    if(k==="renovada" && daysTo(p.venc)<0){ rollOne(p); rolled = true; }
+    save(); renderMain(); showDetail(p.id, true);
+    if(rolled) toast("Renovada. El proper venciment és el "+fShort(p.venc)+".");
+  }
+
+  function newForm(){
+    openId = null;
+    var dl = '<datalist id="complist">'+COMPANYIES.map(function(c){ return '<option value="'+c+'">'; }).join("")+'</datalist>';
+    G.openSheet(''+
+      '<div class="s-head"><div><h2 id="s-title">Nova pòlissa</h2></div><button type="button" class="x" data-act="close" aria-label="Tanca">×</button></div>'+
+      '<form class="nf" id="nf" novalidate>'+
+        '<label class="fld">Client<input id="n-client" required autocomplete="off"></label>'+
+        '<div class="two"><label class="fld">Ram<select id="n-ram">'+RAMS.map(function(r){ return '<option>'+r+'</option>'; }).join("")+'</select></label>'+
+        '<label class="fld">Companyia<input id="n-comp" list="complist" autocomplete="off"></label></div>'+dl+
+        '<label class="fld">Núm. de pòlissa<input id="n-num" autocomplete="off"></label>'+
+        '<label class="fld">Risc assegurat <span class="opt">(matrícula, adreça…)</span><input id="n-obj" autocomplete="off"></label>'+
+        '<div class="two"><label class="fld">Venciment<input id="n-venc" type="date" required></label>'+
+        '<label class="fld">Prima anual (€)<input id="n-prima" type="number" inputmode="decimal" min="0" step="1"></label></div>'+
+        '<div class="two"><label class="fld">Pagament<select id="n-pag"><option>Anual</option><option>Semestral</option><option>Trimestral</option><option>Mensual</option></select></label>'+
+        '<label class="fld">Telèfon<input id="n-tel" type="tel" autocomplete="off"></label></div>'+
+        '<p class="err" id="n-err" hidden></p>'+
+        '<div><button class="btn primary" type="submit">Afegeix la pòlissa</button></div>'+
+      '</form>', "#n-client");
+  }
+  function submitNew(){
+    var client = $("n-client").value.trim(), venc = $("n-venc").value, err = $("n-err");
+    if(!client || !/^\d{4}-\d{2}-\d{2}$/.test(venc)){
+      err.textContent = !client ? "Falta el nom del client." : "Falta la data de venciment.";
+      err.hidden = false; (!client ? $("n-client") : $("n-venc")).focus(); return;
+    }
+    var prima = parseFloat($("n-prima").value), id = "p"+Date.now().toString(36);
+    data.pol.push({
+      id:id, client:client, tel:$("n-tel").value.trim(), ram:$("n-ram").value, comp:$("n-comp").value.trim()||"—",
+      num:$("n-num").value.trim(), obj:$("n-obj").value.trim(), prima:isNaN(prima)?null:prima, primaNova:null,
+      venc:venc, pag:$("n-pag").value, estat:"pendent", notes:"", hist:[{d:iso(today()), t:"Alta al tauler"}], novaComp:"", novaPrima:null
+    });
+    save(); renderMain(); G.closeSheet(); toast("Pòlissa afegida.");
+    var row = document.querySelector('.row[data-id="'+id+'"]');
+    if(row){ row.scrollIntoView({block:"center"}); row.focus({preventScroll:true}); }
+  }
+  function listTSV(){
+    var head = ["Client","Ram","Companyia","Núm. pòlissa","Risc","Venciment","Termini de baixa","Prima","Prima renovació","Estat","Notes"];
+    var rows = data.pol.filter(visible).sort(function(a,b){ return a.venc<b.venc?-1:a.venc>b.venc?1:0; }).map(function(p){
+      return [p.client,p.ram,p.comp,p.num,p.obj,fShort(p.venc),fShort(terminiISO(p)),p.prima==null?"":p.prima,p.primaNova==null?"":p.primaNova,ESTATS[p.estat],p.notes]
+        .map(function(v){ return String(v==null?"":v).replace(/[\t\n\r]+/g," "); }).join("\t");
+    });
+    return [head.join("\t")].concat(rows).join("\n");
+  }
+
+  document.addEventListener("click", function(e){
+    var t = e.target;
+    var row = t.closest(".row"); if(row){ showDetail(row.getAttribute("data-id")); return; }
+    var mc = t.closest(".mcol"); if(mc){ var k = mc.getAttribute("data-mes"); F.mes = (F.mes===k) ? "" : k; renderMonths(); renderList(); return; }
+    var chip = t.closest(".chip"); if(chip){ F.ram = chip.getAttribute("data-ram"); syncChips(); renderList(); return; }
+    var act = t.closest("[data-act]");
+    if(act){
+      var a = act.getAttribute("data-act");
+      if(a==="clearmes"){ F.mes=""; renderMonths(); renderList(); return; }
+      if(a==="clearall"){ clearAll(); return; }
+      if(a==="new"){ newForm(); return; }
+      if(a==="close"){ closeSheet(); return; }
+      var p = openId && byId(openId);
+      if(a==="copymsg" && p){ G.copyText($("d-msg").value, $("d-msg"), "Missatge copiat."); return; }
+      if(a==="copytel" && p){ G.copyText(p.tel.replace(/\s+/g,""), null, "Telèfon copiat."); return; }
+      if(a==="del" && p){
+        if(!G.arm(act, "Toca un altre cop per eliminar-la")) return;
+        data.pol = data.pol.filter(function(x){ return x.id!==p.id; });
+        save(); openId = null; G.closeSheet(); renderMain(); toast("Pòlissa eliminada.");
+        return;
+      }
+    }
+    var es = t.closest("[data-estat]");
+    if(es && openId){ var pp = byId(openId); if(pp) setEstat(pp, es.getAttribute("data-estat")); return; }
+    if(t === $("bd")) closeSheet();
+  });
+  $("sheet").addEventListener("change", function(e){
+    var el = e.target, f = el.getAttribute && el.getAttribute("data-field");
+    if(!f || !openId) return;
+    var p = byId(openId); if(!p) return;
+    if(f==="prima" || f==="primaNova" || f==="novaPrima"){
+      var v = parseFloat(el.value); v = isNaN(v) ? null : v;
+      if(p[f]===v) return;
+      p[f] = v;
+      if(f==="primaNova" && v!=null) p.hist.push({d:iso(today()), t:"Avís de renovació rebut: "+eur(v)});
+    } else {
+      p[f] = el.value;
+    }
+    save(); renderMain(); refreshDerived(p);
+  });
+  var nt = null;
+  $("sheet").addEventListener("input", function(e){
+    if(e.target.id!=="d-notes" || !openId) return;
+    var p = byId(openId); if(!p) return;
+    p.notes = e.target.value; clearTimeout(nt); nt = setTimeout(save, 400);
+  });
+  $("sheet").addEventListener("submit", function(e){ if(e.target.id==="nf"){ e.preventDefault(); submitNew(); } });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeSheet(); });
+
+  $("q").addEventListener("input", function(e){ F.q = e.target.value; renderList(); });
+  $("f-estat").addEventListener("change", function(e){ F.estat = e.target.value; if(e.target.value==="baixa"){ F.baixes=true; $("f-baixes").checked=true; } renderList(); });
+  $("f-baixes").addEventListener("change", function(e){ F.baixes = e.target.checked; renderList(); });
+  $("b-new").addEventListener("click", newForm);
+  $("b-copy").addEventListener("click", function(){ G.copyText(listTSV(), null, "Llista copiada. Enganxa-la a l’Excel."); });
+  $("b-reset").addEventListener("click", function(e){
+    if(!G.arm(e.currentTarget, "Segur? Es perden els canvis. Toca un altre cop")) return;
+    e.currentTarget.textContent = "Torna a les dades de prova";
+    data = {pol:seed()}; save(); openId=null; G.closeSheet(); clearAll(); toast("Dades de prova restablertes.");
+  });
+
+  buildFilters();
+  G.start(STORE, function(d){ data = d; if(roll()) save(); renderMain(); });
+})();
+</script>
+
+</body>
+</html>
