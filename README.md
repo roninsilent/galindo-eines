@@ -10,7 +10,9 @@ Enllaç: https://roninsilent.github.io/galindo-eines/
 
 ## On són les dades
 
-Aquest repositori és públic, però **no conté cap dada de clients**. Les dades es guarden en un full de càlcul privat al Drive del compte `zenkai3dstudio@gmail.com`, compartit només amb els comptes autoritzats. Cada eina hi entra amb el compte de Google de qui la fa servir; si el compte no té permís sobre el full, no veu res.
+Aquest repositori és públic, però **no conté cap dada de clients**. Les dades es guarden en un full de càlcul privat al Drive del compte `zenkai3dstudio@gmail.com`, compartit només amb els comptes autoritzats.
+
+L'entrada es fa a la portada, amb el selector de comptes de Google. Si el compte triat no té permís sobre el full, no veu les eines. La sessió dura una hora i només val per a aquella pestanya; qui obre una eina sense sessió torna a la portada.
 
 Cada eina té la seva pestanya al full (`venciments`, `trimestrals_clients`, `trimestrals_estat`, `caducitats`). No en canviïs els noms ni els de les columnes.
 

@@ -179,6 +179,8 @@ form.nf{display:flex;flex-direction:column;gap:12px}
 
 /* Versió connectada al Drive: porta d'entrada i estat del desament */
 html.locked .wrap > :not(.brandbar):not(.gate){display:none !important}
+html.locked .apps{display:none}
+.sync b{color:var(--ink);font-weight:600}
 .gate{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:26px 20px;display:flex;flex-direction:column;gap:12px;align-items:flex-start;max-width:540px}
 .gate h2{font-family:var(--f-display);font-weight:800;font-size:1.4rem;line-height:1.15;margin:0;text-wrap:balance}
 .gate p{margin:0;color:var(--muted);max-width:60ch}
@@ -453,29 +455,43 @@ var G = (function(){
     objs:objs, num:num, str:str, bool:bool, dateStr:dateStr, jsonArr:jsonArr, blank:blank};
 })();
 
-/* Desament al full de càlcul de Google (versió publicada a GitHub Pages).
-   Qui entra ho fa amb el seu compte de Google; el full només és compartit amb els comptes autoritzats,
-   així que un compte sense permís rep un error de l'API i no veu res. */
+/* Accés amb Google i desament al full de càlcul (versió publicada a GitHub Pages).
+   L'entrada es fa a la portada, sempre amb el selector de comptes de Google. Les eines reutilitzen
+   la sessió d'aquella pestanya; si no n'hi ha, tornen a la portada. El full només és compartit amb
+   els comptes autoritzats, així que un compte sense permís rep un error de l'API i no veu res. */
 (function(){
   "use strict";
   var C = window.GALINDO_CONFIG || {};
   var API = "https://sheets.googleapis.com/v4/spreadsheets/";
   var SHEETS_SCOPE = "https://www.googleapis.com/auth/spreadsheets";
   var SCOPE = SHEETS_SCOPE+" openid email";
-  var TOKEN_KEY = "galindo-token", HINT_KEY = "galindo-login-hint";
-  var S = null, onData = null, data = null, counts = {};
-  var token = null, tokenExp = 0, email = "", tc = null;
-  var dirty = false, saving = false, saveT = null, lastLoad = 0, afterLogin = null;
-  var gateEl = null, statusEl = null;
+  var TOKEN_KEY = "galindo-token";
+  var TOOLS = ["venciments","trimestrals","caducitats"];
+  var PAGE = (location.pathname.split("/").pop() || "").replace(/\.html$/,"");
   var esc = G.esc;
 
-  function sget(k){ try { return sessionStorage.getItem(k); } catch(e){ return null; } }
-  function sset(k,v){ try { sessionStorage.setItem(k,v); } catch(e){} }
-  function lget(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
-  function lset(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
-  function hhmm(){ var d=new Date(); return G.pad(d.getHours())+":"+G.pad(d.getMinutes()); }
+  var token = null, tokenExp = 0, email = "", tc = null, pendingCb = null;
+  var gateEl = null, statusEl = null;
+  // Estat de les eines
+  var S = null, onData = null, data = null, counts = {};
+  var dirty = false, saving = false, saveT = null, lastLoad = 0, afterLogin = null;
+  // Estat de la portada
+  var portalVerify = null, portalGate = null;
 
-  /* ---------- Interfície: porta d'entrada i estat ---------- */
+  function hhmm(){ var d=new Date(); return G.pad(d.getHours())+":"+G.pad(d.getMinutes()); }
+  function configured(){ return !!(C.clientId && C.spreadsheetId); }
+
+  /* ---------- Sessió (només dins d'aquesta pestanya) ---------- */
+  function readSession(){
+    try { var s = JSON.parse(sessionStorage.getItem(TOKEN_KEY)||"null");
+      if(s && s.t && s.e > Date.now()){ token = s.t; tokenExp = s.e; email = s.m || ""; return true; } } catch(e){}
+    return false;
+  }
+  function writeSession(){ try { sessionStorage.setItem(TOKEN_KEY, JSON.stringify({t:token, e:tokenExp, m:email})); } catch(e){} }
+  function clearSession(){ token = null; tokenExp = 0; email = ""; try { sessionStorage.removeItem(TOKEN_KEY); } catch(e){} }
+  function toPortal(){ location.replace("./"+(TOOLS.indexOf(PAGE)>=0 ? "?torna="+PAGE : "")); }
+
+  /* ---------- Interfície ---------- */
   function ui(){
     document.documentElement.classList.add("locked");
     var demo = document.querySelector(".demo"); if(demo) demo.hidden = true;
@@ -492,65 +508,65 @@ var G = (function(){
     document.documentElement.classList.add("locked");
   }
   function unlock(){ gateEl.hidden = true; document.documentElement.classList.remove("locked"); }
-  function status(kind, text, btn){
+  function status(kind, text, btns){
     statusEl.hidden = false;
     statusEl.className = "sync s-"+kind;
-    statusEl.innerHTML = '<span class="sd" aria-hidden="true"></span><span class="st">'+esc(text)+'</span>'+
-      (btn ? '<button type="button" class="linkbtn" data-sync="'+btn[0]+'">'+esc(btn[1])+'</button>' : '');
+    statusEl.innerHTML = '<span class="sd" aria-hidden="true"></span><span class="st">'+text+'</span>'+
+      (btns||[]).map(function(b){ return '<button type="button" class="linkbtn" data-sync="'+b[0]+'">'+esc(b[1])+'</button>'; }).join("");
   }
-  function okStatus(){ status("ok", "Desat al Drive · "+hhmm()+(email ? " · "+email : "")); }
+  function okStatus(){ status("ok", "Desat al Drive · "+hhmm()+(email ? " · "+esc(email) : "")); }
 
-  /* ---------- Accés amb Google ---------- */
+  /* ---------- Google ---------- */
   function gisReady(){ return !!(window.google && google.accounts && google.accounts.oauth2); }
+  function whenGis(cb){
+    var tries = 0;
+    (function wait(){
+      if(gisReady()){ initClient(); cb(true); return; }
+      if(++tries > 100){ cb(false); return; }
+      setTimeout(wait, 100);
+    })();
+  }
   function initClient(){
     if(tc) return true;
     if(!gisReady()) return false;
     tc = google.accounts.oauth2.initTokenClient({
-      client_id: C.clientId, scope: SCOPE, callback: onToken,
-      error_callback: function(err){
-        if(err && err.type==="popup_closed") gateOrStatus("Has tancat la finestra de Google abans d’acabar.");
-        else gateOrStatus("No s’ha pogut obrir la finestra de Google. Si el navegador bloqueja finestres emergents, permet-les per a aquesta pàgina.");
-      }
+      client_id: C.clientId, scope: SCOPE,
+      callback: function(r){ var f = pendingCb; pendingCb = null; handleToken(r, f); },
+      error_callback: function(err){ var f = pendingCb; pendingCb = null; if(f) f({error:(err && err.type) || "unknown"}); }
     });
     return true;
   }
-  function gateOrStatus(msg){
-    if(data) status("err", msg, ["login","Torna a entrar"]);
-    else gate("Entra per veure les dades", esc(msg), [["login","Entra amb Google"]]);
+  // choose=true obre sempre el selector de comptes; si no, torna a entrar amb el compte ja triat.
+  function requestLogin(choose, done){
+    if(!initClient()){ done({error:"nogis"}); return; }
+    pendingCb = done;
+    var o = choose ? {prompt:"select_account"} : {prompt:""};
+    if(!choose && email) o.login_hint = email;
+    tc.requestAccessToken(o);
   }
-  function login(select){
-    if(!initClient()) return;
-    var hint = lget(HINT_KEY);
-    var opts = {prompt: select ? "select_account" : ""};
-    if(!select && hint) opts.login_hint = hint;
-    tc.requestAccessToken(opts);
-  }
-  function onToken(r){
-    if(!r || r.error){
-      gateOrStatus(r && r.error==="access_denied" ? "Google no ha donat accés a aquest compte. Comprova que és un dels comptes autoritzats." : "No s’ha pogut entrar amb Google.");
-      return;
-    }
-    if(!google.accounts.oauth2.hasGrantedAllScopes(r, SHEETS_SCOPE)){
-      gate("Falta un permís", "Cal marcar el permís per veure i editar els fulls de càlcul. Sense aquest permís l’eina no pot llegir les dades.", [["switch","Torna-ho a provar"]]);
-      return;
-    }
+  function handleToken(r, done){
+    done = done || function(){};
+    if(!r || r.error){ done({error:(r && r.error) || "unknown"}); return; }
+    if(!google.accounts.oauth2.hasGrantedAllScopes(r, SHEETS_SCOPE)){ done({error:"scope"}); return; }
     token = r.access_token;
     tokenExp = Date.now() + (Number(r.expires_in)||3600)*1000 - 60000;
-    sset(TOKEN_KEY, JSON.stringify({t:token, e:tokenExp}));
     fetch("https://www.googleapis.com/oauth2/v3/userinfo", {headers:{Authorization:"Bearer "+token}})
       .then(function(x){ return x.ok ? x.json() : {}; })
-      .then(function(j){ if(j.email){ email = j.email; lset(HINT_KEY, email); sset(TOKEN_KEY, JSON.stringify({t:token, e:tokenExp, m:email})); } })
-      .catch(function(){})
-      .then(function(){ var f = afterLogin || loadData; afterLogin = null; f(); });
+      .then(function(j){ email = j.email || ""; }, function(){})
+      .then(function(){ writeSession(); done({ok:true}); });
   }
-  function needLogin(then){
-    afterLogin = then;
-    token = null;
-    if(data) status("err", "La sessió ha caducat. Els canvis encara no estan desats.", ["login","Torna a entrar"]);
-    else gate("Entra per veure les dades", "La sessió ha caducat.", [["login","Entra amb Google"]]);
+  function loginError(code){
+    switch(code){
+      case "access_denied": return "Google no ha donat accés a aquest compte. Comprova que és un dels comptes autoritzats.";
+      case "scope": return "Cal marcar la casella del permís per veure i editar els fulls de càlcul.";
+      case "popup_closed": return "Has tancat la finestra de Google abans d’acabar.";
+      case "popup_failed_to_open": return "El navegador ha bloquejat la finestra de Google. Permet les finestres emergents per a aquesta pàgina.";
+      case "nogis": return "No s’ha pogut connectar amb Google. Torna a carregar la pàgina.";
+      default: return "No s’ha pogut entrar amb Google.";
+    }
   }
 
-  /* ---------- Crides a l'API ---------- */
+  /* ---------- API ---------- */
   function api(method, url, body){
     if(!token || Date.now()>tokenExp) return Promise.reject({auth:true});
     return fetch(url, {method:method, headers:{"Authorization":"Bearer "+token, "Content-Type":"application/json"}, body: body ? JSON.stringify(body) : undefined})
@@ -561,6 +577,48 @@ var G = (function(){
         return r.json();
       }, function(){ throw {offline:true}; });
   }
+  function errText(e){ return e && e.offline ? "No hi ha connexió amb Google. Comprova la connexió a internet." : ((e && e.msg) || "Error desconegut."); }
+
+  /* ---------- Portada ---------- */
+  function portal(){
+    ui();
+    if(!configured()){ gate("Falta acabar la configuració", "Cal posar l’identificador d’accés de Google al fitxer <code>config.js</code> del repositori.", []); return; }
+    var torna = new URLSearchParams(location.search).get("torna");
+    var target = TOOLS.indexOf(torna)>=0 ? torna+".html" : null;
+    portalGate = function(msg){
+      gate("Entra amb el teu compte de Google",
+        (msg ? '<b>'+esc(msg)+'</b> ' : '')+"Les eines i les dades de la gestoria són privades. Tria el compte autoritzat amb què vols entrar.",
+        [["portal-login","Entra amb Google"]]);
+      statusEl.hidden = true;
+    };
+    portalVerify = function(){
+      gate("", "Comprovant l’accés…");
+      api("GET", API+C.spreadsheetId+"?fields=properties.title").then(function(){
+        if(target){ location.replace(target); return; }
+        unlock();
+        status("ok", "Has entrat com a <b>"+esc(email || "un compte autoritzat")+"</b>", [["switch","Canvia de compte"],["logout","Surt"]]);
+      }).catch(function(e){
+        if(e.auth){ clearSession(); portalGate("La sessió ha caducat."); return; }
+        if(e.denied){
+          var who = email; clearSession();
+          gate("Aquest compte no té accés", (who ? "Has entrat com a <b>"+esc(who)+"</b>. " : "")+"Les eines només es poden obrir amb els comptes autoritzats.", [["portal-login","Tria un altre compte"]]);
+          statusEl.hidden = true; return;
+        }
+        gate("No s’ha pogut connectar", esc(errText(e)), [["portal-retry","Torna-ho a provar"]]);
+      });
+    };
+    if(readSession()) portalVerify(); else gate("", "Connectant amb Google…");
+    whenGis(function(ok){
+      if(token) return;
+      if(ok) portalGate(target ? "Entra per obrir l’eina." : "");
+      else gate("No s’ha pogut connectar amb Google", "Comprova la connexió a internet i torna a carregar la pàgina.", []);
+    });
+  }
+  function portalLogin(){
+    requestLogin(true, function(res){ if(res.error) portalGate(loginError(res.error)); else portalVerify(); });
+  }
+
+  /* ---------- Eines: llegir i desar ---------- */
   function tabs(){ return Object.keys(S.tabs); }
   function fetchTables(){
     var id = C.spreadsheetId, ts = tabs();
@@ -578,23 +636,25 @@ var G = (function(){
       return tables;
     });
   }
+  function needLogin(then){
+    afterLogin = then; token = null; tokenExp = 0;
+    if(!data){ clearSession(); toPortal(); return; }
+    status("err", "La sessió ha caducat. Els canvis encara no estan desats.", [["relogin","Torna a entrar"]]);
+  }
   function handleErr(e, inBackground){
     if(e && e.auth){ needLogin(inBackground ? push : loadData); return; }
     if(e && e.denied){
       gate("Aquest compte no té accés", (email ? "Has entrat com a <b>"+esc(email)+"</b>. " : "")+"Les dades només es poden obrir amb els comptes autoritzats.", [["switch","Canvia de compte"]]);
       data = null; statusEl.hidden = true; return;
     }
-    var msg = e && e.offline ? "No hi ha connexió amb Google. Comprova la connexió a internet." : ((e && e.msg) || "Error desconegut.");
-    if(inBackground && data){ status("err", msg, ["retry","Torna-ho a provar"]); return; }
-    gate("No s’han pogut carregar les dades", esc(msg), [["retry","Torna-ho a provar"]]);
+    if(inBackground && data){ status("err", esc(errText(e)), [["retry","Torna-ho a provar"]]); return; }
+    gate("No s’han pogut carregar les dades", esc(errText(e)), [["retry","Torna-ho a provar"]]);
   }
   function loadData(){
     gate("", "Carregant les dades del Drive…");
     fetchTables().then(function(tables){
-      data = S.fromTables(tables);
-      lastLoad = Date.now();
-      unlock(); okStatus();
-      onData(data);
+      data = S.fromTables(tables); lastLoad = Date.now();
+      unlock(); okStatus(); onData(data);
     }).catch(function(e){ handleErr(e, false); });
   }
   function refresh(){
@@ -605,8 +665,6 @@ var G = (function(){
       onData(data); okStatus();
     }).catch(function(e){ handleErr(e, true); });
   }
-
-  /* ---------- Desar ---------- */
   function push(){
     clearTimeout(saveT);
     if(!data) return;
@@ -632,42 +690,43 @@ var G = (function(){
       .catch(function(e){ saving = false; dirty = true; handleErr(e, true); });
   }
 
+  /* ---------- Botons ---------- */
   document.addEventListener("click", function(e){
     var b = e.target.closest && e.target.closest("[data-sync]");
     if(!b) return;
     var a = b.getAttribute("data-sync");
-    if(a==="login") login(false);
-    else if(a==="switch"){ afterLogin = null; login(true); }
-    else if(a==="retry"){ if(data) push(); else if(token) loadData(); else login(false); }
+    if(a==="portal-login") portalLogin();
+    else if(a==="portal-retry"){ if(portalVerify) portalVerify(); }
+    else if(a==="logout"){ clearSession(); location.replace("./"); }
+    else if(a==="switch"){
+      clearSession();
+      if(portalVerify) portalLogin(); else toPortal();
+    }
+    else if(a==="relogin"){
+      requestLogin(false, function(res){
+        if(res.error){ status("err", esc(loginError(res.error)), [["relogin","Torna a entrar"]]); return; }
+        var f = afterLogin || loadData; afterLogin = null; f();
+      });
+    }
+    else if(a==="retry"){ if(data) push(); else loadData(); }
   });
   document.addEventListener("visibilitychange", function(){
-    if(document.visibilityState==="visible" && Date.now()-lastLoad > 30000) refresh();
+    if(S && document.visibilityState==="visible" && Date.now()-lastLoad > 30000) refresh();
   });
   window.addEventListener("beforeunload", function(e){
     if(dirty || saving){ e.preventDefault(); e.returnValue = ""; }
   });
 
-  /* ---------- Punt d'entrada per a les eines ---------- */
+  /* ---------- Punts d'entrada ---------- */
   G.mode = "sheets";
+  G.portal = portal;
   G.start = function(s, cb){
     S = s; onData = cb;
     ui();
-    if(!C.clientId || !C.spreadsheetId){
-      gate("Falta acabar la configuració", "Cal posar l’identificador d’accés de Google al fitxer <code>config.js</code> del repositori.", []);
-      return;
-    }
-    try { var saved = JSON.parse(sget(TOKEN_KEY)||"null"); if(saved && saved.t && saved.e > Date.now()){ token = saved.t; tokenExp = saved.e; email = saved.m || ""; } } catch(e){}
-    if(token) loadData(); else gate("", "Connectant amb Google…");
-    var tries = 0;
-    (function wait(){
-      if(gisReady()){
-        initClient();
-        if(!token) gate("Entra per veure les dades", "Les dades són en un full de càlcul privat al Drive de la gestoria. Només hi poden entrar els comptes autoritzats.", [["login","Entra amb Google"]]);
-        return;
-      }
-      if(++tries > 100){ if(!token) gate("No s’ha pogut connectar amb Google", "Comprova la connexió a internet i torna a carregar la pàgina.", []); return; }
-      setTimeout(wait, 100);
-    })();
+    if(!configured()){ gate("Falta acabar la configuració", "Cal posar l’identificador d’accés de Google al fitxer <code>config.js</code> del repositori.", []); return; }
+    if(!readSession()){ gate("", "Cal entrar des de la portada…"); toPortal(); return; }
+    loadData();
+    whenGis(function(){});
   };
   G.save = function(d){
     data = d;
