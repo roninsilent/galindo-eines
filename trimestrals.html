@@ -187,6 +187,10 @@ html.locked .apps{display:none}
 .gate p b{color:var(--ink)}
 .gate code{font-family:var(--f-mono);font-size:.92em;background:var(--sunk);padding:1px 5px;border-radius:4px}
 .gate-btns{display:flex;gap:8px;flex-wrap:wrap}
+.gate-form{display:flex;flex-direction:column;gap:12px;width:100%;max-width:380px}
+.gate-form input{font-size:16px !important}
+.gate .gate-msg{color:var(--late);font-weight:600}
+.gate .hint{max-width:60ch}
 .sync{display:flex;align-items:center;gap:6px 8px;font-size:12.5px;color:var(--muted);flex-wrap:wrap;flex-basis:100%}
 @media (min-width:760px){.sync{flex-basis:auto}}
 .sync .sd{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
@@ -536,14 +540,18 @@ var G = (function(){
     });
     return true;
   }
-  // choose=true obre sempre el selector de comptes; si no, torna a entrar amb el compte ja triat.
-  function requestLogin(choose, done){
+  // hint: el correu que ha escrit la persona; Google obre directament aquest compte, no el del navegador.
+  // choose=true obre el selector de comptes de Google, sense cap compte proposat.
+  function requestLogin(hint, done, choose){
     if(!initClient()){ done({error:"nogis"}); return; }
     pendingCb = done;
-    var o = choose ? {prompt:"select_account"} : {prompt:""};
-    if(!choose && email) o.login_hint = email;
+    var o = {prompt: choose ? "select_account" : ""};
+    if(!choose && hint) o.login_hint = hint;
     tc.requestAccessToken(o);
   }
+  var LAST_KEY = "galindo-compte";
+  function lastEmail(){ try { return localStorage.getItem(LAST_KEY) || ""; } catch(e){ return ""; } }
+  function setLastEmail(v){ try { if(v) localStorage.setItem(LAST_KEY, v); else localStorage.removeItem(LAST_KEY); } catch(e){} }
   function handleToken(r, done){
     done = done || function(){};
     if(!r || r.error){ done({error:(r && r.error) || "unknown"}); return; }
@@ -557,7 +565,7 @@ var G = (function(){
   }
   function loginError(code){
     switch(code){
-      case "access_denied": return "Google no ha donat accés a aquest compte. Comprova que és un dels comptes autoritzats.";
+      case "access_denied": return "Google ha bloquejat l’accés d’aquest compte. Només hi poden entrar els comptes autoritzats.";
       case "scope": return "Cal marcar la casella del permís per veure i editar els fulls de càlcul.";
       case "popup_closed": return "Has tancat la finestra de Google abans d’acabar.";
       case "popup_failed_to_open": return "El navegador ha bloquejat la finestra de Google. Permet les finestres emergents per a aquesta pàgina.";
@@ -585,15 +593,27 @@ var G = (function(){
     if(!configured()){ gate("Falta acabar la configuració", "Cal posar l’identificador d’accés de Google al fitxer <code>config.js</code> del repositori.", []); return; }
     var torna = new URLSearchParams(location.search).get("torna");
     var target = TOOLS.indexOf(torna)>=0 ? torna+".html" : null;
-    portalGate = function(msg){
-      gate("Entra amb el teu compte de Google",
-        (msg ? '<b>'+esc(msg)+'</b> ' : '')+"Les eines i les dades de la gestoria són privades. Tria el compte autoritzat amb què vols entrar.",
-        [["portal-login","Entra amb Google"]]);
+    // value: correu que es proposa al camp (per defecte, l'últim compte que va entrar en aquest navegador).
+    portalGate = function(msg, value){
+      var v = value==null ? lastEmail() : value;
+      gateEl.innerHTML = '<h2>Entra amb el teu compte de Google</h2>'+
+        (msg ? '<p class="gate-msg">'+esc(msg)+'</p>' : '')+
+        '<p>Escriu el correu del compte autoritzat. Google obrirà aquest compte, encara que al navegador n’hi hagi un altre per defecte.</p>'+
+        '<form class="gate-form" id="g-form" novalidate>'+
+          '<label class="fld" for="g-email">Compte de Google<input id="g-email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" placeholder="nom@domini.com" value="'+esc(v)+'"></label>'+
+          '<div class="gate-btns"><button type="submit" class="btn primary">Entra amb aquest compte</button></div>'+
+        '</form>'+
+        '<p class="hint">Si Google mostra «Accés bloquejat», s’ha obert un compte sense permís. Tanca aquella finestra i revisa el correu. '+
+        '<button type="button" class="linkbtn" data-sync="portal-choose">Tria el compte a la llista de Google</button></p>';
+      gateEl.hidden = false;
+      document.documentElement.classList.add("locked");
       statusEl.hidden = true;
+      var inp = document.getElementById("g-email"); if(inp && !v) inp.focus();
     };
     portalVerify = function(){
       gate("", "Comprovant l’accés…");
       api("GET", API+C.spreadsheetId+"?fields=properties.title").then(function(){
+        if(email) setLastEmail(email);
         if(target){ location.replace(target); return; }
         unlock();
         status("ok", "Has entrat com a <b>"+esc(email || "un compte autoritzat")+"</b>", [["switch","Canvia de compte"],["logout","Surt"]]);
@@ -601,7 +621,7 @@ var G = (function(){
         if(e.auth){ clearSession(); portalGate("La sessió ha caducat."); return; }
         if(e.denied){
           var who = email; clearSession();
-          gate("Aquest compte no té accés", (who ? "Has entrat com a <b>"+esc(who)+"</b>. " : "")+"Les eines només es poden obrir amb els comptes autoritzats.", [["portal-login","Tria un altre compte"]]);
+          gate("Aquest compte no té accés", (who ? "Has entrat com a <b>"+esc(who)+"</b>. " : "")+"Les eines només es poden obrir amb els comptes autoritzats.", [["portal-other","Entra amb un altre compte"]]);
           statusEl.hidden = true; return;
         }
         gate("No s’ha pogut connectar", esc(errText(e)), [["portal-retry","Torna-ho a provar"]]);
@@ -610,13 +630,29 @@ var G = (function(){
     if(readSession()) portalVerify(); else gate("", "Connectant amb Google…");
     whenGis(function(ok){
       if(token) return;
-      if(ok) portalGate(target ? "Entra per obrir l’eina." : "");
+      if(ok) portalGate("");
       else gate("No s’ha pogut connectar amb Google", "Comprova la connexió a internet i torna a carregar la pàgina.", []);
     });
   }
-  function portalLogin(){
-    requestLogin(true, function(res){ if(res.error) portalGate(loginError(res.error)); else portalVerify(); });
+  // wanted: el correu escrit al camp; si Google torna un altre compte, no es deixa passar.
+  function portalLogin(wanted, choose){
+    requestLogin(wanted, function(res){
+      if(res.error){ portalGate(loginError(res.error), wanted); return; }
+      if(wanted && email && email.toLowerCase()!==wanted.toLowerCase()){
+        var got = email; clearSession();
+        portalGate("Google ha obert el compte "+got+" i no "+wanted+". Torna-ho a provar. Si torna a passar, tanca la sessió de "+got+" a Google o obre la pàgina en una finestra privada.", wanted);
+        return;
+      }
+      portalVerify();
+    }, choose);
   }
+  document.addEventListener("submit", function(e){
+    if(!e.target || e.target.id!=="g-form") return;
+    e.preventDefault();
+    var v = (document.getElementById("g-email").value || "").trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ portalGate("Escriu un correu complet, per exemple nom@gmail.com.", v); return; }
+    portalLogin(v, false);
+  });
 
   /* ---------- Eines: llegir i desar ---------- */
   function tabs(){ return Object.keys(S.tabs); }
@@ -695,15 +731,16 @@ var G = (function(){
     var b = e.target.closest && e.target.closest("[data-sync]");
     if(!b) return;
     var a = b.getAttribute("data-sync");
-    if(a==="portal-login") portalLogin();
+    if(a==="portal-choose") portalLogin("", true);
+    else if(a==="portal-other") portalGate("", "");
     else if(a==="portal-retry"){ if(portalVerify) portalVerify(); }
     else if(a==="logout"){ clearSession(); location.replace("./"); }
     else if(a==="switch"){
-      clearSession();
-      if(portalVerify) portalLogin(); else toPortal();
+      clearSession(); setLastEmail("");
+      if(portalGate) portalGate("", ""); else toPortal();
     }
     else if(a==="relogin"){
-      requestLogin(false, function(res){
+      requestLogin(email, function(res){
         if(res.error){ status("err", esc(loginError(res.error)), [["relogin","Torna a entrar"]]); return; }
         var f = afterLogin || loadData; afterLogin = null; f();
       });
