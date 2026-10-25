@@ -1,10 +1,12 @@
 # Eines de Galindo grup
 
-Tres eines internes per a la gestoria, publicades a GitHub Pages:
+Eines internes per a la gestoria, publicades a GitHub Pages:
 
-- **Venciments**: pòlisses per data de venciment, amb el termini perquè el client les pugui donar de baixa (un mes abans, art. 22 de la Llei de contracte d'assegurança).
 - **Trimestrals**: estat dels models 303, 130, 111, 115 i 202 de cada client, amb els terminis de presentació i de domiciliació.
-- **Caducitats**: certificats digitals, DNI, carnets de conduir i ITV dels clients.
+- **Venciments** *(amagada)*: pòlisses per data de venciment, amb el termini perquè el client les pugui donar de baixa (un mes abans, art. 22 de la Llei de contracte d'assegurança).
+- **Caducitats** *(amagada)*: certificats digitals, DNI, carnets de conduir i ITV dels clients.
+
+Venciments i Caducitats no surten ni al menú ni a la portada, però les pàgines continuen al repositori i funcionen amb l'enllaç directe (`venciments.html`, `caducitats.html`). Per tornar-les a mostrar, treu l'atribut `hidden` dels seus enllaços a la capçalera de cada pàgina (`<nav class="apps">`) i de les targetes de `index.html`.
 
 Enllaç: https://roninsilent.github.io/galindo-eines/
 
