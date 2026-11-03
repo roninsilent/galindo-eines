@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; style-src-elem 'self' https://accounts.google.com/gsi/style; style-src-attr 'unsafe-inline'; font-src 'self'; img-src 'self'; connect-src 'self' https://sheets.googleapis.com https://www.googleapis.com https://oauth2.googleapis.com https://accounts.google.com/gsi/; frame-src https://accounts.google.com/gsi/; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Galindo grup">
+<meta name="application-name" content="Galindo grup">
+<meta name="theme-color" content="#f6f5f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#191816" media="(prefers-color-scheme: dark)">
+<title>Eines de Galindo grup</title>
+<link rel="stylesheet" href="css/comu.css">
+<link rel="stylesheet" href="css/portada.css">
+<script src="config.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+<div class="wrap">
+<div class="brandbar"><a class="brandlink" href="./" aria-label="Inici"><img class="mark" src="logo.webp" alt="Galindo grup" width="37" height="40"><span class="wm" aria-hidden="true"><span class="wm1">Galindo</span><span class="wm2">grup</span></span></a><nav class="apps" aria-label="Eines de la gestoria"><a class="app" href="venciments.html" hidden>Venciments</a><a class="app" href="trimestrals.html">Trimestrals</a><a class="app" href="caducitats.html" hidden>Caducitats</a><a class="app" href="historic.html">Històric</a><a class="app" href="copies.html">Còpies</a></nav></div>
+<header class="top">
+<div>
+<h1>Eines de la gestoria</h1>
+<p class="sub">Trimestrals · històric · còpies de seguretat</p>
+</div>
+</header>
+<section class="tools" aria-label="Eines">
+<a class="tool" href="venciments.html" hidden>
+<span class="tag">Assegurances</span>
+<h2>Venciments</h2>
+<p>Pòlisses ordenades per data de venciment, amb el termini perquè el client les pugui donar de baixa i el missatge per avisar-lo.</p>
+<span class="go">Obre →</span>
+</a>
+<a class="tool" href="trimestrals.html">
+<span class="tag">Hisenda</span>
+<h2>Trimestrals</h2>
+<p>Quins clients deuen papers, què està preparat i què ja s’ha presentat dels models 303, 130, 111, 115 i 202.</p>
+<span class="go">Obre →</span>
+</a>
+<a class="tool" href="caducitats.html" hidden>
+<span class="tag">Documents</span>
+<h2>Caducitats</h2>
+<p>Certificats digitals, DNI, carnets i ITV dels clients, amb avís quan es poden renovar per internet.</p>
+<span class="go">Obre →</span>
+</a>
+<a class="tool" href="historic.html">
+<span class="tag">Control</span>
+<h2>Històric</h2>
+<p>Qui ha canviat què i quan, amb el valor d’abans i el de després. Qualsevol canvi es pot desfer.</p>
+<span class="go">Obre →</span>
+</a>
+<a class="tool" href="copies.html">
+<span class="tag">Seguretat</span>
+<h2>Còpies</h2>
+<p>Còpies de les dades i restauració.</p>
+<span class="go">Obre →</span>
+</a>
+</section>
+<p class="note">Les dades es guarden en un full de càlcul privat al Drive. Per veure-les cal entrar amb un compte de Google autoritzat.</p>
+</div>
+<div class="backdrop" id="bd" hidden><aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="s-title"></aside></div>
+<div class="toast" id="toast" role="status" hidden></div>
+<script src="js/comu.js"></script>
+<script src="js/portada.js"></script>
+</body>
+</html>

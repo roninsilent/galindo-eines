@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; style-src-elem 'self' https://accounts.google.com/gsi/style; style-src-attr 'unsafe-inline'; font-src 'self'; img-src 'self'; connect-src 'self' https://sheets.googleapis.com https://www.googleapis.com https://oauth2.googleapis.com https://accounts.google.com/gsi/; frame-src https://accounts.google.com/gsi/; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Galindo grup">
+<meta name="application-name" content="Galindo grup">
+<meta name="theme-color" content="#f6f5f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#191816" media="(prefers-color-scheme: dark)">
+<title>Còpies · Galindo grup</title>
+<link rel="stylesheet" href="css/comu.css">
+<link rel="stylesheet" href="css/copies.css">
+<script src="config.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+<div class="wrap">
+<div class="brandbar"><a class="brandlink" href="./" aria-label="Inici"><img class="mark" src="logo.webp" alt="Galindo grup" width="37" height="40"><span class="wm" aria-hidden="true"><span class="wm1">Galindo</span><span class="wm2">grup</span></span></a><nav class="apps" aria-label="Eines de la gestoria"><a class="app" href="venciments.html" hidden>Venciments</a><a class="app" href="trimestrals.html">Trimestrals</a><a class="app" href="caducitats.html" hidden>Caducitats</a><a class="app" href="historic.html">Històric</a><span class="app cur" aria-current="page">Còpies</span></nav></div>
+<header class="top">
+<div>
+<h1>Còpies de seguretat</h1>
+<p class="sub" id="sub"></p>
+</div>
+</header>
+<section class="card" id="auto" aria-live="polite"></section>
+<section class="card" id="down">
+<h2>Descarrega una còpia ara</h2>
+<p>Un fitxer amb totes les dades de les eines i l’historial de canvis, xifrat amb una contrasenya que tries ara. Sense la contrasenya no es pot obrir, ni tu mateixa: guarda-la en un gestor de contrasenyes.</p>
+<form class="nf" id="f-down" novalidate>
+<div class="two">
+<label class="fld">Contrasenya<input id="pw1" type="password" autocomplete="new-password" minlength="10"></label>
+<label class="fld">Repeteix-la<input id="pw2" type="password" autocomplete="new-password"></label>
+</div>
+<p class="hint">Com a mínim 10 caràcters. Millor una frase de tres o quatre paraules.</p>
+<p class="err" id="down-err" hidden></p>
+<div class="actions">
+<button class="btn primary" type="submit" id="b-down">Descarrega la còpia xifrada</button>
+<button class="btn" type="button" id="b-plain">Descarrega sense xifrar</button>
+</div>
+</form>
+</section>
+<section class="card" id="rest">
+<h2>Restaura una còpia</h2>
+<p>Tria un fitxer de còpia descarregat d’aquí, o toca <b>Restaura</b> en una de les còpies automàtiques de dalt. Abans de canviar res veuràs què hi ha de diferent amb les dades d’ara.</p>
+<div><label class="btn" for="file">Tria el fitxer de còpia…</label><input id="file" type="file" accept=".json,application/json" hidden></div>
+<div id="rest-out" aria-live="polite"></div>
+</section>
+<section class="card">
+<h2>Si les eines no s’obren</h2>
+<p>Les dades són en un full de càlcul normal de Google. Amb el compte propietari, obre’l i ves a <b>Fitxer → Historial de versions → Mostra l’historial de versions</b>: Google guarda totes les versions anteriors del full i qualsevol es pot recuperar, encara que aquestes pàgines no funcionin.</p>
+</section>
+</div>
+<div class="backdrop" id="bd" hidden><aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="s-title"></aside></div>
+<div class="toast" id="toast" role="status" hidden></div>
+<script src="js/comu.js"></script>
+<script src="js/copies.js"></script>
+</body>
+</html>

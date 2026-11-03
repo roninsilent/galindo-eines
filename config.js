@@ -1,0 +1,1 @@
+window.GALINDO_CONFIG={minutsInactivitat:15,clientId:"362880647020-pmn31o8gjmiqv6n1hhtfj0kpd9a9jrku.apps.googleusercontent.com",spreadsheetId:"1RgEySY609O_MXkXFm_6lnTDz74v43XCDj7bJVlizzmY"};

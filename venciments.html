@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; style-src-elem 'self' https://accounts.google.com/gsi/style; style-src-attr 'unsafe-inline'; font-src 'self'; img-src 'self'; connect-src 'self' https://sheets.googleapis.com https://www.googleapis.com https://oauth2.googleapis.com https://accounts.google.com/gsi/; frame-src https://accounts.google.com/gsi/; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Galindo grup">
+<meta name="application-name" content="Galindo grup">
+<meta name="theme-color" content="#f6f5f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#191816" media="(prefers-color-scheme: dark)">
+<title>Venciments · Galindo grup</title>
+<link rel="stylesheet" href="css/comu.css">
+<link rel="stylesheet" href="css/venciments.css">
+<script src="config.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+<div class="wrap">
+<div class="brandbar"><a class="brandlink" href="./" aria-label="Inici"><img class="mark" src="logo.webp" alt="Galindo grup" width="37" height="40"><span class="wm" aria-hidden="true"><span class="wm1">Galindo</span><span class="wm2">grup</span></span></a><nav class="apps" aria-label="Eines de la gestoria"><span class="app cur" aria-current="page" hidden>Venciments</span><a class="app" href="trimestrals.html">Trimestrals</a><a class="app" href="caducitats.html" hidden>Caducitats</a><a class="app" href="historic.html">Històric</a><a class="app" href="copies.html">Còpies</a></nav></div>
+<header class="top">
+<div>
+<h1>Venciments</h1>
+<p class="sub" id="sub"></p>
+</div>
+<div class="actions">
+<button class="btn" id="b-copy" type="button">Copia la llista</button>
+<button class="btn primary" id="b-new" type="button">+ Nova pòlissa</button>
+</div>
+</header>
+<p class="demo">
+<span>Clients i pòlisses inventats per provar el tauler. El que hi canviïs es guarda només en aquest navegador.</span>
+<button class="linkbtn" id="b-reset" type="button">Torna a les dades de prova</button>
+</p>
+<section class="stats" id="stats" aria-label="Resum"></section>
+<section class="months" aria-labelledby="mh-t">
+<div class="mh"><h2 id="mh-t">Venciments per mes</h2><span class="mf" id="mfilter"></span></div>
+<div class="mscroll"><div class="mgrid" id="mgrid"></div></div>
+</section>
+<section class="filters" aria-label="Filtres">
+<input class="search" id="q" type="search" placeholder="Busca per client, matrícula, adreça o núm. de pòlissa" autocomplete="off">
+<div class="frow">
+<div class="chips" id="chips"></div>
+<div class="fside">
+<select id="f-estat" aria-label="Estat"><option value="">Tots els estats</option></select>
+<label class="check"><input type="checkbox" id="f-baixes"> Mostra les baixes</label>
+</div>
+</div>
+</section>
+<div id="list" aria-live="polite"></div>
+</div>
+<div class="backdrop" id="bd" hidden><aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="s-title"></aside></div>
+<div class="toast" id="toast" role="status" hidden></div>
+<script src="js/comu.js"></script>
+<script src="js/venciments.js"></script>
+</body>
+</html>
