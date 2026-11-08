@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; style-src-elem 'self' https://accounts.google.com/gsi/style; style-src-attr 'unsafe-inline'; font-src 'self'; img-src 'self'; connect-src 'self' https://sheets.googleapis.com https://www.googleapis.com https://oauth2.googleapis.com https://accounts.google.com/gsi/; frame-src https://accounts.google.com/gsi/; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Galindo grup">
+<meta name="application-name" content="Galindo grup">
+<meta name="theme-color" content="#f6f5f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#191816" media="(prefers-color-scheme: dark)">
+<title>Tasques · Galindo grup</title>
+<link rel="stylesheet" href="css/comu.css">
+<link rel="stylesheet" href="css/tasques.css">
+<script src="config.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+<div class="wrap">
+<div class="brandbar"><a class="brandlink" href="./" aria-label="Inici"><img class="mark" src="logo.webp" alt="Galindo grup" width="37" height="40"><span class="wm" aria-hidden="true"><span class="wm1">Galindo</span><span class="wm2">grup</span></span></a><nav class="apps" aria-label="Eines de la gestoria"><a class="app" href="venciments.html" hidden>Venciments</a><a class="app" href="trimestrals.html" data-full="principal">Trimestrals</a><a class="app" href="caducitats.html" hidden>Caducitats</a><span class="app cur" aria-current="page" data-full="equip">Tasques</span><a class="app" href="incidencies.html" data-full="equip">Incidències</a><a class="app" href="historic.html">Històric</a><a class="app" href="copies.html" data-copies>Còpies</a></nav></div>
+<header class="top">
+<div>
+<h1>Tasques</h1>
+<p class="sub" id="sub"></p>
+</div>
+<div class="actions">
+<button class="btn" id="b-team" type="button" data-only-admin hidden>Equip</button>
+<button class="btn primary" id="b-new" type="button" data-only-admin hidden>+ Nova tasca</button>
+</div>
+</header>
+<section class="filters" aria-label="Filtres">
+<input class="search" id="q" type="search" placeholder="Busca una tasca, un client o una persona" autocomplete="off">
+<div class="frow">
+<div class="chips" id="chips">
+<button type="button" class="chip" data-v="obertes" aria-pressed="true">Per fer</button>
+<button type="button" class="chip" data-v="facturar" aria-pressed="false">Per facturar</button>
+<button type="button" class="chip" data-v="facturades" aria-pressed="false">Facturades</button>
+<button type="button" class="chip" data-v="totes" aria-pressed="false">Totes</button>
+</div>
+<div class="fside"><select id="f-qui" aria-label="De qui"></select></div>
+</div>
+<div class="legend"><span>Toca l’estat per avançar-lo:</span><span class="st st-pendent">Pendent</span><span class="st st-proces">En procés</span><span class="st st-tramitat">Tramitat</span><span class="st st-facturat">Facturat</span></div>
+</section>
+<div id="list" aria-live="polite"></div>
+</div>
+<div class="backdrop" id="bd" hidden><aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="s-title"></aside></div>
+<div class="toast" id="toast" role="status" hidden></div>
+<script src="js/comu.js"></script>
+<script src="js/tasques.js"></script>
+</body>
+</html>
