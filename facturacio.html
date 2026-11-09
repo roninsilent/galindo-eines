@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; style-src-elem 'self' https://accounts.google.com/gsi/style; style-src-attr 'unsafe-inline'; font-src 'self'; img-src 'self'; connect-src 'self' https://sheets.googleapis.com https://www.googleapis.com https://oauth2.googleapis.com https://accounts.google.com/gsi/; frame-src https://accounts.google.com/gsi/; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Galindo grup">
+<meta name="application-name" content="Galindo grup">
+<meta name="theme-color" content="#f6f5f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#191816" media="(prefers-color-scheme: dark)">
+<title>Facturació · Galindo grup</title>
+<link rel="stylesheet" href="css/comu.css">
+<link rel="stylesheet" href="css/facturacio.css">
+<script src="config.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+<div class="wrap">
+<div class="brandbar"><a class="brandlink" href="./" aria-label="Inici"><img class="mark" src="logo.webp" alt="Galindo grup" width="37" height="40"><span class="wm" aria-hidden="true"><span class="wm1">Galindo</span><span class="wm2">grup</span></span></a><nav class="apps" aria-label="Eines de la gestoria"><a class="app" href="venciments.html" hidden>Venciments</a><a class="app" href="trimestrals.html" data-full="principal">Trimestrals</a><span class="app cur" aria-current="page" data-full="principal">Facturació</span><a class="app" href="tancament.html" data-full="principal">Tancament</a><a class="app" href="caducitats.html" hidden>Caducitats</a><a class="app" href="tasques.html" data-full="equip">Tasques</a><a class="app" href="incidencies.html" data-full="equip">Incidències</a><a class="app" href="historic.html">Històric</a><a class="app" href="copies.html" data-copies>Còpies</a></nav></div>
+<header class="top">
+<div>
+<h1>Facturació mensual</h1>
+<p class="sub" id="sub"></p>
+</div>
+<div class="actions">
+<label class="btn" for="file">Importa un Excel…</label>
+<input id="file" type="file" accept=".xlsx,.xlsm,.xls,.csv" hidden>
+<button class="btn primary" id="b-new" type="button">+ Nou concepte</button>
+</div>
+</header>
+<section class="mesbar" aria-label="Mes">
+<button type="button" class="btn" id="b-prev" aria-label="Mes anterior">←</button>
+<h2 id="mes" aria-live="polite"></h2>
+<button type="button" class="btn" id="b-next" aria-label="Mes següent">→</button>
+<button type="button" class="linkbtn" id="b-avui" hidden>Torna a aquest mes</button>
+</section>
+<section class="stats" id="stats" aria-label="Resum del mes"></section>
+<section class="filters" aria-label="Filtres">
+<input class="search" id="q" type="search" placeholder="Busca un client o un concepte" autocomplete="off">
+<div class="frow">
+<div class="chips" id="chips">
+<button type="button" class="chip" data-v="pendents" aria-pressed="true">Per facturar</button>
+<button type="button" class="chip" data-v="fets" aria-pressed="false">Facturats</button>
+<button type="button" class="chip" data-v="tots" aria-pressed="false">Tots</button>
+</div>
+</div>
+</section>
+<div id="list" aria-live="polite"></div>
+</div>
+<div class="backdrop" id="bd" hidden><aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="s-title"></aside></div>
+<div class="toast" id="toast" role="status" hidden></div>
+<script src="js/comu.js"></script>
+<script src="js/xlsx.js"></script>
+<script src="js/facturacio.js"></script>
+</body>
+</html>
