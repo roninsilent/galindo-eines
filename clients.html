@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; style-src-elem 'self' https://accounts.google.com/gsi/style; style-src-attr 'unsafe-inline'; font-src 'self'; img-src 'self'; connect-src 'self' https://sheets.googleapis.com https://www.googleapis.com https://oauth2.googleapis.com https://accounts.google.com/gsi/; frame-src https://accounts.google.com/gsi/; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Galindo grup">
+<meta name="application-name" content="Galindo grup">
+<meta name="theme-color" content="#f6f5f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#191816" media="(prefers-color-scheme: dark)">
+<title>Clients · Galindo grup</title>
+<link rel="stylesheet" href="css/comu.css">
+<link rel="stylesheet" href="css/clients.css">
+<script src="config.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+<div class="wrap">
+<div class="brandbar"><a class="brandlink" href="./" aria-label="Inici"><img class="mark" src="logo.webp" alt="Galindo grup" width="37" height="40"><span class="wm" aria-hidden="true"><span class="wm1">Galindo</span><span class="wm2">grup</span></span></a><nav class="apps" aria-label="Eines de la gestoria"><a class="app" href="venciments.html" hidden>Venciments</a><span class="app cur" aria-current="page" data-eina="clients">Clients</span><a class="app" href="trimestrals.html" data-eina="trimestrals">Trimestrals</a><a class="app" href="seguiment.html" data-eina="seguiment">Seguiment</a><a class="app" href="facturacio.html" data-eina="facturacio">Facturació</a><a class="app" href="tancament.html" data-eina="tancament">Tancament</a><a class="app" href="caducitats.html" hidden>Caducitats</a><a class="app" href="tasques.html" data-eina="tasques">Tasques</a><a class="app" href="incidencies.html" data-eina="incidencies">Incidències</a><a class="app" href="xat.html" data-eina="xat">Xat</a><a class="app" href="historic.html" data-eina="historic">Històric</a><a class="app" href="copies.html" data-eina="copies">Còpies</a><a class="app" href="admin.html" data-eina="admin">Usuaris</a></nav></div>
+<header class="top">
+<div>
+<h1>Clients</h1>
+<p class="sub" id="sub"></p>
+</div>
+<div class="actions">
+<button class="btn primary" id="b-new" type="button">+ Client nou</button>
+</div>
+</header>
+<section class="filters" aria-label="Filtres">
+<input class="search" id="q" type="search" placeholder="Busca per codi, nom, NIF o telèfon" autocomplete="off">
+<div class="frow">
+<div class="chips" id="chips">
+<button type="button" class="chip" data-v="actius" aria-pressed="true">Actius</button>
+<button type="button" class="chip" data-v="baixa" aria-pressed="false">De baixa</button>
+<button type="button" class="chip" data-v="tots" aria-pressed="false">Tots</button>
+</div>
+<div class="fside"><select id="f-tipus" aria-label="Tipus de client"></select></div>
+</div>
+</section>
+<div id="list" aria-live="polite"></div>
+</div>
+<div class="backdrop" id="bd" hidden><aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="s-title"></aside></div>
+<div class="toast" id="toast" role="status" hidden></div>
+<script src="js/comu.js"></script>
+<script src="js/clients.js"></script>
+</body>
+</html>
