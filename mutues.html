@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; style-src-elem 'self' https://accounts.google.com/gsi/style; style-src-attr 'unsafe-inline'; font-src 'self'; img-src 'self' blob:; connect-src 'self' https://sheets.googleapis.com https://www.googleapis.com https://oauth2.googleapis.com https://accounts.google.com/gsi/ https://script.google.com https://script.googleusercontent.com; frame-src https://accounts.google.com/gsi/ blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Galindo grup">
+<meta name="application-name" content="Galindo grup">
+<meta name="theme-color" content="#f6f5f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#191816" media="(prefers-color-scheme: dark)">
+<title>Mútues · Galindo grup</title>
+<link rel="stylesheet" href="css/comu.css">
+<link rel="stylesheet" href="css/mutues.css">
+<script src="config.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+<div class="wrap">
+<div class="brandbar"><a class="brandlink" href="./" aria-label="Inici"><img class="mark" src="logo.webp" alt="Galindo grup" width="37" height="40"><span class="wm" aria-hidden="true"><span class="wm1">Galindo</span><span class="wm2">grup</span></span></a><nav class="apps" aria-label="Eines de la gestoria"><a class="app" href="venciments.html" hidden>Venciments</a><a class="app" href="clients.html" data-eina="clients">Clients</a><a class="app" href="trimestrals.html" data-eina="trimestrals">Trimestrals</a><a class="app" href="seguiment.html" data-eina="seguiment">Seguiment</a><a class="app" href="facturacio.html" data-eina="facturacio">Facturació</a><a class="app" href="tancament.html" data-eina="tancament">Tancament</a><span class="app cur" aria-current="page" data-eina="mutues">Mútues<span class="tprova">prova</span></span><a class="app" href="caducitats.html" hidden>Caducitats</a><a class="app" href="tasques.html" data-eina="tasques">Tasques</a><a class="app" href="incidencies.html" data-eina="incidencies">Incidències</a><a class="app" href="xat.html" data-eina="xat">Xat</a><a class="app" href="historic.html" data-eina="historic">Històric</a><a class="app" href="copies.html" data-eina="copies">Còpies</a><a class="app" href="admin.html" data-eina="admin">Usuaris</a></nav></div>
+<header class="top">
+<div>
+<h1>Mútues <span class="tag tprova-gran">prova</span></h1>
+<p class="sub" id="sub">Full de visites escrit a mà contra l’Excel del que han pagat les mútues</p>
+</div>
+</header>
+<p class="note hot"><b>Eina de prova.</b> Feu-la servir amb dades inventades fins que el centre autoritzi aquest tractament. No es desa res enlloc: el PDF, l’Excel i la comparació només són en aquesta pestanya i desapareixen en tancar-la.</p>
+<section class="mpas" aria-labelledby="h-pdf">
+<h2 id="h-pdf"><span class="mnum">1</span> Full de visites</h2>
+<div class="mpick">
+<input id="f-pdf" class="vh" type="file" accept="application/pdf,image/jpeg,image/png">
+<label class="btn" for="f-pdf">Tria el PDF o la foto</label>
+<span class="hint" id="pdf-nom">Cap fitxer triat</span>
+<button type="button" class="btn primary" id="b-llegeix" disabled>Llegeix el full</button>
+</div>
+<p class="hint" id="pdf-estat"></p>
+</section>
+<section class="mpas" aria-labelledby="h-xl">
+<h2 id="h-xl"><span class="mnum">2</span> Què s’ha cobrat</h2>
+<div class="mpick">
+<input id="f-xl" class="vh" type="file" accept=".xlsx,.xlsm,.csv">
+<label class="btn" for="f-xl">Tria l’Excel</label>
+<span class="hint">o</span>
+<form class="mlink" id="f-sheet" novalidate>
+<input class="search" id="sheet-url" type="url" placeholder="Enllaç d’un full de Google Sheets" autocomplete="off" aria-label="Enllaç d’un full de Google Sheets">
+<button type="submit" class="btn">Carrega</button>
+</form>
+</div>
+<p class="hint" id="xl-estat"></p>
+</section>
+<div id="list" aria-live="polite"></div>
+</div>
+<div class="backdrop" id="bd" hidden><aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="s-title"></aside></div>
+<div class="toast" id="toast" role="status" hidden></div>
+<script src="js/comu.js"></script>
+<script src="js/xlsx.js"></script>
+<script src="js/mutues.js"></script>
+</body>
+</html>
